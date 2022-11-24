@@ -2,7 +2,6 @@
 
 namespace App\Interfaces;
 
-use App\Interfaces\Base\FilteredInterface;
 use App\Models\User;
 
 interface UserInterface extends FilteredInterface

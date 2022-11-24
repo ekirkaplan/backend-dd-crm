@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Interfaces\Base;
+namespace App\Interfaces;
 
 use Illuminate\Contracts\Pagination\Paginator;
 

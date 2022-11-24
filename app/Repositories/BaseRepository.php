@@ -2,15 +2,11 @@
 
 namespace App\Repositories;
 
-use App\Interfaces\Base\DestroyInterface;
-use App\Interfaces\Base\AllInterface;
-use App\Interfaces\Base\ShowInterface;
-use App\Interfaces\Base\StoreInterface;
-use App\Interfaces\Base\UpdateInterface;
+use App\Interfaces\BaseInterface;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 
-class BaseRepository implements AllInterface, ShowInterface, StoreInterface, UpdateInterface, DestroyInterface
+class BaseRepository implements BaseInterface
 {
     /**
      * @param Model $model
