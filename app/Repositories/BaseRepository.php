@@ -42,8 +42,7 @@ class BaseRepository implements AllInterface, ShowInterface, StoreInterface, Upd
      */
     public function store(array $data): Model
     {
-        $data['password'] = bcrypt($data['password']);
-        return $this->model->create($data);
+        return $this->model->query()->create($data);
     }
 
     /**
