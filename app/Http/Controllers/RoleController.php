@@ -65,7 +65,6 @@ class RoleController extends Controller
     public function store(StoreRequest $request): JsonResponse
     {
         $permissions = $request->get('permissions');
-
         $role = $this->baseRepository->store($request->validated());
         $this->permissionRepository->sync($role, $permissions);
         return JsonOutputFaced::response();
