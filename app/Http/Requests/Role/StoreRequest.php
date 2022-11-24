@@ -21,7 +21,7 @@ class StoreRequest extends FormRequest
     {
         return [
             'name' => ['required'],
-            'permission.*' => ['nullable']
+            'permissions.*' => ['nullable']
         ];
     }
 
@@ -32,7 +32,7 @@ class StoreRequest extends FormRequest
     {
         return [
             'name' => __('role.labels.name'),
-            'permission.*' => __('role.labels.permission'),
+            'permissions.*' => __('role.labels.permission'),
         ];
     }
 }
