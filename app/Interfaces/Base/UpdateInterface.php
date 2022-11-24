@@ -8,9 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 interface UpdateInterface
 {
     /**
-     * @param Model $mode
+     * @param Model $model
      * @param array $data
      * @return User
      */
-    public function update(Model $mode, array $data): Model;
+    public function update(Model $model, array $data): Model;
 }
