@@ -3,11 +3,8 @@
 namespace App\Services;
 
 use App\Facades\JsonOutputFaced;
-use App\Http\Resources\UserResource;
-use App\Models\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Crypt;
 
 class AuthenticationService
 {
@@ -21,7 +18,7 @@ class AuthenticationService
             'access_token' => $token,
             'token_type' => 'bearer',
             'expires_in' => auth()->factory()->getTTL() * 60,
-            'user' => new UserResource(Auth::user()),
+            'user' => Auth::user(),
         ];
 
         return $data;
@@ -40,15 +37,5 @@ class AuthenticationService
         ];
 
         return JsonOutputFaced::setData($data)->response();
-    }
-
-    /**
-     * @param User $user
-     * @param string $token
-     * @return string
-     */
-    public function encrypt(User $user, string $token): string
-    {
-        return Crypt::encryptString($user->email . '<-nono->' . $token);
     }
 }

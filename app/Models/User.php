@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Traits\HasActivity;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -17,6 +18,7 @@ class User extends Authenticatable implements JWTSubject
      * @var string[]
      */
     protected $fillable = [
+        'role_id',
         'first_name',
         'last_name',
         'email',
@@ -29,6 +31,14 @@ class User extends Authenticatable implements JWTSubject
     protected $hidden = [
         'password',
     ];
+
+    /**
+     * @return BelongsTo
+     */
+    public function role(): BelongsTo
+    {
+        return $this->belongsTo(Role::class);
+    }
 
     /**
      * Get the identifier that will be stored in the subject claim of the JWT.
