@@ -34,7 +34,7 @@ class UserController extends Controller
     public function getAll(): JsonResponse
     {
 //        PermissionFaced::permission('user.index');
-        $users = $this->userRepository->getAll();
+        $users = $this->baseRepository->getAll();
         return JsonOutputFaced::setData($users)->response();
     }
 

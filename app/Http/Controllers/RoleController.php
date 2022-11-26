@@ -25,6 +25,8 @@ class RoleController extends Controller
         private PermissionRepository $permissionRepository
     )
     {
+        $model = new Role();
+        $this->baseRepository->init($model);
     }
 
     /**
