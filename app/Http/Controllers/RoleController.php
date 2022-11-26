@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Facades\JsonOutputFaced;
 use App\Http\Requests\Role\StoreRequest;
 use App\Http\Requests\Role\UpdateRequest;
+use App\Http\Resources\RoleResource;
 use App\Models\Role;
 use App\Repositories\BaseRepository;
 use App\Repositories\PermissionRepository;
@@ -57,7 +58,8 @@ class RoleController extends Controller
     public function show(Role $role): JsonResponse
     {
         $role = $this->baseRepository->show($role);
-        return JsonOutputFaced::setData($role)->response();
+        $data = new RoleResource($role);
+        return JsonOutputFaced::setData($data)->response();
     }
 
     /**

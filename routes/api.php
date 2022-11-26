@@ -27,6 +27,7 @@ Route::prefix('auth')->group(function () {
 
 Route::middleware(['jwt.verify'])->group(function () {
     Route::post('logout', [LoginController::class, 'logout']);
+    Route::get('/auth/me', [LoginController::class, 'me']);
     Route::get('medias/get-media-by-id/{id}', [MediaController::class, 'getMediaById']);
 
     Route::apiResource('users', UserController::class);
@@ -35,9 +36,11 @@ Route::middleware(['jwt.verify'])->group(function () {
         Route::get('get-filtered', 'getFiltered');
     });
 
-    Route::apiResource('roles', RoleController::class);
+
     Route::controller(RoleController::class)->prefix('roles')->group(function () {
         Route::get('get-all', 'getAll');
         Route::get('get-filtered', 'getFiltered');
     });
+    Route::apiResource('roles', RoleController::class);
+
 });
