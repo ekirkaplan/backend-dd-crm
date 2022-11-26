@@ -85,4 +85,9 @@ class LoginController extends Controller
             return JsonOutputFaced::setStatusCode(401)->setMessage($e->getMessage())->response();
         }
     }
+
+    public function me()
+    {
+        return JsonOutputFaced::setData(Auth::user())->response();
+    }
 }

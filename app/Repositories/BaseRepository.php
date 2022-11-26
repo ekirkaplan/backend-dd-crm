@@ -11,8 +11,12 @@ class BaseRepository implements BaseInterface
     /**
      * @param Model $model
      */
-    public function __construct(protected Model $model)
+
+    protected Model $model;
+
+    public function init(Model $model): void
     {
+        $this->model = $model;
     }
 
     /**

@@ -23,6 +23,8 @@ class UserController extends Controller
         private UserRepository $userRepository
     )
     {
+        $model = new User();
+        $this->baseRepository->init($model);
     }
 
     // todo: parameter
@@ -32,7 +34,7 @@ class UserController extends Controller
     public function getAll(): JsonResponse
     {
 //        PermissionFaced::permission('user.index');
-        $users = $this->baseRepository->getAll();
+        $users = $this->userRepository->getAll();
         return JsonOutputFaced::setData($users)->response();
     }
 

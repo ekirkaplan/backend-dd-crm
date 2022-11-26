@@ -3,15 +3,16 @@
 namespace App\Interfaces;
 
 use App\Models\User;
-use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 
 interface BaseInterface
 {
+
     /**
-     * @return Collection
+     * @param  Model  $model
+     * @return void
      */
-    public function getAll(): Collection;
+    public function init(Model $model): void;
 
     /**
      * @param Model $model
