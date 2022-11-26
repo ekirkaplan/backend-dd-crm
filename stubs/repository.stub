@@ -1,0 +1,16 @@
+<?php
+
+namespace $NAMESPACE$;
+
+use App\Interfaces\$INTERFACE_NAME$Interface;
+use App\Models\$MODEL$;
+
+class $CLASS_NAME$Repository implements $INTERFACE_NAME$Interface
+{
+    /**
+     * @param $MODEL$ $$MODEL_PARAM$
+     */
+    public function __construct(protected $MODEL$ $$MODEL_PARAM$)
+    {
+    }
+}
