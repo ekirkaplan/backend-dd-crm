@@ -30,11 +30,12 @@ Route::middleware(['jwt.verify'])->group(function () {
     Route::get('/auth/me', [LoginController::class, 'me']);
     Route::get('medias/get-media-by-id/{id}', [MediaController::class, 'getMediaById']);
 
-    Route::apiResource('users', UserController::class);
     Route::controller(UserController::class)->prefix('users')->group(function () {
         Route::get('get-all', 'getAll');
         Route::get('get-filtered', 'getFiltered');
     });
+    Route::apiResource('users', UserController::class);
+
 
 
     Route::controller(RoleController::class)->prefix('roles')->group(function () {
