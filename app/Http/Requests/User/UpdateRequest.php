@@ -14,7 +14,7 @@ class UpdateRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -36,14 +36,8 @@ class UpdateRequest extends FormRequest
     /**
      * @return array
      */
-    public function messages(): array
+    public function attributes()
     {
-        return [
-            'first_name' => __('role.labels.first_name'),
-            'last_name' => __('role.labels.last_name'),
-            'email' => __('role.labels.email'),
-            'role_id' => __('role.labels.role_id'),
-            'password' => __('role.labels.password'),
-        ];
+        return __('user.labels');
     }
 }

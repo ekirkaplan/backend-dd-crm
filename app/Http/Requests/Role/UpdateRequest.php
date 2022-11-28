@@ -28,11 +28,8 @@ class UpdateRequest extends FormRequest
     /**
      * @return array
      */
-    public function messages(): array
+    public function attributes()
     {
-        return [
-            'name' => __('role.labels.name'),
-            'permissions.*' => __('role.labels.permission'),
-        ];
+        return __('role.labels');
     }
 }
