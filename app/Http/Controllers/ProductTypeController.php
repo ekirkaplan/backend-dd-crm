@@ -27,7 +27,7 @@ class ProductTypeController extends Controller
      */
     public function getAll(): JsonResponse
     {
-        return JsonOutputFaced::setData($this->baseRepository->getAll())->response()
+        return JsonOutputFaced::setData($this->baseRepository->getAll())->response();
     }
 
     /**
