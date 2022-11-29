@@ -1,10 +1,22 @@
 <?php
 
+use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\MediaController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\RoleController;
-use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\SquadController;
+use App\Http\Controllers\CompanyController;
+use App\Http\Controllers\EmployeeController;
+use App\Http\Controllers\CustomerController;
+use App\Http\Controllers\SupplierController;
+use App\Http\Controllers\ArrivalLocationController;
+use App\Http\Controllers\ProductTypeController;
+use App\Http\Controllers\CustomerUnitPriceController;
+use App\Http\Controllers\ExitWarehouseController;
+use App\Http\Controllers\RegionDirectoreController;
+use App\Http\Controllers\ChiefDirectoreController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -37,11 +49,75 @@ Route::middleware(['jwt.verify'])->group(function () {
     Route::apiResource('users', UserController::class);
 
 
-
     Route::controller(RoleController::class)->prefix('roles')->group(function () {
         Route::get('get-all', 'getAll');
         Route::get('get-filtered', 'getFiltered');
     });
     Route::apiResource('roles', RoleController::class);
 
+    Route::controller(SquadController::class)->prefix('squads')->group(function () {
+        Route::get('get-all', 'getAll');
+        Route::get('get-filtered', 'getFiltered');
+    });
+    Route::apiResource('squads', SquadController::class);
+
+    Route::controller(CompanyController::class)->prefix('companies')->group(function () {
+        Route::get('get-all', 'getAll');
+        Route::get('get-filtered', 'getFiltered');
+    });
+    Route::apiResource('companies', CompanyController::class);
+
+    Route::controller(EmployeeController::class)->prefix('employees')->group(function () {
+        Route::get('get-all', 'getAll');
+        Route::get('get-filtered', 'getFiltered');
+    });
+    Route::apiResource('employees', EmployeeController::class);
+
+    Route::controller(CustomerController::class)->prefix('customers')->group(function () {
+        Route::get('get-all', 'getAll');
+        Route::get('get-filtered', 'getFiltered');
+    });
+    Route::apiResource('customers', CustomerController::class);
+
+    Route::controller(SupplierController::class)->prefix('suppliers')->group(function () {
+        Route::get('get-all', 'getAll');
+        Route::get('get-filtered', 'getFiltered');
+    });
+    Route::apiResource('suppliers', SupplierController::class);
+
+    Route::controller(ArrivalLocationController::class)->prefix('arrival-locations')->group(function () {
+        Route::get('get-all', 'getAll');
+        Route::get('get-filtered', 'getFiltered');
+    });
+    Route::apiResource('arrival-locations', ArrivalLocationController::class);
+
+    Route::controller(ProductTypeController::class)->prefix('product-types')->group(function () {
+        Route::get('get-all', 'getAll');
+        Route::get('get-filtered', 'getFiltered');
+    });
+    Route::apiResource('product-types', ProductTypeController::class);
+
+    Route::controller(CustomerUnitPriceController::class)->prefix('customer-unit-prices')->group(function () {
+        Route::get('get-all', 'getAll');
+        Route::get('get-filtered', 'getFiltered');
+    });
+    Route::apiResource('customer-unit-prices', CustomerUnitPriceController::class);
+
+    Route::controller(ExitWarehouseController::class)->prefix('exit-warehouses')->group(function () {
+        Route::get('get-all', 'getAll');
+        Route::get('get-filtered', 'getFiltered');
+    });
+    Route::apiResource('exit-warehouses', ExitWarehouseController::class);
+
+    Route::controller(RegionDirectoreController::class)->prefix('region-directores')->group(function () {
+        Route::get('get-all', 'getAll');
+        Route::get('get-filtered', 'getFiltered');
+    });
+    Route::apiResource('region-directores', RegionDirectoreController::class);
+
+    Route::controller(ChiefDirectoreController::class)->prefix('chief-directores')->group(function () {
+        Route::get('get-all', 'getAll');
+        Route::get('get-filtered', 'getFiltered');
+    });
+    Route::apiResource('chief-directores', ChiefDirectoreController::class);
 });

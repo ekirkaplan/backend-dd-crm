@@ -109,7 +109,7 @@ class MakeRepositoryCommand extends Command
      */
     public function getSourceFilePath(): string
     {
-        return base_path('App/Repositories') .'/' .$this->getSingularClassName($this->argument('name')) . 'Repository.php';
+        return base_path('app/Repositories') .'/' .$this->getSingularClassName($this->argument('name')) . 'Repository.php';
     }
 
     /**
