@@ -9,8 +9,8 @@ return new class extends Migration {
     {
         Schema::create('employees', function (Blueprint $table) {
             $table->id();
-            $table->unsignedTinyInteger('type');
             $table->foreignId('company_id')->references('id')->on('companies');
+            $table->unsignedTinyInteger('type');
             $table->string('first_name');
             $table->string('last_name');
             $table->string('phone');

@@ -2,12 +2,15 @@
 
 namespace App\Models;
 
+use App\Traits\HasActivity;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Employee extends Model
 {
-    use SoftDeletes;
+    use SoftDeletes, HasActivity;
 
     /**
      * @var string
@@ -19,8 +22,19 @@ class Employee extends Model
      */
     protected $guarded = ['id'];
 
-    public function squads()
+    /**
+     * @return BelongsToMany
+     */
+    public function squads(): BelongsToMany
     {
         return $this->belongsToMany(Squad::class, 'squad_employees');
+    }
+
+    /**
+     * @return BelongsTo
+     */
+    public function companies(): BelongsTo
+    {
+        return $this->belongsTo(Company::class);
     }
 }
