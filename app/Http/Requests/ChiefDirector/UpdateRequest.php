@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Requests\RegionDirectore;
+namespace App\Http\Requests\ChiefDirector;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
-class StoreRequest extends FormRequest
+class UpdateRequest extends FormRequest
 {
     public function authorize(): bool
     {
@@ -15,7 +15,7 @@ class StoreRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'city_id' => ['required', 'int', Rule::exists('cities', 'id')],
+            'region_directore_id' => ['required', 'int', Rule::exists('region_directores', 'id')],
             'name' => ['required', 'string'],
             'description' => ['nullable', 'string']
         ];

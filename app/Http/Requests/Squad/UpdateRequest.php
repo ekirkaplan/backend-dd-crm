@@ -11,21 +11,23 @@ class UpdateRequest extends FormRequest
         return true;
     }
 
+    /**
+     * @return \string[][]
+     */
     public function rules(): array
     {
         return [
-            'name' => [
-                'required',
-                'unique:squads,name,'.($this->squad ? $this->squad->name : ''),
-            ],
-            'employees' => ['nullable', 'array'],
+            'foreman_id' => ['required', 'exists:employees,id'],
+            'name' => ['required', 'unique:squads.name'],
+            'employees' => ['nullable', 'array']
         ];
     }
 
-    public function attributes()
+    /**
+     * @return array
+     */
+    public function attributes(): array
     {
-        return __('squad.labels');
+        return __('squads.labels');
     }
-
-
 }

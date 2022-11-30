@@ -31,7 +31,7 @@ class EmployeeController extends Controller
 
     public function store(StoreRequest $request)
     {
-        return JsonOutputFaced::setData($this->baseRepository->store($request->validate()))->response();
+        return JsonOutputFaced::setData($this->baseRepository->store($request->validated()))->response();
     }
 
     public function show(Employee $employee): JsonResponse
@@ -41,7 +41,7 @@ class EmployeeController extends Controller
 
     public function update(UpdateRequest $request, Employee $employee): JsonResponse
     {
-        return JsonOutputFaced::setData($this->baseRepository->update($employee, $request->validate()))->response();
+        return JsonOutputFaced::setData($this->baseRepository->update($employee, $request->validated()))->response();
     }
 
     public function destroy(Employee $employee): JsonResponse

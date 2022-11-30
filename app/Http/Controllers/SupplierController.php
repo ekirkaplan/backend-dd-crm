@@ -47,7 +47,7 @@ class SupplierController extends Controller
      */
     public function store(StoreRequest $request): JsonResponse
     {
-        return JsonOutputFaced::setData($this->baseRepository->store($request->validate()))->response();
+        return JsonOutputFaced::setData($this->baseRepository->store($request->validated()))->response();
     }
 
     /**
@@ -66,7 +66,7 @@ class SupplierController extends Controller
      */
     public function update(UpdateRequest $request, Supplier $supplier)
     {
-        return JsonOutputFaced::setData($this->baseRepository->update($supplier, $request->validate()))->response();
+        return JsonOutputFaced::setData($this->baseRepository->update($supplier, $request->validated()))->response();
     }
 
     /**

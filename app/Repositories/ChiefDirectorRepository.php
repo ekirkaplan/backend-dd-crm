@@ -2,22 +2,22 @@
 
 namespace App\Repositories;
 
-use App\Interfaces\ChiefDirectoreInterface;
-use App\Models\ChiefDirectore;
+use App\Interfaces\ChiefDirectorInterface;
+use App\Models\ChiefDirector;
 use Illuminate\Contracts\Pagination\Paginator;
 
-class ChiefDirectoreRepository implements ChiefDirectoreInterface
+class ChiefDirectorRepository implements ChiefDirectorInterface
 {
     /**
-     * @param ChiefDirectore $chiefDirectore
+     * @param ChiefDirector $chiefDirector
      */
-    public function __construct(protected ChiefDirectore $chiefDirectore)
+    public function __construct(protected ChiefDirector $chiefDirector)
     {
     }
 
     public function getFiltered(?string $search = null, int $perPage = 10): Paginator
     {
-        return $this->chiefDirectore
+        return $this->chiefDirector
             ->query()
             ->when($search, function ($query, $search) {
                 $query->orWhere('name', 'ilike', "%{$search}%");

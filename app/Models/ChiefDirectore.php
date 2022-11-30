@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class ChiefDirectore extends Model
+class ChiefDirector extends Model
 {
     use SoftDeletes;
 
@@ -22,8 +22,8 @@ class ChiefDirectore extends Model
     /**
      * @return BelongsTo
      */
-    public function regionDirectore(): BelongsTo
+    public function regionDirector(): BelongsTo
     {
-        return $this->belongsTo(RegionDirectore::class, 'region_directore_id');
+        return $this->belongsTo(RegionDirector::class, 'region_director_id');
     }
 }

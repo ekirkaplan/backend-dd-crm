@@ -2,12 +2,13 @@
 
 namespace App\Models;
 
+use App\Traits\HasActivity;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Supplier extends Model
 {
-    use SoftDeletes;
+    use SoftDeletes, HasActivity;
 
     /**
      * @var string

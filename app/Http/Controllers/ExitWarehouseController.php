@@ -47,7 +47,7 @@ class ExitWarehouseController extends Controller
      */
     public function store(StoreRequest $request): JsonResponse
     {
-        return JsonOutputFaced::setData($this->baseRepository->store($request->validate()))->response();
+        return JsonOutputFaced::setData($this->baseRepository->store($request->validated()))->response();
     }
 
     /**
@@ -66,7 +66,7 @@ class ExitWarehouseController extends Controller
      */
     public function update(UpdateRequest $request, ExitWarehouse $exitWarehouse): JsonResponse
     {
-        return JsonOutputFaced::setData($this->baseRepository->update($exitWarehouse, $request->validate()))->response();
+        return JsonOutputFaced::setData($this->baseRepository->update($exitWarehouse, $request->validated()))->response();
     }
 
     /**

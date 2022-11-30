@@ -47,7 +47,7 @@ class CustomerController extends Controller
      */
     public function store(StoreRequest $request): JsonResponse
     {
-        return JsonOutputFaced::setData($this->baseRepository->store($request->validate()))->response();
+        return JsonOutputFaced::setData($this->baseRepository->store($request->validated()))->response();
     }
 
     /**
@@ -66,7 +66,7 @@ class CustomerController extends Controller
      */
     public function update(UpdateRequest $request, Customer $customer): JsonResponse
     {
-        return JsonOutputFaced::setData($this->baseRepository->update($customer, $request->validate()))->response();
+        return JsonOutputFaced::setData($this->baseRepository->update($customer, $request->validated()))->response();
     }
 
     /**

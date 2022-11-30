@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests\ChiefDirectore;
+namespace App\Http\Requests\ChiefDirector;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
