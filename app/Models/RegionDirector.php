@@ -14,7 +14,7 @@ class RegionDirector extends Model
     /**
      * @var string
      */
-    protected $table = 'region_directores';
+    protected $table = 'region_directors';
     /**
      * @var string[]
      */

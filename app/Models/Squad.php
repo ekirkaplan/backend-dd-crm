@@ -10,10 +10,12 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Squad extends Model
 {
     use SoftDeletes, HasActivity;
+
     /**
      * @var string
      */
     protected $table = "squads";
+
     /**
      * @var string[]
      */

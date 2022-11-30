@@ -13,7 +13,7 @@ class ChiefDirector extends Model
     /**
      * @var string
      */
-    protected $table = 'chief_directores';
+    protected $table = 'chief_directors';
     /**
      * @var string[]
      */

@@ -7,9 +7,9 @@ use Illuminate\Support\Facades\Schema;
 return new class extends Migration {
     public function up()
     {
-        Schema::create('chief_directores', function (Blueprint $table) {
+        Schema::create('chief_directors', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('region_directore_id')->references('id')->on('region_directores');
+            $table->foreignId('region_director_id')->references('id')->on('region_directors');
             $table->string('name');
             $table->text('description')->nullable();
             $table->timestamps();
@@ -19,6 +19,6 @@ return new class extends Migration {
 
     public function down()
     {
-        Schema::dropIfExists('chief_directores');
+        Schema::dropIfExists('chief_directors');
     }
 };
