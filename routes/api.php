@@ -14,8 +14,10 @@ use App\Http\Controllers\ArrivalLocationController;
 use App\Http\Controllers\ProductTypeController;
 use App\Http\Controllers\CustomerUnitPriceController;
 use App\Http\Controllers\ExitWarehouseController;
-use App\Http\Controllers\RegionDirectoreController;
-use App\Http\Controllers\ChiefDirectoreController;
+use App\Http\Controllers\RegionDirectorController;
+use App\Http\Controllers\ChiefDirectorController;
+use App\Http\Controllers\CountryController;
+use App\Http\Controllers\CityController;
 
 
 /*
@@ -109,15 +111,27 @@ Route::middleware(['jwt.verify'])->group(function () {
     });
     Route::apiResource('exit-warehouses', ExitWarehouseController::class);
 
-    Route::controller(RegionDirectoreController::class)->prefix('region-directores')->group(function () {
+    Route::controller(RegionDirectorController::class)->prefix('region-directores')->group(function () {
         Route::get('get-all', 'getAll');
         Route::get('get-filtered', 'getFiltered');
     });
-    Route::apiResource('region-directores', RegionDirectoreController::class);
+    Route::apiResource('region-directores', RegionDirectorController::class);
 
-    Route::controller(ChiefDirectoreController::class)->prefix('chief-directores')->group(function () {
+    Route::controller(ChiefDirectorController::class)->prefix('chief-directores')->group(function () {
         Route::get('get-all', 'getAll');
         Route::get('get-filtered', 'getFiltered');
     });
-    Route::apiResource('chief-directores', ChiefDirectoreController::class);
+    Route::apiResource('chief-directores', ChiefDirectorController::class);
+
+    Route::controller(CountryController::class)->prefix('countries')->group(function () {
+        Route::get('get-all', 'getAll');
+        Route::get('get-filtered', 'getFiltered');
+    });
+    Route::apiResource('countries', CountryController::class);
+
+    Route::controller(CityController::class)->prefix('cities')->group(function () {
+        Route::get('get-all', 'getAll');
+        Route::get('get-filtered', 'getFiltered');
+    });
+    Route::apiResource('cities', CityController::class);
 });

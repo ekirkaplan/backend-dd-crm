@@ -29,11 +29,5 @@ class LoginRequest extends FormRequest
         ];
     }
 
-    /**
-     * @return string[]
-     */
-    public function attributes()
-    {
-        return __('auth.labels');
-    }
+
 }

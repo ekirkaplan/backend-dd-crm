@@ -25,12 +25,4 @@ class StoreRequest extends FormRequest
             'employees' => ['nullable', 'array']
         ];
     }
-
-    /**
-     * @return array
-     */
-    public function attributes(): array
-    {
-        return __('squads.labels');
-    }
 }

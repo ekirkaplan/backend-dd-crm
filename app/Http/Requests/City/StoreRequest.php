@@ -1,8 +1,9 @@
 <?php
 
-namespace App\Http\Requests\Company;
+namespace App\Http\Requests\City;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class StoreRequest extends FormRequest
 {
@@ -14,8 +15,8 @@ class StoreRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => ['required']
+            'country_id' => ['required', 'int', Rule::exists('countries', 'id')],
+            'name' => ['required', 'string']
         ];
     }
-
 }

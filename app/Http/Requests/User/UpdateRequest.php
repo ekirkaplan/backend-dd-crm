@@ -33,11 +33,4 @@ class UpdateRequest extends FormRequest
         ];
     }
 
-    /**
-     * @return array
-     */
-    public function attributes()
-    {
-        return __('user.labels');
-    }
 }

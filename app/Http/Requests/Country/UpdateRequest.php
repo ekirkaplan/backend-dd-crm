@@ -1,28 +1,21 @@
 <?php
 
-namespace App\Http\Requests\Role;
+namespace App\Http\Requests\Country;
 
 use Illuminate\Foundation\Http\FormRequest;
 
 class UpdateRequest extends FormRequest
 {
-    /**
-     * @return bool
-     */
     public function authorize(): bool
     {
         return true;
     }
 
-    /**
-     * @return array<string, mixed>
-     */
     public function rules(): array
     {
         return [
-            'name' => ['required'],
-            'permissions.*' => ['nullable']
+            'name' => ['string', 'required'],
+            'native_name' => ['string', 'required'],
         ];
     }
-
 }

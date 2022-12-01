@@ -1,28 +1,22 @@
 <?php
 
-namespace App\Http\Requests\Role;
+namespace App\Http\Requests\City;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class UpdateRequest extends FormRequest
 {
-    /**
-     * @return bool
-     */
     public function authorize(): bool
     {
         return true;
     }
 
-    /**
-     * @return array<string, mixed>
-     */
     public function rules(): array
     {
         return [
-            'name' => ['required'],
-            'permissions.*' => ['nullable']
+            'country_id' => ['required', 'int', Rule::exists('countries', 'id')],
+            'name' => ['required', 'string']
         ];
     }
-
 }

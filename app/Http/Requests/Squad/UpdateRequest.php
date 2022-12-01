@@ -23,11 +23,4 @@ class UpdateRequest extends FormRequest
         ];
     }
 
-    /**
-     * @return array
-     */
-    public function attributes(): array
-    {
-        return __('squads.labels');
-    }
 }
