@@ -5,6 +5,7 @@ namespace App\Repositories;
 use App\Interfaces\EmployeeInterface;
 use App\Models\Employee;
 use Illuminate\Contracts\Pagination\Paginator;
+use Illuminate\Database\Eloquent\Collection;
 
 class EmployeeRepository implements EmployeeInterface
 {
@@ -15,8 +16,14 @@ class EmployeeRepository implements EmployeeInterface
     {
     }
 
+    /**
+     * @return Collection
+     */
+    public function getOutOfTeam(): Collection
+    {
+        return $this->employee->whereDoesntHave('squads')->get();
+    }
 
-    // TODO: If user has squad than do not show in the list!!!
     /**
      * @param  string|null  $search
      * @param  int  $perPage
