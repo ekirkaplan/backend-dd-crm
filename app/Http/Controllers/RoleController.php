@@ -71,7 +71,7 @@ class RoleController extends Controller
         $permissions = $request->get('permissions');
         $role = $this->baseRepository->store($request->validated());
         $this->permissionRepository->sync($role, $permissions);
-        return JsonOutputFaced::response();
+        return JsonOutputFaced::setMessage('Rol Eklendi')->response();
     }
 
     /**
@@ -84,7 +84,7 @@ class RoleController extends Controller
         $permissions = $request->get('permissions');
         $this->baseRepository->update($role ,$request->validated());
         $this->permissionRepository->sync($role, $permissions);
-        return JsonOutputFaced::response();
+        return JsonOutputFaced::setMessage('Rol Güncellendi')->response();
     }
 
     /**
@@ -95,6 +95,6 @@ class RoleController extends Controller
     {
         $this->permissionRepository->detach($role);
         $this->baseRepository->destroy($role);
-        return JsonOutputFaced::response();
+        return JsonOutputFaced::setMessage('Rol Silindi')->response();
     }
 }

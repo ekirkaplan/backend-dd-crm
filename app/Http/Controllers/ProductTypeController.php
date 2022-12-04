@@ -55,7 +55,7 @@ class ProductTypeController extends Controller
     public function store(StoreRequest $request): JsonResponse
     {
         $this->baseRepository->store($request->validated());
-        return JsonOutputFaced::response();
+        return JsonOutputFaced::setMessage('Ürün Tipi Eklendi')->response();
     }
 
     /**
@@ -76,7 +76,7 @@ class ProductTypeController extends Controller
     public function update(UpdateRequest $request, ProductType $productType): JsonResponse
     {
         $this->baseRepository->update($productType, $request->validated());
-        return JsonOutputFaced::response();
+        return JsonOutputFaced::setMessage('Ürün Tipi Güncellendi')->response();
     }
 
     /**
@@ -86,6 +86,6 @@ class ProductTypeController extends Controller
     public function destroy(ProductType $productType): JsonResponse
     {
         $this->baseRepository->destroy($productType);
-        return JsonOutputFaced::response();
+        return JsonOutputFaced::setMessage('Ürün Tipi Silindi')->response();
     }
 }

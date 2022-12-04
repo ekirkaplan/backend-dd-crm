@@ -55,7 +55,7 @@ class SupplierController extends Controller
     public function store(StoreRequest $request): JsonResponse
     {
         $this->baseRepository->store($request->validated());
-        return JsonOutputFaced::response();
+        return JsonOutputFaced::setMessage('Tedarikçi Eklendi')->response();
     }
 
     /**
@@ -76,7 +76,7 @@ class SupplierController extends Controller
     public function update(UpdateRequest $request, Supplier $supplier)
     {
         $this->baseRepository->update($supplier, $request->validated());
-        return JsonOutputFaced::response();
+        return JsonOutputFaced::setMessage('Tedarikçi Güncellendi')->response();
     }
 
     /**
@@ -86,6 +86,6 @@ class SupplierController extends Controller
     public function destroy(Supplier $supplier): JsonResponse
     {
         $this->baseRepository->destroy($supplier);
-        return JsonOutputFaced::response();
+        return JsonOutputFaced::setMessage('Tedarikçi Silindi')->response();
     }
 }

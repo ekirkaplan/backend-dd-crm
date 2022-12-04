@@ -115,13 +115,13 @@ Route::middleware(['jwt.verify'])->group(function () {
         Route::get('get-all', 'getAll');
         Route::get('get-filtered', 'getFiltered');
     });
-    Route::apiResource('region-directores', RegionDirectorController::class);
+    Route::apiResource('region-directors', RegionDirectorController::class);
 
     Route::controller(ChiefDirectorController::class)->prefix('chief-directores')->group(function () {
         Route::get('get-all', 'getAll');
         Route::get('get-filtered', 'getFiltered');
     });
-    Route::apiResource('chief-directores', ChiefDirectorController::class);
+    Route::apiResource('chief-directors', ChiefDirectorController::class);
 
     Route::controller(CountryController::class)->prefix('countries')->group(function () {
         Route::get('get-all', 'getAll');

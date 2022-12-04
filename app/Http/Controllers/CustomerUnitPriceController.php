@@ -56,7 +56,7 @@ class CustomerUnitPriceController extends Controller
     public function store(StoreRequest $request): JsonResponse
     {
         $this->baseRepository->store($request->validated());
-        return JsonOutputFaced::response();
+        return JsonOutputFaced::setMessage('Müşteri Birim Fiyat Eklendi')->response();
     }
 
     /**
@@ -77,7 +77,7 @@ class CustomerUnitPriceController extends Controller
     public function update(UpdateRequest $request, CustomerUnitPrice $customerUnitPrice): JsonResponse
     {
         $this->baseRepository->update($customerUnitPrice, $request->validated());
-        return JsonOutputFaced::response();
+        return JsonOutputFaced::setMessage('Müşteri Birim Fiyat Güncellendi')->response();
     }
 
     /**
@@ -87,6 +87,6 @@ class CustomerUnitPriceController extends Controller
     public function destroy(CustomerUnitPrice $customerUnitPrice): JsonResponse
     {
         $this->baseRepository->destroy($customerUnitPrice);
-        return JsonOutputFaced::response();
+        return JsonOutputFaced::setMessage('Müşteri Birim Fiyat Silindi')->response();
     }
 }

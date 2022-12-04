@@ -40,7 +40,7 @@ class EmployeeController extends Controller
     public function store(StoreRequest $request)
     {
         $this->baseRepository->store($request->validated());
-        return JsonOutputFaced::response();
+        return JsonOutputFaced::setMessage('Personel Eklendi')->response();
     }
 
     public function show(Employee $employee): JsonResponse
@@ -52,12 +52,12 @@ class EmployeeController extends Controller
     public function update(UpdateRequest $request, Employee $employee): JsonResponse
     {
         $this->baseRepository->update($employee, $request->validated());
-        return JsonOutputFaced::response();
+        return JsonOutputFaced::setMessage('Personel Güncellendi')->response();
     }
 
     public function destroy(Employee $employee): JsonResponse
     {
         $this->baseRepository->destroy($employee);
-        return JsonOutputFaced::response();
+        return JsonOutputFaced::setMessage('Personel Silindi')->response();
     }
 }

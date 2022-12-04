@@ -51,7 +51,7 @@ class ArrivalLocationController extends Controller
     public function store(StoreRequest $request): JsonResponse
     {
         $this->baseRepository->store($request->validated());
-        return JsonOutputFaced::response();
+        return JsonOutputFaced::setMessage('Varış Lokasyonu eklendi')->response();
     }
 
     /**
@@ -72,7 +72,7 @@ class ArrivalLocationController extends Controller
     public function update(UpdateRequest $request, ArrivalLocation $arrivalLocation): JsonResponse
     {
         $this->baseRepository->update($arrivalLocation, $request->validated());
-        return JsonOutputFaced::response();
+        return JsonOutputFaced::setMessage('Varış Lokasyonu Güncellendi')->response();
     }
 
     /**
@@ -82,6 +82,6 @@ class ArrivalLocationController extends Controller
     public function destroy(ArrivalLocation $arrivalLocation): JsonResponse
     {
         $this->baseRepository->destroy($arrivalLocation);
-        return JsonOutputFaced::response();
+        return JsonOutputFaced::setMessage('Varış Lokasyonu Silindi')->response();
     }
 }

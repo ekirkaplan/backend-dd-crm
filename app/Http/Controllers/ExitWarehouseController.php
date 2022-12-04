@@ -56,7 +56,7 @@ class ExitWarehouseController extends Controller
     public function store(StoreRequest $request): JsonResponse
     {
         $this->baseRepository->store($request->validated());
-        return JsonOutputFaced::response();
+        return JsonOutputFaced::setMessage('Çıkış Depo Eklendi')->response();
     }
 
     /**
@@ -77,7 +77,7 @@ class ExitWarehouseController extends Controller
     public function update(UpdateRequest $request, ExitWarehouse $exitWarehouse): JsonResponse
     {
         $this->baseRepository->update($exitWarehouse, $request->validated());
-        return JsonOutputFaced::response();
+        return JsonOutputFaced::setMessage('Çıkış Depo Güncellendi')->response();
     }
 
     /**
@@ -87,6 +87,6 @@ class ExitWarehouseController extends Controller
     public function destroy(ExitWarehouse $exitWarehouse): JsonResponse
     {
         $this->baseRepository->destroy($exitWarehouse);
-        return JsonOutputFaced::response();
+        return JsonOutputFaced::setMessage('Çıkış Depo Silindi')->response();
     }
 }

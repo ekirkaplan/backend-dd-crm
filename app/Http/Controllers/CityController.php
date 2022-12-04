@@ -56,7 +56,7 @@ class CityController extends Controller
     public function store(StoreRequest $request): JsonResponse
     {
         $this->baseRepository->store($request->validated());
-        return JsonOutputFaced::response();
+        return JsonOutputFaced::setMessage('Şehir Eklendi')->response();
     }
 
     /**
@@ -77,7 +77,7 @@ class CityController extends Controller
     public function update(UpdateRequest $request, City $city): JsonResponse
     {
         $this->baseRepository->update($city, $request->validated());
-        return JsonOutputFaced::response();
+        return JsonOutputFaced::setMessage('Şehir Güncellendi')->response();
     }
 
     /**
@@ -87,6 +87,6 @@ class CityController extends Controller
     public function destroy(City $city): JsonResponse
     {
         $this->baseRepository->destroy($city);
-        return JsonOutputFaced::response();
+        return JsonOutputFaced::setMessage('Şehir Silindi')->response();
     }
 }

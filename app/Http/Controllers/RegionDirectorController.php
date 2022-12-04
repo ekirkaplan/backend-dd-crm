@@ -56,7 +56,7 @@ class RegionDirectorController extends Controller
     public function store(StoreRequest $request): JsonResponse
     {
         $this->baseRepository->store($request->validated());
-        return JsonOutputFaced::response();
+        return JsonOutputFaced::setMessage('Bölgesel Müdürlük Eklendi')->response();
     }
 
     /**
@@ -77,7 +77,7 @@ class RegionDirectorController extends Controller
     public function update(UpdateRequest $request, RegionDirector $regionDirector): JsonResponse
     {
         $this->baseRepository->update($regionDirector, $request->validated());
-        return JsonOutputFaced::response();
+        return JsonOutputFaced::setMessage('Bölgesel Müdürlük Güncellendi')->response();
     }
 
     /**
@@ -87,6 +87,6 @@ class RegionDirectorController extends Controller
     public function destroy(regionDirector $regionDirector): JsonResponse
     {
         $this->baseRepository->destroy($regionDirector);
-        return JsonOutputFaced::response();
+        return JsonOutputFaced::setMessage('Bölgesel Müdürlük Silindi')->response();
     }
 }

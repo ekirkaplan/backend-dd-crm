@@ -56,7 +56,7 @@ class ChiefDirectorController extends Controller
     public function store(StoreRequest $request): JsonResponse
     {
         $this->baseRepository->store($request->validated());
-        return JsonOutputFaced::response();
+        return JsonOutputFaced::setMessage('İşletme Müdürlüğü Eklendi')->response();
     }
 
     /**
@@ -77,7 +77,7 @@ class ChiefDirectorController extends Controller
     public function update(UpdateRequest $request, ChiefDirector $chiefDirector): JsonResponse
     {
         $this->baseRepository->update($chiefDirector, $request->validated());
-        return JsonOutputFaced::response();
+        return JsonOutputFaced::setMessage('İşletme Müdürlüğü Güncellendi')->response();
     }
 
     /**
@@ -87,6 +87,6 @@ class ChiefDirectorController extends Controller
     public function destroy(ChiefDirector $chiefDirector): JsonResponse
     {
         $this->baseRepository->destroy($chiefDirector);
-        return JsonOutputFaced::response();
+        return JsonOutputFaced::setMessage('İşletme Müdürlüğü Silidi')->response();
     }
 }

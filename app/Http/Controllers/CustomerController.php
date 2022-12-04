@@ -56,7 +56,7 @@ class CustomerController extends Controller
     public function store(StoreRequest $request): JsonResponse
     {
         $this->baseRepository->store($request->validated());
-        return JsonOutputFaced::response();
+        return JsonOutputFaced::setMessage('Müşteri Ekledi')->response();
     }
 
     /**
@@ -77,7 +77,7 @@ class CustomerController extends Controller
     public function update(UpdateRequest $request, Customer $customer): JsonResponse
     {
         $this->baseRepository->update($customer, $request->validated());
-        return JsonOutputFaced::response();
+        return JsonOutputFaced::setMessage('Müşteri Güncellendi')->response();
     }
 
     /**
@@ -87,6 +87,6 @@ class CustomerController extends Controller
     public function destroy(Customer $customer): JsonResponse
     {
         $this->baseRepository->destroy($customer);
-        return JsonOutputFaced::response();
+        return JsonOutputFaced::setMessage('Müşteri Silindi')->response();
     }
 }

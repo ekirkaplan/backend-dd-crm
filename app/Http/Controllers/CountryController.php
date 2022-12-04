@@ -31,7 +31,7 @@ class CountryController extends Controller
     /**
      * @return JsonResponse
      */
-    public function get(): JsonResponse
+    public function getAll(): JsonResponse
     {
         $countries = $this->baseRepository->getAll();
         $countries = $this->countryService->setPlural($countries);
@@ -56,7 +56,7 @@ class CountryController extends Controller
     public function store(StoreRequest $request): JsonResponse
     {
         $this->baseRepository->store($request->validated());
-        return JsonOutputFaced::response();
+        return JsonOutputFaced::setMessage('Ülke Eklendi')->response();
     }
 
     /**
@@ -77,7 +77,7 @@ class CountryController extends Controller
     public function update(UpdateRequest $request, Country $country): JsonResponse
     {
         $this->baseRepository->update($country, $request->validated());
-        return JsonOutputFaced::response();
+        return JsonOutputFaced::setMessage('Ülke Güncellendi')->response();
     }
 
     /**
@@ -87,6 +87,6 @@ class CountryController extends Controller
     public function destroy(Country $country): JsonResponse
     {
         $this->baseRepository->destroy($country);
-        return JsonOutputFaced::response();
+        return JsonOutputFaced::setMessage('Ülke Silindi')->response();
     }
 }

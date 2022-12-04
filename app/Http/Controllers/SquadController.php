@@ -60,7 +60,7 @@ class SquadController extends Controller
         $squad = $this->baseRepository->store($request->validated());
         $this->squadRepository->sync($squad, $employees);
 
-        return JsonOutputFaced::setMessage(__('squad.store.message'))
+        return JsonOutputFaced::setMessage('Ekip Eklendi')
             ->setData($squad)->response();
     }
 
@@ -84,7 +84,7 @@ class SquadController extends Controller
         $employees = $request->get('employees');
         $this->squadRepository->sync($squad, $employees);
         $this->baseRepository->update($squad, $request->validated());
-        return JsonOutputFaced::response();
+        return JsonOutputFaced::setMessage('Ekip Güncellendi')->response();
     }
 
     /**
@@ -94,6 +94,6 @@ class SquadController extends Controller
     public function destroy(Squad $squad): JsonResponse
     {
         $this->baseRepository->destroy($squad);
-        return JsonOutputFaced::response();
+        return JsonOutputFaced::setMessage('Ekip Silindi')->response();
     }
 }

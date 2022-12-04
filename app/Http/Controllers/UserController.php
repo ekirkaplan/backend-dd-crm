@@ -74,7 +74,7 @@ class UserController extends Controller
     {
 //        PermissionFaced::permission('user.edit');
         $this->baseRepository->store($request->validated());
-        return JsonOutputFaced::response();
+        return JsonOutputFaced::setMessage('Kullanıcı Eklendi')->response();
     }
 
     /**
@@ -86,7 +86,7 @@ class UserController extends Controller
     {
 //        PermissionFaced::permission('user.edit');
         $this->baseRepository->update($user ,$request->validated());
-        return JsonOutputFaced::response();
+        return JsonOutputFaced::setMessage('Kullanıcı Güncellendi')->response();
     }
 
     /**
@@ -97,6 +97,6 @@ class UserController extends Controller
     {
 //        PermissionFaced::permission('user.destroy');
         $this->baseRepository->destroy($user);
-        return JsonOutputFaced::response();
+        return JsonOutputFaced::setMessage('Kullanıcı Silindi')->response();
     }
 }

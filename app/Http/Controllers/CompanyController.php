@@ -56,7 +56,7 @@ class CompanyController extends Controller
     public function store(StoreRequest $request): JsonResponse
     {
         $this->baseRepository->store($request->validated());
-        return JsonOutputFaced::response();
+        return JsonOutputFaced::setMessage('Firma Eklendi')->response();
     }
 
     /**
@@ -77,7 +77,7 @@ class CompanyController extends Controller
     public function update(UpdateRequest $request, Company $company): JsonResponse
     {
         $this->baseRepository->update($company, $request->validated());
-        return JsonOutputFaced::response();
+        return JsonOutputFaced::setMessage('Firma Güncellendi')->response();
     }
 
     /**
@@ -87,6 +87,6 @@ class CompanyController extends Controller
     public function destroy(Company $company): JsonResponse
     {
         $this->baseRepository->destroy($company);
-        return JsonOutputFaced::response();
+        return JsonOutputFaced::setMessage('Firma Silindi')->response();
     }
 }
