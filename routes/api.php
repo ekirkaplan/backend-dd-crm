@@ -72,7 +72,7 @@ Route::middleware(['jwt.verify'])->group(function () {
     Route::controller(EmployeeController::class)->prefix('employees')->group(function () {
         Route::get('get-all', 'getAll');
         Route::get('get-filtered', 'getFiltered');
-        Route::get('get-out-of-team', 'getOutOfTeam');
+        Route::get('out-of-squad', 'outOfTeam');
     });
     Route::apiResource('employees', EmployeeController::class);
 

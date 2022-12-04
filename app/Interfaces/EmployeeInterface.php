@@ -10,5 +10,5 @@ interface EmployeeInterface extends FilteredInterface
     /**
      * @return Collection
      */
-    public function getOutOfTeam(): Collection;
+    public function outOfSquad(): Collection;
 }

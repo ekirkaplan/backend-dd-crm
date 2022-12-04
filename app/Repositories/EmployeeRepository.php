@@ -19,7 +19,7 @@ class EmployeeRepository implements EmployeeInterface
     /**
      * @return Collection
      */
-    public function getOutOfTeam(): Collection
+    public function outOfSquad(): Collection
     {
         return $this->employee->whereDoesntHave('squads')->get();
     }
