@@ -22,7 +22,7 @@ class ChiefDirectorRepository implements ChiefDirectorInterface
             ->when($search, function ($query, $search) {
                 $query->orWhere('name', 'ilike', "%{$search}%");
             })
-            //->with('regionDirector')
+            ->with('regionDirector')
             ->paginate($perPage);
     }
 }
