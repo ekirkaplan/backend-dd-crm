@@ -132,6 +132,7 @@ Route::middleware(['jwt.verify'])->group(function () {
     Route::controller(CityController::class)->prefix('cities')->group(function () {
         Route::get('get-all', 'getAll');
         Route::get('get-filtered', 'getFiltered');
+        Route::get('get-country-for-cities/{country}', 'getCountryForCities');
     });
     Route::apiResource('cities', CityController::class);
 });

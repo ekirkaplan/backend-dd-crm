@@ -29,7 +29,6 @@ return new class extends Migration
             $table->double('contract_stamp_duty');
             $table->double('forward_invoice_fee');
             $table->date('contract_invoice_date');
-            $table->date('contract_invoice_date');
             $table->string('contract_receipt_no');
             $table->date('field_pickup_date');
             $table->date('actual_start_date');
