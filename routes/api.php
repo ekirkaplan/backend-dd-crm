@@ -111,13 +111,13 @@ Route::middleware(['jwt.verify'])->group(function () {
     });
     Route::apiResource('exit-warehouses', ExitWarehouseController::class);
 
-    Route::controller(RegionDirectorController::class)->prefix('region-directores')->group(function () {
+    Route::controller(RegionDirectorController::class)->prefix('region-directors')->group(function () {
         Route::get('get-all', 'getAll');
         Route::get('get-filtered', 'getFiltered');
     });
     Route::apiResource('region-directors', RegionDirectorController::class);
 
-    Route::controller(ChiefDirectorController::class)->prefix('chief-directores')->group(function () {
+    Route::controller(ChiefDirectorController::class)->prefix('chief-directors')->group(function () {
         Route::get('get-all', 'getAll');
         Route::get('get-filtered', 'getFiltered');
     });
