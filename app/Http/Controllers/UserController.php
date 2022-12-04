@@ -9,6 +9,7 @@ use App\Http\Requests\User\UpdateRequest;
 use App\Models\User;
 use App\Repositories\BaseRepository;
 use App\Repositories\UserRepository;
+use App\Services\UserService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
@@ -17,10 +18,12 @@ class UserController extends Controller
     /**
      * @param BaseRepository $baseRepository
      * @param UserRepository $userRepository
+     * @param UserService $userService
      */
     public function __construct(
         private BaseRepository $baseRepository,
-        private UserRepository $userRepository
+        private UserRepository $userRepository,
+        private UserService $userService
     )
     {
         $model = new User();
@@ -35,6 +38,7 @@ class UserController extends Controller
     {
 //        PermissionFaced::permission('user.index');
         $users = $this->baseRepository->getAll();
+        $users = $this->userService->setPlural($users);
         return JsonOutputFaced::setData($users)->response();
     }
 
@@ -69,8 +73,8 @@ class UserController extends Controller
     public function store(StoreRequest $request): JsonResponse
     {
 //        PermissionFaced::permission('user.edit');
-        $user = $this->baseRepository->store($request->validated());
-        return JsonOutputFaced::setData($user)->response();
+        $this->baseRepository->store($request->validated());
+        return JsonOutputFaced::response();
     }
 
     /**
@@ -81,8 +85,8 @@ class UserController extends Controller
     public function update(UpdateRequest $request, User $user): JsonResponse
     {
 //        PermissionFaced::permission('user.edit');
-        $user = $this->baseRepository->update($user ,$request->validated());
-        return JsonOutputFaced::setData($user)->response();
+        $this->baseRepository->update($user ,$request->validated());
+        return JsonOutputFaced::response();
     }
 
     /**
@@ -92,7 +96,7 @@ class UserController extends Controller
     public function destroy(User $user): JsonResponse
     {
 //        PermissionFaced::permission('user.destroy');
-        $user = $this->baseRepository->destroy($user);
-        return JsonOutputFaced::setData($user)->response();
+        $this->baseRepository->destroy($user);
+        return JsonOutputFaced::response();
     }
 }

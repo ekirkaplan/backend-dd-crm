@@ -15,7 +15,7 @@ class UpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'region_director_id' => ['required', 'integer', 'region_directors:exists,id'],
+            'region_director_id' => ['required', 'integer', 'exists:region_directors,id'],
             'name' => ['required', 'string'],
             'description' => ['nullable', 'string']
         ];

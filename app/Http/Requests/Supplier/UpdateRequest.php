@@ -15,7 +15,7 @@ class UpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'city_id' => ['required', 'integer', 'cities:exists,id'],
+            'city_id' => ['required', 'integer', 'exists:cities,id'],
             'title' => ['required', 'string'],
             'address' => ['nullable', 'string'],
             'phone' => ['nullable', 'string'],

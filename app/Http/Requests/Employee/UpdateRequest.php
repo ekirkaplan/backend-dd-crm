@@ -16,7 +16,7 @@ class UpdateRequest extends FormRequest
     {
         return [
             'type' => ['required', 'numeric'],
-            'company_id' => ['required', 'companies:exists,id'],
+            'company_id' => ['required', 'exists:companies,id'],
             'first_name' => ['required', 'string'],
             'last_name' => ['required', 'string'],
             'phone' => ['required', 'string'],

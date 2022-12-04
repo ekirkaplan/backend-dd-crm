@@ -15,8 +15,8 @@ class StoreRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'customer_id' => ['required', 'integer', 'customers:exists,id'],
-            'product_type_id' => ['required', 'integer', 'product_types:exists,id'],
+            'customer_id' => ['required', 'integer', 'exists:customers,id'],
+            'product_type_id' => ['required', 'integer', 'exists:product_types,id'],
             'start_date' => ['required', 'date'],
             'end_date' => ['required', 'date'],
             'purchase_unit_price' => ['required', 'integer'],
