@@ -14,7 +14,7 @@ return new class extends Migration {
     {
         Schema::create('squad_payment_transactions', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('payment_transaction_type_id')->references('id')->on('payment_transactions_types');
+            $table->foreignId('payment_transaction_type_id')->references('id')->on('payment_transaction_types');
             $table->foreignId('contact_id')->references('id')->on('contracts');
             $table->foreignId('squad_id')->references('id')->on('squads');
             $table->double('total_transaction_amount');
