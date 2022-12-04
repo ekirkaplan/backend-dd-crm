@@ -29,7 +29,11 @@ class UserRepository implements UserInterface
                 $query->orWhere('first_name', 'ilike', "%{$search}%");
                 $query->orWhere('last_name', 'ilike', "%{$search}%");
                 $query->orWhere('email', 'ilike', "%{$search}%");
+                $query->orWhereHas('role', function($q, $search){
+                   $q->where('name', 'ilike', "%{$search}%");
+                });
             })
+            ->with('role')
             ->paginate($perPage);
     }
 

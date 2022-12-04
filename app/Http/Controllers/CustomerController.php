@@ -8,16 +8,22 @@ use App\Http\Requests\Customer\UpdateRequest;
 use App\Models\Customer;
 use App\Repositories\BaseRepository;
 use App\Repositories\CustomerRepository;
+use App\Services\CustomerService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
 class CustomerController extends Controller
 {
     /**
-     * @param  BaseRepository  $baseRepository
-     * @param  CustomerRepository  $customerRepository
+     * @param BaseRepository $baseRepository
+     * @param CustomerRepository $customerRepository
+     * @param CustomerService $customerService
      */
-    public function __construct(private BaseRepository $baseRepository, private CustomerRepository $customerRepository)
+    public function __construct(
+        private BaseRepository $baseRepository,
+        private CustomerRepository $customerRepository,
+        private CustomerService $customerService
+    )
     {
         $this->baseRepository->init(new Customer());
     }
@@ -27,7 +33,9 @@ class CustomerController extends Controller
      */
     public function getAll(): JsonResponse
     {
-        return JsonOutputFaced::setData($this->baseRepository->getAll())->response();
+        $customers = $this->baseRepository->getAll();
+        $customers = $this->customerService->setPlural($customers);
+        return JsonOutputFaced::setData($customers)->response();
     }
 
     /**
@@ -37,8 +45,8 @@ class CustomerController extends Controller
     public function getFiltered(Request $request): JsonResponse
     {
         $search = $request->get('search');
-
-        return JsonOutputFaced::setData($this->customerRepository->getFiltered($search))->response();
+        $customers = $this->customerRepository->getFiltered($search);
+        return JsonOutputFaced::setData($customers)->response();
     }
 
     /**
@@ -47,7 +55,8 @@ class CustomerController extends Controller
      */
     public function store(StoreRequest $request): JsonResponse
     {
-        return JsonOutputFaced::setData($this->baseRepository->store($request->validated()))->response();
+        $this->baseRepository->store($request->validated());
+        return JsonOutputFaced::response();
     }
 
     /**
@@ -56,6 +65,7 @@ class CustomerController extends Controller
      */
     public function show(Customer $customer): JsonResponse
     {
+        $cutsomer = $this->customerService->setSingle($customer);
         return JsonOutputFaced::setData($customer)->response();
     }
 
@@ -66,7 +76,8 @@ class CustomerController extends Controller
      */
     public function update(UpdateRequest $request, Customer $customer): JsonResponse
     {
-        return JsonOutputFaced::setData($this->baseRepository->update($customer, $request->validated()))->response();
+        $this->baseRepository->update($customer, $request->validated());
+        return JsonOutputFaced::response();
     }
 
     /**
@@ -75,6 +86,7 @@ class CustomerController extends Controller
      */
     public function destroy(Customer $customer): JsonResponse
     {
-        return JsonOutputFaced::setData($this->baseRepository->destroy($customer))->response();
+        $this->baseRepository->destroy($customer);
+        return JsonOutputFaced::response();
     }
 }

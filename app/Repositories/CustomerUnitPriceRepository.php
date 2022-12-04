@@ -23,6 +23,7 @@ class CustomerUnitPriceRepository implements CustomerUnitPriceInterface
                 $query->orWhere('start_date', 'ilike', "%{$search}%");
                 $query->orWhere('end_date', 'ilike', "%{$search}%");
             })
+            ->with('productType', 'customer')
             ->paginate($perPage);
     }
 }

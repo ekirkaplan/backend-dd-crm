@@ -8,16 +8,22 @@ use App\Http\Requests\ChiefDirector\UpdateRequest;
 use App\Models\ChiefDirector;
 use App\Repositories\BaseRepository;
 use App\Repositories\ChiefDirectorRepository;
+use App\Services\ChiefDirectorService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
 class ChiefDirectorController extends Controller
 {
     /**
-     * @param  BaseRepository  $baseRepository
-     * @param  ChiefDirectorRepository  $chiefDirectorRepository
+     * @param BaseRepository $baseRepository
+     * @param ChiefDirectorRepository $chiefDirectorRepository
+     * @param ChiefDirectorService $chiefDirectorService
      */
-    public function __construct(private BaseRepository $baseRepository, private ChiefDirectorRepository $chiefDirectorRepository)
+    public function __construct(
+        private BaseRepository $baseRepository,
+        private ChiefDirectorRepository $chiefDirectorRepository,
+        private ChiefDirectorService $chiefDirectorService
+    )
     {
         $this->baseRepository->init(new ChiefDirector());
     }
@@ -27,7 +33,9 @@ class ChiefDirectorController extends Controller
      */
     public function getAll(): JsonResponse
     {
-        return JsonOutputFaced::setData($this->baseRepository->getAll())->response();
+        $chiefDirectors = $this->baseRepository->getAll();
+        $chiefDirectors = $this->chiefDirectorService->setPlural($chiefDirectors);
+        return JsonOutputFaced::setData($chiefDirectors)->response();
     }
 
     /**
@@ -37,8 +45,8 @@ class ChiefDirectorController extends Controller
     public function getFiltered(Request $request): JsonResponse
     {
         $search = $request->get('search');
-
-        return JsonOutputFaced::setData($this->chiefDirectorRepository->getFiltered($search))->response();
+        $chiefDirectors = $this->chiefDirectorRepository->getFiltered($search);
+        return JsonOutputFaced::setData($chiefDirectors)->response();
     }
 
     /**
@@ -47,7 +55,8 @@ class ChiefDirectorController extends Controller
      */
     public function store(StoreRequest $request): JsonResponse
     {
-        return JsonOutputFaced::setData($this->baseRepository->store($request->validated()))->response();
+        $this->baseRepository->store($request->validated());
+        return JsonOutputFaced::response();
     }
 
     /**
@@ -56,6 +65,7 @@ class ChiefDirectorController extends Controller
      */
     public function show(ChiefDirector $chiefDirector): JsonResponse
     {
+        $chiefDirector = $this->chiefDirectorService->setSingle($chiefDirector);
         return JsonOutputFaced::setData($chiefDirector)->response();
     }
 
@@ -66,7 +76,8 @@ class ChiefDirectorController extends Controller
      */
     public function update(UpdateRequest $request, ChiefDirector $chiefDirector): JsonResponse
     {
-        return JsonOutputFaced::setData($this->baseRepository->update($chiefDirector, $request->validated()))->response();
+        $this->baseRepository->update($chiefDirector, $request->validated());
+        return JsonOutputFaced::response();
     }
 
     /**
@@ -75,6 +86,7 @@ class ChiefDirectorController extends Controller
      */
     public function destroy(ChiefDirector $chiefDirector): JsonResponse
     {
-        return JsonOutputFaced::setData($this->baseRepository->destroy($chiefDirector))->response();
+        $this->baseRepository->destroy($chiefDirector);
+        return JsonOutputFaced::response();
     }
 }

@@ -8,16 +8,22 @@ use App\Http\Requests\regionDirector\UpdateRequest;
 use App\Models\RegionDirector;
 use App\Repositories\BaseRepository;
 use App\Repositories\RegionDirectorRepository;
+use App\Services\RegionDirectorService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
 class RegionDirectorController extends Controller
 {
     /**
-     * @param  BaseRepository  $baseRepository
-     * @param  RegionDirectorRepository  $regionDirectorRepository
+     * @param BaseRepository $baseRepository
+     * @param RegionDirectorRepository $regionDirectorRepository
+     * @param RegionDirectorService $regionDirectorService
      */
-    public function __construct(private BaseRepository $baseRepository, private RegionDirectorRepository $regionDirectorRepository)
+    public function __construct(
+        private BaseRepository $baseRepository,
+        private RegionDirectorRepository $regionDirectorRepository,
+        private RegionDirectorService $regionDirectorService
+    )
     {
         $this->baseRepository->init(new RegionDirector());
     }
@@ -27,7 +33,9 @@ class RegionDirectorController extends Controller
      */
     public function getAll(): JsonResponse
     {
-        return JsonOutputFaced::setData($this->baseRepository->getAll())->response();
+        $regionDirectors = $this->baseRepository->getAll();
+        $regionDirectors = $this->regionDirectorService->setPlural($regionDirectors);
+        return JsonOutputFaced::setData($regionDirectors)->response();
     }
 
     /**
@@ -37,8 +45,8 @@ class RegionDirectorController extends Controller
     public function getFiltered(Request $request): JsonResponse
     {
         $search = $request->get('search');
-
-        return JsonOutputFaced::setData($this->regionDirectorRepository->getFiltered($search))->response();
+        $regionDirectors = $this->regionDirectorRepository->getFiltered($search);
+        return JsonOutputFaced::setData($regionDirectors)->response();
     }
 
     /**
@@ -47,7 +55,8 @@ class RegionDirectorController extends Controller
      */
     public function store(StoreRequest $request): JsonResponse
     {
-        return JsonOutputFaced::setData($this->baseRepository->store($request->validated()))->response();
+        $this->baseRepository->store($request->validated());
+        return JsonOutputFaced::response();
     }
 
     /**

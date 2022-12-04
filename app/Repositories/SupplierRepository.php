@@ -30,6 +30,7 @@ class SupplierRepository implements SupplierInterface
                 $query->orWhere('email', 'ilike', "%{$search}%");
                 $query->orWhere('tax_number', 'ilike', "%{$search}%");
             })
+            ->with('city')
             ->paginate($perPage);
     }
 }

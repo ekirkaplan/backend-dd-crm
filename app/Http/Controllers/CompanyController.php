@@ -8,16 +8,22 @@ use App\Http\Requests\Company\UpdateRequest;
 use App\Models\Company;
 use App\Repositories\BaseRepository;
 use App\Repositories\CompanyRepository;
+use App\Services\CompanyService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
 class CompanyController extends Controller
 {
     /**
-     * @param  BaseRepository  $baseRepository
-     * @param  CompanyRepository  $companyRepository
+     * @param BaseRepository $baseRepository
+     * @param CompanyRepository $companyRepository
+     * @param CompanyService $companyService
      */
-    public function __construct(private BaseRepository $baseRepository, private CompanyRepository $companyRepository)
+    public function __construct(
+        private BaseRepository $baseRepository,
+        private CompanyRepository $companyRepository,
+        private CompanyService $companyService
+    )
     {
         $this->baseRepository->init(new Company());
     }
@@ -27,7 +33,9 @@ class CompanyController extends Controller
      */
     public function getAll(): JsonResponse
     {
-        return JsonOutputFaced::setData($this->baseRepository->getAll())->response();
+        $companies = $this->baseRepository->getAll();
+        $companies = $this->companyService->setPlural($companies);
+        return JsonOutputFaced::setData($companies)->response();
     }
 
     /**
@@ -37,8 +45,8 @@ class CompanyController extends Controller
     public function getFiltered(Request $request): JsonResponse
     {
         $search = $request->get('search');
-
-        return JsonOutputFaced::setData($this->companyRepository->getFiltered($search))->response();
+        $companies = $this->companyRepository->getFiltered($search);
+        return JsonOutputFaced::setData($companies)->response();
     }
 
     /**
@@ -47,7 +55,8 @@ class CompanyController extends Controller
      */
     public function store(StoreRequest $request): JsonResponse
     {
-        return JsonOutputFaced::setData($this->baseRepository->store($request->validated()))->response();
+        $this->baseRepository->store($request->validated());
+        return JsonOutputFaced::response();
     }
 
     /**
@@ -56,6 +65,7 @@ class CompanyController extends Controller
      */
     public function show(Company $company): JsonResponse
     {
+        $company = $this->companyService->setSingle($company);
         return JsonOutputFaced::setData($company)->response();
     }
 
@@ -66,7 +76,8 @@ class CompanyController extends Controller
      */
     public function update(UpdateRequest $request, Company $company): JsonResponse
     {
-        return JsonOutputFaced::setData($this->baseRepository->update($company, $request->validated()))->response();
+        $this->baseRepository->update($company, $request->validated());
+        return JsonOutputFaced::response();
     }
 
     /**
@@ -75,6 +86,7 @@ class CompanyController extends Controller
      */
     public function destroy(Company $company): JsonResponse
     {
-        return JsonOutputFaced::setData($this->baseRepository->destroy($company))->response();
+        $this->baseRepository->destroy($company);
+        return JsonOutputFaced::response();
     }
 }

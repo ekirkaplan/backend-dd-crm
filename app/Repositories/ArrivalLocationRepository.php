@@ -23,6 +23,7 @@ class ArrivalLocationRepository implements ArrivalLocationInterface
                 $query->orWhere('name', 'ilike', "%{$search}%");
                 $query->orWhere('address', 'ilike', "%{$search}%");
             })
+            ->with('city')
             ->paginate($perPage);
     }
 }

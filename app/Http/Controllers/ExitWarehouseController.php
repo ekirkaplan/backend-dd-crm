@@ -8,16 +8,22 @@ use App\Http\Requests\ExitWarehouse\UpdateRequest;
 use App\Models\ExitWarehouse;
 use App\Repositories\BaseRepository;
 use App\Repositories\ExitWarehouseRepository;
+use App\Services\ExitWareHouseService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
 class ExitWarehouseController extends Controller
 {
     /**
-     * @param  BaseRepository  $baseRepository
-     * @param  ExitWarehouseRepository  $exitWarehouseRepository
+     * @param BaseRepository $baseRepository
+     * @param ExitWarehouseRepository $exitWarehouseRepository
+     * @param ExitWareHouseService $exitWareHouseService
      */
-    public function __construct(private BaseRepository $baseRepository, private ExitWarehouseRepository $exitWarehouseRepository)
+    public function __construct(
+        private BaseRepository $baseRepository,
+        private ExitWarehouseRepository $exitWarehouseRepository,
+        private ExitWareHouseService $exitWareHouseService
+    )
     {
         $this->baseRepository->init(new ExitWarehouse());
     }
@@ -27,7 +33,9 @@ class ExitWarehouseController extends Controller
      */
     public function getAll(): JsonResponse
     {
-        return JsonOutputFaced::setData($this->baseRepository->getAll())->response();
+        $exitWareHouses = $this->baseRepository->getAll();
+        $exitWareHouses = $this->exitWareHouseService->setPlural($exitWareHouses);
+        return JsonOutputFaced::setData($exitWareHouses)->response();
     }
 
     /**
@@ -37,8 +45,8 @@ class ExitWarehouseController extends Controller
     public function getFiltered(Request $request): JsonResponse
     {
         $search = $request->get('search');
-
-        return JsonOutputFaced::setData($this->exitWarehouseRepository->getFiltered($search))->response();
+        $exitWareHouses = $this->exitWarehouseRepository->getFiltered($search);
+        return JsonOutputFaced::setData($exitWareHouses)->response();
     }
 
     /**
@@ -47,7 +55,8 @@ class ExitWarehouseController extends Controller
      */
     public function store(StoreRequest $request): JsonResponse
     {
-        return JsonOutputFaced::setData($this->baseRepository->store($request->validated()))->response();
+        $this->baseRepository->store($request->validated());
+        return JsonOutputFaced::response();
     }
 
     /**
@@ -56,6 +65,7 @@ class ExitWarehouseController extends Controller
      */
     public function show(ExitWarehouse $exitWarehouse): JsonResponse
     {
+        $exitWarehouse = $this->exitWareHouseService->setSingle($exitWarehouse);
         return JsonOutputFaced::setData($exitWarehouse)->response();
     }
 
@@ -66,7 +76,8 @@ class ExitWarehouseController extends Controller
      */
     public function update(UpdateRequest $request, ExitWarehouse $exitWarehouse): JsonResponse
     {
-        return JsonOutputFaced::setData($this->baseRepository->update($exitWarehouse, $request->validated()))->response();
+        $this->baseRepository->update($exitWarehouse, $request->validated());
+        return JsonOutputFaced::response();
     }
 
     /**
@@ -75,6 +86,7 @@ class ExitWarehouseController extends Controller
      */
     public function destroy(ExitWarehouse $exitWarehouse): JsonResponse
     {
-        return JsonOutputFaced::setData($this->baseRepository->destroy($exitWarehouse))->response();
+        $this->baseRepository->destroy($exitWarehouse);
+        return JsonOutputFaced::response();
     }
 }

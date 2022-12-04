@@ -15,7 +15,7 @@ class UpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'country_id' => ['required', 'integer', 'countries:exists,id'],
+            'country_id' => ['required', 'integer'],
             'name' => ['required', 'string']
         ];
     }

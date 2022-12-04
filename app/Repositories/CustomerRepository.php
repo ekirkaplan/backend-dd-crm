@@ -25,6 +25,7 @@ class CustomerRepository implements CustomerInterface
                 $query->orWhere('email', 'ilike', "%{$search}%");
                 $query->orWhere('tax_number', 'ilike', "%{$search}%");
             })
+            ->with('city')
             ->paginate($perPage);
     }
 

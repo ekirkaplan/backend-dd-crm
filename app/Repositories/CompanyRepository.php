@@ -29,5 +29,4 @@ class CompanyRepository implements CompanyInterface
             })
             ->paginate($perPage);
     }
-
 }

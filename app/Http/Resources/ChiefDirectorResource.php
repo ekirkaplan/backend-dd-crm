@@ -9,9 +9,11 @@ class ChiefDirectorResource extends JsonResource
     public function toArray($request): array
     {
         return [
-            'region_director' => new RegionDirectorResource($this->regionDirector),
+            'id' => $this->id,
+            'region_director_id' => $this->regionDirector->id,
             'name' => $this->name,
-            'description' => $this->description
+            'description' => $this->description,
+            'region_director' => new RegionDirectorResource($this->regionDirector)
         ];
     }
 }

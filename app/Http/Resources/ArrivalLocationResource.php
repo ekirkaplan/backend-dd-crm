@@ -9,11 +9,13 @@ class ArrivalLocationResource extends JsonResource
     public function toArray($request): array
     {
         return [
-            'city' => new CityResource($this->city),
+            'id' => $this->id,
+            'city_id' => $this->city->id,
             'transport_unit_price' => $this->transport_unit_price,
             'name' => $this->name,
             'address' => $this->address,
-            'description' => $this->description
+            'description' => $this->description,
+            'city' => new CityResource($this->city)
         ];
     }
 }

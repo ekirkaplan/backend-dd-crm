@@ -8,16 +8,22 @@ use App\Http\Requests\City\UpdateRequest;
 use App\Models\City;
 use App\Repositories\BaseRepository;
 use App\Repositories\CityRepository;
+use App\Services\CityService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
 class CityController extends Controller
 {
     /**
-     * @param  BaseRepository  $baseRepository
-     * @param  CityRepository  $cityRepository
+     * @param BaseRepository $baseRepository
+     * @param CityRepository $cityRepository
+     * @param CityService $cityService
      */
-    public function __construct(private BaseRepository $baseRepository, private CityRepository $cityRepository)
+    public function __construct(
+        private BaseRepository $baseRepository,
+        private CityRepository $cityRepository,
+        private CityService $cityService
+    )
     {
         $this->baseRepository->init(new City());
     }
@@ -27,7 +33,9 @@ class CityController extends Controller
      */
     public function getAll(): JsonResponse
     {
-        return JsonOutputFaced::setData($this->baseRepository->getAll())->response();
+        $cities = $this->baseRepository->getAll();
+        $cities = $this->cityService->setPlural($cities);
+        return JsonOutputFaced::setData($cities)->response();
     }
 
     /**
@@ -37,8 +45,8 @@ class CityController extends Controller
     public function getFiltered(Request $request): JsonResponse
     {
         $search = $request->get('search');
-
-        return JsonOutputFaced::setData($this->cityRepository->getFiltered($search))->response();
+        $cities = $this->cityRepository->getFiltered($search);
+        return JsonOutputFaced::setData($cities)->response();
     }
 
     /**
@@ -47,7 +55,8 @@ class CityController extends Controller
      */
     public function store(StoreRequest $request): JsonResponse
     {
-        return JsonOutputFaced::setData($this->baseRepository->store($request->validated()))->response();
+        $this->baseRepository->store($request->validated());
+        return JsonOutputFaced::response();
     }
 
     /**
@@ -56,6 +65,7 @@ class CityController extends Controller
      */
     public function show(City $city): JsonResponse
     {
+        $city = $this->cityService->setSingle($city);
         return JsonOutputFaced::setData($city)->response();
     }
 
@@ -66,7 +76,8 @@ class CityController extends Controller
      */
     public function update(UpdateRequest $request, City $city): JsonResponse
     {
-        return JsonOutputFaced::setData($this->baseRepository->update($city, $request->validated()))->response();
+        $this->baseRepository->update($city, $request->validated());
+        return JsonOutputFaced::response();
     }
 
     /**
@@ -75,6 +86,7 @@ class CityController extends Controller
      */
     public function destroy(City $city): JsonResponse
     {
-        return JsonOutputFaced::setData($this->baseRepository->destroy($city))->response();
+        $this->baseRepository->destroy($city);
+        return JsonOutputFaced::response();
     }
 }

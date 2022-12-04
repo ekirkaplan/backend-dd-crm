@@ -8,16 +8,22 @@ use App\Http\Requests\CustomerUnitPrice\UpdateRequest;
 use App\Models\CustomerUnitPrice;
 use App\Repositories\BaseRepository;
 use App\Repositories\CustomerUnitPriceRepository;
+use App\Services\CustomerUnitPriceService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
 class CustomerUnitPriceController extends Controller
 {
     /**
-     * @param  BaseRepository  $baseRepository
-     * @param  CustomerUnitPriceRepository  $customerUnitPriceRepository
+     * @param BaseRepository $baseRepository
+     * @param CustomerUnitPriceRepository $customerUnitPriceRepository
+     * @param CustomerUnitPriceService $customerUnitPriceService
      */
-    public function __construct(private BaseRepository $baseRepository, private CustomerUnitPriceRepository $customerUnitPriceRepository)
+    public function __construct(
+        private BaseRepository $baseRepository,
+        private CustomerUnitPriceRepository $customerUnitPriceRepository,
+        private CustomerUnitPriceService $customerUnitPriceService
+    )
     {
         $this->baseRepository->init(new CustomerUnitPrice());
     }
@@ -27,7 +33,9 @@ class CustomerUnitPriceController extends Controller
      */
     public function getAll(): JsonResponse
     {
-        return JsonOutputFaced::setData($this->baseRepository->getAll())->response();
+        $customerUnitPrices = $this->baseRepository->getAll();
+        $customerUnitPrices = $this->customerUnitPriceService->setPlural($customerUnitPrices);
+        return JsonOutputFaced::setData($customerUnitPrices)->response();
     }
 
     /**
@@ -37,8 +45,8 @@ class CustomerUnitPriceController extends Controller
     public function getFiltered(Request $request): JsonResponse
     {
         $search = $request->get('search');
-
-        return JsonOutputFaced::setData($this->customerUnitPriceRepository->getFiltered($search))->response();
+        $customerUnitPrices = $this->customerUnitPriceRepository->getFiltered($search);
+        return JsonOutputFaced::setData($customerUnitPrices)->response();
     }
 
     /**
@@ -47,7 +55,8 @@ class CustomerUnitPriceController extends Controller
      */
     public function store(StoreRequest $request): JsonResponse
     {
-        return JsonOutputFaced::setData($this->baseRepository->store($request->validated()))->response();
+        $this->baseRepository->store($request->validated());
+        return JsonOutputFaced::response();
     }
 
     /**
@@ -56,6 +65,7 @@ class CustomerUnitPriceController extends Controller
      */
     public function show(CustomerUnitPrice $customerUnitPrice): JsonResponse
     {
+        $customerUnitPrice = $this->customerUnitPriceService->setSingle($customerUnitPrice);
         return JsonOutputFaced::setData($customerUnitPrice)->response();
     }
 
@@ -66,7 +76,8 @@ class CustomerUnitPriceController extends Controller
      */
     public function update(UpdateRequest $request, CustomerUnitPrice $customerUnitPrice): JsonResponse
     {
-        return JsonOutputFaced::setData($this->baseRepository->update($customerUnitPrice, $request->validated()))->response();
+        $this->baseRepository->update($customerUnitPrice, $request->validated());
+        return JsonOutputFaced::response();
     }
 
     /**
@@ -75,6 +86,7 @@ class CustomerUnitPriceController extends Controller
      */
     public function destroy(CustomerUnitPrice $customerUnitPrice): JsonResponse
     {
-        return JsonOutputFaced::setData($customerUnitPrice)->response();
+        $this->baseRepository->destroy($customerUnitPrice);
+        return JsonOutputFaced::response();
     }
 }

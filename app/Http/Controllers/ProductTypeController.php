@@ -8,6 +8,7 @@ use App\Http\Requests\ProductType\UpdateRequest;
 use App\Models\ProductType;
 use App\Repositories\BaseRepository;
 use App\Repositories\ProductTypeRepository;
+use App\Services\ProductTypeService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
@@ -17,7 +18,11 @@ class ProductTypeController extends Controller
      * @param  BaseRepository  $baseRepository
      * @param  ProductTypeRepository  $productTypeRepository
      */
-    public function __construct(private BaseRepository $baseRepository, private ProductTypeRepository $productTypeRepository)
+    public function __construct(
+        private BaseRepository $baseRepository,
+        private ProductTypeRepository $productTypeRepository,
+        private ProductTypeService $productTypeService
+    )
     {
         $this->baseRepository->init(new ProductType());
     }
@@ -27,7 +32,9 @@ class ProductTypeController extends Controller
      */
     public function getAll(): JsonResponse
     {
-        return JsonOutputFaced::setData($this->baseRepository->getAll())->response();
+        $productTypeServices =  $this->baseRepository->getAll();
+        $productTypeServices = $this->productTypeService->setPlural($productTypeServices);
+        return JsonOutputFaced::setData($productTypeServices)->response();
     }
 
     /**
@@ -37,8 +44,8 @@ class ProductTypeController extends Controller
     public function getFiltered(Request $request): JsonResponse
     {
         $search = $request->get('search');
-
-        return JsonOutputFaced::setData($this->productTypeRepository->getFiltered($search))->response();
+        $productTypeServices = $this->productTypeRepository->getFiltered($search);
+        return JsonOutputFaced::setData($productTypeServices)->response();
     }
 
     /**
@@ -47,7 +54,8 @@ class ProductTypeController extends Controller
      */
     public function store(StoreRequest $request): JsonResponse
     {
-        return JsonOutputFaced::setData($this->baseRepository->store($request->validated()))->response();
+        $this->baseRepository->store($request->validated());
+        return JsonOutputFaced::response();
     }
 
     /**
@@ -56,6 +64,7 @@ class ProductTypeController extends Controller
      */
     public function show(ProductType $productType): JsonResponse
     {
+        $productType = $this->productTypeService->setSingle($productType);
         return JsonOutputFaced::setData($productType)->response();
     }
 
@@ -66,7 +75,8 @@ class ProductTypeController extends Controller
      */
     public function update(UpdateRequest $request, ProductType $productType): JsonResponse
     {
-        return JsonOutputFaced::setData($this->baseRepository->update($productType, $request->validated()))->response();
+        $this->baseRepository->update($productType, $request->validated());
+        return JsonOutputFaced::response();
     }
 
     /**
@@ -75,6 +85,7 @@ class ProductTypeController extends Controller
      */
     public function destroy(ProductType $productType): JsonResponse
     {
-        return JsonOutputFaced::setData($this->baseRepository->destroy($productType))->response();
+        $this->baseRepository->destroy($productType);
+        return JsonOutputFaced::response();
     }
 }

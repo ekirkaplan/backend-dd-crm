@@ -2,16 +2,16 @@
 
 namespace App\Repositories;
 
-use App\Interfaces\RegionDirectorInterface;
-use App\Models\RegionDirector;
+use App\Interfaces\CountryInterface;
+use App\Models\Country;
 use Illuminate\Contracts\Pagination\Paginator;
 
-class RegionDirectorRepository implements RegionDirectorInterface
+class CountryRepository implements CountryInterface
 {
     /**
-     * @param RegionDirector $regionDirector
+     * @param Country $country
      */
-    public function __construct(protected RegionDirector $regionDirector)
+    public function __construct(protected Country $country)
     {
     }
 
@@ -22,12 +22,12 @@ class RegionDirectorRepository implements RegionDirectorInterface
      */
     public function getFiltered(?string $search = null, int $perPage = 10): Paginator
     {
-        return $this->regionDirector
+        return $this->country
             ->query()
             ->when($search, function ($query, $search) {
                 $query->orWhere('name', 'ilike', "%{$search}%");
+                $query->orWhere('native_name', 'ilike', "%{$search}%");
             })
-            ->with('city')
             ->paginate($perPage);
     }
 }

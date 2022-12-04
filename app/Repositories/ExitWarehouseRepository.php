@@ -24,6 +24,7 @@ class ExitWarehouseRepository implements ExitWarehouseInterface
                 $query->orWhere('address', 'ilike', "%{$search}%");
                 $query->orWhere('phone', 'ilike', "%{$search}%");
             })
+            ->with('city')
             ->paginate($perPage);
     }
 }

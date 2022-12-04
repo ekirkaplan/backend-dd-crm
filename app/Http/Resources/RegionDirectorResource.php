@@ -9,9 +9,11 @@ class RegionDirectorResource extends JsonResource
     public function toArray($request): array
     {
         return [
-            'city'=> new CityResource($this->city),
+            'id' => $this->id,
+            'city_id' => $this->city->id,
             'name' => $this->name,
-            'description' => $this->description
+            'description' => $this->description,
+            'city'=> new CityResource($this->city)
         ];
     }
 }
