@@ -16,7 +16,8 @@ class CountryResource extends JsonResource
     {
         return [
             'name' => $this->name,
-            'native_name' => $this->native_name
+            'native_name' => $this->native_name,
+            'cities' => CityResource::collection($this->cities)
         ];
     }
 }
