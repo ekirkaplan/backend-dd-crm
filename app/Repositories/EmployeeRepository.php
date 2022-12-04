@@ -15,6 +15,8 @@ class EmployeeRepository implements EmployeeInterface
     {
     }
 
+
+    // TODO: If user has squad than do not show in the list!!!
     /**
      * @param  string|null  $search
      * @param  int  $perPage

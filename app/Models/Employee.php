@@ -29,12 +29,4 @@ class Employee extends Model
     {
         return $this->belongsToMany(Squad::class, 'squad_employees');
     }
-
-    /**
-     * @return BelongsTo
-     */
-    public function companies(): BelongsTo
-    {
-        return $this->belongsTo(Company::class);
-    }
 }
