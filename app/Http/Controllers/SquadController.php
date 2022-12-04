@@ -8,6 +8,7 @@ use App\Http\Requests\Squad\UpdateRequest;
 use App\Models\Squad;
 use App\Repositories\BaseRepository;
 use App\Repositories\SquadRepository;
+use App\Services\SquadService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
@@ -16,8 +17,13 @@ class SquadController extends Controller
     /**
      * @param BaseRepository $baseRepository
      * @param SquadRepository $squadRepository
+     * @param SquadService $squadService
      */
-    public function __construct(private BaseRepository $baseRepository, private SquadRepository $squadRepository)
+    public function __construct(
+        private BaseRepository $baseRepository,
+        private SquadRepository $squadRepository,
+        private SquadService $squadService
+    )
     {
         $model = new Squad();
         $this->baseRepository->init($model);
@@ -28,7 +34,9 @@ class SquadController extends Controller
      */
     public function getAll(): JsonResponse
     {
-        return JsonOutputFaced::setData($this->baseRepository->getAll())->response();
+        $squads = $this->baseRepository->getAll();
+        $squads = $this->squadService->setPlural($squads);
+        return JsonOutputFaced::setData($squads)->response();
     }
 
     /**
@@ -38,7 +46,8 @@ class SquadController extends Controller
     public function getFiltered(Request $request): JsonResponse
     {
         $search = $request->get('search');
-        return JsonOutputFaced::setData($this->squadRepository->getFiltered($search))->response();
+        $squads = $this->squadRepository->getFiltered($search);
+        return JsonOutputFaced::setData($squads)->response();
     }
 
     /**
@@ -61,6 +70,7 @@ class SquadController extends Controller
      */
     public function show(Squad $squad): JsonResponse
     {
+        $squad = $this->squadService->setSingle($squad);
         return JsonOutputFaced::setData($squad)->response();
     }
 
@@ -73,8 +83,8 @@ class SquadController extends Controller
     {
         $employees = $request->get('employees');
         $this->squadRepository->sync($squad, $employees);
-
-        return JsonOutputFaced::setData($this->baseRepository->update($squad, $request->validated()))->response();
+        $this->baseRepository->update($squad, $request->validated());
+        return JsonOutputFaced::response();
     }
 
     /**
@@ -83,6 +93,7 @@ class SquadController extends Controller
      */
     public function destroy(Squad $squad): JsonResponse
     {
-        return JsonOutputFaced::setData($this->baseRepository->destroy($squad))->response();
+        $this->baseRepository->destroy($squad);
+        return JsonOutputFaced::response();
     }
 }

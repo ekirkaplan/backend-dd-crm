@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Facades\JsonOutputFaced;
-use App\Http\Requests\regionDirector\StoreRequest;
-use App\Http\Requests\regionDirector\UpdateRequest;
+use App\Http\Requests\RegionDirector\StoreRequest;
+use App\Http\Requests\RegionDirector\UpdateRequest;
 use App\Models\RegionDirector;
 use App\Repositories\BaseRepository;
 use App\Repositories\RegionDirectorRepository;
@@ -65,6 +65,7 @@ class RegionDirectorController extends Controller
      */
     public function show(RegionDirector $regionDirector): JsonResponse
     {
+        $regionDirector = $this->regionDirectorService->setSingle($regionDirector);
         return JsonOutputFaced::setData($regionDirector)->response();
     }
 
@@ -75,7 +76,8 @@ class RegionDirectorController extends Controller
      */
     public function update(UpdateRequest $request, RegionDirector $regionDirector): JsonResponse
     {
-        return JsonOutputFaced::setData($this->baseRepository->update($regionDirector, $request->validated()))->response();
+        $this->baseRepository->update($regionDirector, $request->validated());
+        return JsonOutputFaced::response();
     }
 
     /**
@@ -84,6 +86,7 @@ class RegionDirectorController extends Controller
      */
     public function destroy(regionDirector $regionDirector): JsonResponse
     {
-        return JsonOutputFaced::setData($this->baseRepository->destroy($regionDirector))->response();
+        $this->baseRepository->destroy($regionDirector);
+        return JsonOutputFaced::response();
     }
 }

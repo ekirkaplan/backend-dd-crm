@@ -8,6 +8,7 @@ use App\Http\Requests\Supplier\UpdateRequest;
 use App\Models\Supplier;
 use App\Repositories\BaseRepository;
 use App\Repositories\SupplierRepository;
+use App\Services\SupplierService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
@@ -17,7 +18,11 @@ class SupplierController extends Controller
      * @param  BaseRepository  $baseRepository
      * @param  SupplierRepository  $supplierRepository
      */
-    public function __construct(private BaseRepository $baseRepository, private SupplierRepository $supplierRepository)
+    public function __construct(
+        private BaseRepository $baseRepository,
+        private SupplierRepository $supplierRepository,
+        private SupplierService $supplierService
+    )
     {
         $this->baseRepository->init(new Supplier());
     }
@@ -27,7 +32,9 @@ class SupplierController extends Controller
      */
     public function getAll(): JsonResponse
     {
-        return JsonOutputFaced::setData($this->baseRepository->getAll())->response();
+        $suppliers = $this->baseRepository->getAll();
+        $suppliers = $this->supplierService->setPlural($suppliers);
+        return JsonOutputFaced::setData($suppliers)->response();
     }
 
     /**
@@ -37,8 +44,8 @@ class SupplierController extends Controller
     public function getFiltered(Request $request): JsonResponse
     {
         $search = $request->get('search');
-
-        return JsonOutputFaced::setData($this->supplierRepository->getFiltered($search))->response();
+        $suppliers = $this->supplierRepository->getFiltered($search);
+        return JsonOutputFaced::setData($suppliers)->response();
     }
 
     /**
@@ -47,7 +54,8 @@ class SupplierController extends Controller
      */
     public function store(StoreRequest $request): JsonResponse
     {
-        return JsonOutputFaced::setData($this->baseRepository->store($request->validated()))->response();
+        $this->baseRepository->store($request->validated());
+        return JsonOutputFaced::response();
     }
 
     /**
@@ -56,6 +64,7 @@ class SupplierController extends Controller
      */
     public function show(Supplier $supplier): JsonResponse
     {
+        $supplier = $this->supplierService->setSingle($supplier);
         return JsonOutputFaced::setData($supplier)->response();
     }
 
@@ -66,7 +75,8 @@ class SupplierController extends Controller
      */
     public function update(UpdateRequest $request, Supplier $supplier)
     {
-        return JsonOutputFaced::setData($this->baseRepository->update($supplier, $request->validated()))->response();
+        $this->baseRepository->update($supplier, $request->validated());
+        return JsonOutputFaced::response();
     }
 
     /**
@@ -75,6 +85,7 @@ class SupplierController extends Controller
      */
     public function destroy(Supplier $supplier): JsonResponse
     {
-        return JsonOutputFaced::setData($this->baseRepository->destroy($supplier))->response();
+        $this->baseRepository->destroy($supplier);
+        return JsonOutputFaced::response();
     }
 }
