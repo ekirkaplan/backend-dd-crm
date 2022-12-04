@@ -15,8 +15,16 @@ class StoreRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'country_id' => ['required', 'int', Rule::exists('countries', 'id')],
+            'country_id' => ['required', 'integer', 'countries:exists,id'],
             'name' => ['required', 'string']
+        ];
+    }
+
+    public function attributes(): array
+    {
+        return [
+            'country_id' => 'Ülke',
+            'name' => 'Şehir İsmi',
         ];
     }
 }

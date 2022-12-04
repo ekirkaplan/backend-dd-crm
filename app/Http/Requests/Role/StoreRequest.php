@@ -25,4 +25,11 @@ class StoreRequest extends FormRequest
         ];
     }
 
+    public function attributes()
+    {
+        return [
+            'name' => 'İsmi',
+            'permissions.*' => 'İzinler'
+        ];
+    }
 }

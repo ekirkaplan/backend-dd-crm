@@ -18,4 +18,10 @@ class StoreRequest extends FormRequest
         ];
     }
 
+    public function attributes()
+    {
+        return [
+            'name' => ['required']
+        ];
+    }
 }

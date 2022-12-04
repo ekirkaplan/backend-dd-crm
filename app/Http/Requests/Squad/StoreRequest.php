@@ -20,9 +20,16 @@ class StoreRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'foreman_id' => ['required', 'exists:employees,id'],
             'name' => ['required', 'unique:squads.name'],
             'employees' => ['nullable', 'array']
+        ];
+    }
+
+    public function attributes()
+    {
+        return [
+            'name' => 'Ekip Adı',
+            'employees' => 'İşçiler'
         ];
     }
 }

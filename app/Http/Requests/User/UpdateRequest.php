@@ -29,8 +29,19 @@ class UpdateRequest extends FormRequest
             'last_name' => ['required'],
             'email' => ['required', 'email', 'unique:users,email'],
             'role_id' => ['nullable'],
-            'password' => ['nullable', 'confirmed', Password::min(8)->letters()->numbers()]
+            'password' => ['required', 'confirmed', Password::min(8)]
         ];
     }
 
+    public function attributes()
+    {
+        return [
+            'first_name' => 'Adı',
+            'last_name' => 'Soyismi',
+            'email' => 'E-Posta',
+            'role_id' => 'Rol',
+            'password' => 'Şifre',
+            'password_confirmation' => 'Şifre Onay'
+        ];
+    }
 }

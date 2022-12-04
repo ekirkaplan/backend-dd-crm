@@ -15,9 +15,18 @@ class StoreRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'region_directore_id' => ['required', 'int', Rule::exists('region_directores', 'id')],
+            'region_director_id' => ['required', 'integer', 'region_directors:exists,id'],
             'name' => ['required', 'string'],
             'description' => ['nullable', 'string']
+        ];
+    }
+
+    public function attributes(): array
+    {
+        return [
+            'region_director_id' => 'Bölğesel Müdürlük',
+            'name' => 'Bölğe Müdürlük İsmi',
+            'description' => 'Açıklama',
         ];
     }
 }

@@ -17,4 +17,11 @@ class UpdateRequest extends FormRequest
             'name' => ['required', 'string']
         ];
     }
+
+    public function attributes()
+    {
+        return [
+            'name' => 'Adı'
+        ];
+    }
 }

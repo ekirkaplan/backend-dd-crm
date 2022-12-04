@@ -18,4 +18,12 @@ class StoreRequest extends FormRequest
             'native_name' => ['string', 'required'],
         ];
     }
+
+    public function attributes()
+    {
+        return [
+            'name' => 'Adı',
+            'native_name' => 'Yöresel Adı'
+        ];
+    }
 }

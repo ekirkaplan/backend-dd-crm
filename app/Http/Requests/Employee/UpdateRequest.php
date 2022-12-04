@@ -16,12 +16,25 @@ class UpdateRequest extends FormRequest
     {
         return [
             'type' => ['required', 'numeric'],
-            'company_id' => ['required', Rule::exists('companies', 'id')],
+            'company_id' => ['required', 'companies:exists,id'],
             'first_name' => ['required', 'string'],
             'last_name' => ['required', 'string'],
             'phone' => ['required', 'string'],
             'address' => ['nullable', 'string'],
-            'description' => ['nullable', 'string'],
+            'description' => ['nullable', 'string']
+        ];
+    }
+
+    public function attributes()
+    {
+        return [
+            'type' => 'Tipi',
+            'company_id' => 'Firma',
+            'first_name' => 'Adı',
+            'last_name' => 'Soyadı',
+            'phone' => 'Telefonu',
+            'address' => 'Adres',
+            'description' => 'Açıklama'
         ];
     }
 }

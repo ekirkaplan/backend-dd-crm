@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests\regionDirector;
+namespace App\Http\Requests\RegionDirector;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
@@ -15,9 +15,18 @@ class UpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'city_id' => ['required', 'int', Rule::exists('cities', 'id')],
+            'city_id' => ['required', 'integer', 'cities:exists,id'],
             'name' => ['required', 'string'],
             'description' => ['nullable', 'string']
+        ];
+    }
+
+    public function attributes()
+    {
+        return [
+            'city_id' => 'Şehir',
+            'name' => 'Bölğesel Müdürlük İsmi',
+            'description' => 'Açıklama'
         ];
     }
 }

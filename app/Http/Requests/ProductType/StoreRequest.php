@@ -17,4 +17,11 @@ class StoreRequest extends FormRequest
             'name' => ['required', 'string']
         ];
     }
+
+    public function attributes()
+    {
+        return [
+            'name' => 'Adı'
+        ];
+    }
 }

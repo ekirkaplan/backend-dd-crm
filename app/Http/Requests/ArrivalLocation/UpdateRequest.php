@@ -15,11 +15,22 @@ class UpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'city_id' => ['required', 'integer', Rule::exists('cities', 'id')],
-            'transport_unit_price' => ['required', 'int'],
+            'city_id' => ['required', 'integer', 'cities:exists,id'],
+            'transport_unit_price' => ['required', 'integer'],
             'name' => ['required', 'string'],
             'address' => ['required', 'string'],
             'description' => ['nullable', 'string'],
+        ];
+    }
+
+    public function attributes(): array
+    {
+        return [
+            'city_id' => 'Şehir',
+            'transport_unit_price' => 'Transfer Birim Fiyatı',
+            'name' => 'Varış Lokasyon İsmi',
+            'address' => 'Adres',
+            'description' => 'Açıklama',
         ];
     }
 }
