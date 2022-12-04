@@ -15,7 +15,6 @@ class StoreRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'type' => ['required', 'numeric'],
             'company_id' => ['required', 'exists:companies,id'],
             'first_name' => ['required', 'string'],
             'last_name' => ['required', 'string'],
@@ -28,7 +27,6 @@ class StoreRequest extends FormRequest
     public function attributes()
     {
         return [
-            'type' => 'Tipi',
             'company_id' => 'Firma',
             'first_name' => 'Adı',
             'last_name' => 'Soyadı',
