@@ -21,12 +21,4 @@ class City extends Model
      * @var bool
      */
     public $timestamps = false;
-
-    /**
-     * @return BelongsTo
-     */
-    public function country(): BelongsTo
-    {
-        return $this->belongsTo(Country::class);
-    }
 }

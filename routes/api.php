@@ -16,8 +16,11 @@ use App\Http\Controllers\CustomerUnitPriceController;
 use App\Http\Controllers\ExitWarehouseController;
 use App\Http\Controllers\RegionDirectorController;
 use App\Http\Controllers\ChiefDirectorController;
-use App\Http\Controllers\CountryController;
 use App\Http\Controllers\CityController;
+use App\Http\Controllers\VehicleController;
+use App\Http\Controllers\DriverController;
+use App\Http\Controllers\TaxOfficeController;
+use App\Http\Controllers\ContractController;
 
 
 /*
@@ -72,7 +75,8 @@ Route::middleware(['jwt.verify'])->group(function () {
     Route::controller(EmployeeController::class)->prefix('employees')->group(function () {
         Route::get('get-all', 'getAll');
         Route::get('get-filtered', 'getFiltered');
-        Route::get('out-of-squad', 'outOfSquad');
+        Route::get('out-of-squad-employee', 'outOfSquadEmployee');
+        Route::get('out-of-squad-foreman', 'outOfSquadForeman');
     });
     Route::apiResource('employees', EmployeeController::class);
 
@@ -121,19 +125,37 @@ Route::middleware(['jwt.verify'])->group(function () {
     Route::controller(ChiefDirectorController::class)->prefix('chief-directors')->group(function () {
         Route::get('get-all', 'getAll');
         Route::get('get-filtered', 'getFiltered');
+        Route::get('get-region-of-chiefs/{regionDirector}', 'getRegionOfChiefs');
     });
     Route::apiResource('chief-directors', ChiefDirectorController::class);
-
-    Route::controller(CountryController::class)->prefix('countries')->group(function () {
-        Route::get('get-all', 'getAll');
-        Route::get('get-filtered', 'getFiltered');
-    });
-    Route::apiResource('countries', CountryController::class);
 
     Route::controller(CityController::class)->prefix('cities')->group(function () {
         Route::get('get-all', 'getAll');
         Route::get('get-filtered', 'getFiltered');
-        Route::get('get-country-for-cities/{country}', 'getCountryForCities');
     });
     Route::apiResource('cities', CityController::class);
+
+    Route::controller(VehicleController::class)->prefix('vehicles')->group(function () {
+        Route::get('get-all', 'getAll');
+        Route::get('get-filtered', 'getFiltered');
+    });
+    Route::apiResource('vehicles', VehicleController::class);
+
+    Route::controller(DriverController::class)->prefix('drivers')->group(function () {
+        Route::get('get-all', 'getAll');
+        Route::get('get-filtered', 'getFiltered');
+    });
+    Route::apiResource('drivers', DriverController::class);
+
+    Route::controller(TaxOfficeController::class)->prefix('tax-offices')->group(function () {
+        Route::get('get-all', 'getAll');
+        Route::get('get-filtered', 'getFiltered');
+    });
+    Route::apiResource('tax-offices', TaxOfficeController::class);
+
+    Route::controller(ContractController::class)->prefix('contracts')->group(function () {
+        Route::get('get-all', 'getAll');
+        Route::get('get-filtered', 'getFiltered');
+    });
+    Route::apiResource('contracts', ContractController::class);
 });

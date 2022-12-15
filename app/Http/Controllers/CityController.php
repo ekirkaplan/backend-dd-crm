@@ -6,6 +6,7 @@ use App\Facades\JsonOutputFaced;
 use App\Http\Requests\City\StoreRequest;
 use App\Http\Requests\City\UpdateRequest;
 use App\Models\City;
+use App\Models\Country;
 use App\Repositories\BaseRepository;
 use App\Repositories\CityRepository;
 use App\Services\CityService;
@@ -15,16 +16,15 @@ use Illuminate\Http\Request;
 class CityController extends Controller
 {
     /**
-     * @param BaseRepository $baseRepository
-     * @param CityRepository $cityRepository
-     * @param CityService $cityService
+     * @param  BaseRepository  $baseRepository
+     * @param  CityRepository  $cityRepository
+     * @param  CityService  $cityService
      */
     public function __construct(
         private BaseRepository $baseRepository,
         private CityRepository $cityRepository,
         private CityService $cityService
-    )
-    {
+    ) {
         $this->baseRepository->init(new City());
     }
 
@@ -35,6 +35,7 @@ class CityController extends Controller
     {
         $cities = $this->baseRepository->getAll();
         $cities = $this->cityService->setPlural($cities);
+
         return JsonOutputFaced::setData($cities)->response();
     }
 
@@ -46,6 +47,7 @@ class CityController extends Controller
     {
         $search = $request->get('search');
         $cities = $this->cityRepository->getFiltered($search);
+
         return JsonOutputFaced::setData($cities)->response();
     }
 
@@ -56,6 +58,7 @@ class CityController extends Controller
     public function store(StoreRequest $request): JsonResponse
     {
         $this->baseRepository->store($request->validated());
+
         return JsonOutputFaced::setMessage('Şehir Eklendi')->response();
     }
 
@@ -66,6 +69,7 @@ class CityController extends Controller
     public function show(City $city): JsonResponse
     {
         $city = $this->cityService->setSingle($city);
+
         return JsonOutputFaced::setData($city)->response();
     }
 
@@ -77,6 +81,7 @@ class CityController extends Controller
     public function update(UpdateRequest $request, City $city): JsonResponse
     {
         $this->baseRepository->update($city, $request->validated());
+
         return JsonOutputFaced::setMessage('Şehir Güncellendi')->response();
     }
 
@@ -87,6 +92,7 @@ class CityController extends Controller
     public function destroy(City $city): JsonResponse
     {
         $this->baseRepository->destroy($city);
+
         return JsonOutputFaced::setMessage('Şehir Silindi')->response();
     }
 }

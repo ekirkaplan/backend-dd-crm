@@ -2,16 +2,16 @@
 
 namespace App\Repositories;
 
-use App\Interfaces\CountryInterface;
-use App\Models\Country;
+use App\Interfaces\TaxOfficeInterface;
+use App\Models\TaxOffice;
 use Illuminate\Contracts\Pagination\Paginator;
 
-class CountryRepository implements CountryInterface
+class TaxOfficeRepository implements TaxOfficeInterface
 {
     /**
-     * @param Country $country
+     * @param TaxOffice $taxOffice
      */
-    public function __construct(protected Country $country)
+    public function __construct(protected TaxOffice $taxOffice)
     {
     }
 
@@ -22,11 +22,10 @@ class CountryRepository implements CountryInterface
      */
     public function getFiltered(?string $search = null, int $perPage = 10): Paginator
     {
-        return $this->country
+        return $this->taxOffice
             ->query()
             ->when($search, function ($query, $search) {
                 $query->orWhere('name', 'ilike', "%{$search}%");
-                $query->orWhere('native_name', 'ilike', "%{$search}%");
             })
             ->paginate($perPage);
     }

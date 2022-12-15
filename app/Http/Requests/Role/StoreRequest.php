@@ -21,15 +21,20 @@ class StoreRequest extends FormRequest
     {
         return [
             'name' => ['required'],
-            'permissions.*' => ['nullable']
+            'permissions.*' => ['nullable'],
         ];
     }
 
-    public function attributes()
+    /**
+     * Get custom attributes for validator errors.
+     *
+     * @return array
+     */
+    public function attributes(): array
     {
         return [
             'name' => 'İsmi',
-            'permissions.*' => 'İzinler'
+            'permissions' => 'İzinler',
         ];
     }
 }

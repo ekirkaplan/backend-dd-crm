@@ -19,9 +19,17 @@ class EmployeeRepository implements EmployeeInterface
     /**
      * @return Collection
      */
-    public function outOfSquad(): Collection
+    public function outOfSquadEmployee(): Collection
     {
-        return $this->employee->whereDoesntHave('squads')->get();
+            return $this->employee->whereDoesntHave('squads')->where('type', 0)->get();
+    }
+
+    /**
+     * @return Collection
+     */
+    public function outOfSquadForeman(): Collection
+    {
+        return $this->employee->where('type', 1)->whereDoesntHave('squadOfForeman')->get();
     }
 
     /**

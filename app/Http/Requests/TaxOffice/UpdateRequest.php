@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests\Country;
+namespace App\Http\Requests\TaxOffice;
 
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -10,20 +10,16 @@ class UpdateRequest extends FormRequest
     {
         return true;
     }
-
     public function rules(): array
     {
         return [
-            'name' => ['string', 'required'],
-            'native_name' => ['string', 'required'],
+            'name' => 'string|required'
         ];
     }
-
     public function attributes()
     {
         return [
-            'name' => 'Adı',
-            'native_name' => 'Yöresel Adı'
+            'name' => "Vergi Dairesinin Adı"
         ];
     }
 }

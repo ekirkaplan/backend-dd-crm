@@ -15,7 +15,6 @@ class UpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'country_id' => ['required', 'integer'],
             'name' => ['required', 'string']
         ];
     }
@@ -23,7 +22,6 @@ class UpdateRequest extends FormRequest
     public function attributes(): array
     {
         return [
-            'country_id' => 'Ülke',
             'name' => 'Şehir İsmi',
         ];
     }

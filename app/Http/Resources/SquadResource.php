@@ -10,7 +10,9 @@ class SquadResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'name' => $this->name
+            'foreman' => new EmployeeResource($this->foreman),
+            'foreman_id' => $this->foreman_id,
+            'employees' => EmployeeResource::collection($this->employees)
         ];
     }
 }

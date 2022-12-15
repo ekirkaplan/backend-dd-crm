@@ -19,6 +19,7 @@ class StoreRequest extends FormRequest
             'last_name' => ['required', 'string'],
             'phone' => ['required', 'string'],
             'address' => ['nullable', 'string'],
+            'type' => ['required', 'integer'],
             'description' => ['nullable', 'string']
         ];
     }

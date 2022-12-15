@@ -7,15 +7,11 @@ use Illuminate\Support\Facades\Schema;
 return new class extends Migration {
     public function up()
     {
-        Schema::create('countries', function (Blueprint $table) {
-            $table->id();
-            $table->string('name');
-            $table->string('native_name');
-        });
+        \DB::unprepared( file_get_contents( "database/seeders/tax_offices.sql" ) );
     }
 
     public function down()
     {
-        Schema::dropIfExists('countries');
+        Schema::dropIfExists('tax_offices');
     }
 };

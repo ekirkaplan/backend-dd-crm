@@ -41,9 +41,19 @@ class EmployeeController extends Controller
     /**
      * @return JsonResponse
      */
-    public function outOfSquad(): JsonResponse
+    public function outOfSquadEmployee(): JsonResponse
     {
-        $employees = $this->employeeRepository->outOfSquad();
+        $employees = $this->employeeRepository->outOfSquadEmployee();
+        $employees = $this->employeeService->setPlural($employees);
+        return JsonOutputFaced::setData($employees)->response();
+    }
+
+    /**
+     * @return JsonResponse
+     */
+    public function outOfSquadForeman(): JsonResponse
+    {
+        $employees = $this->employeeRepository->outOfSquadForeman();
         $employees = $this->employeeService->setPlural($employees);
         return JsonOutputFaced::setData($employees)->response();
     }

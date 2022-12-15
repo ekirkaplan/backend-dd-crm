@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Traits\HasActivity;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -27,5 +28,10 @@ class Squad extends Model
     public function employees(): BelongsToMany
     {
         return $this->belongsToMany(Employee::class, 'squad_employees');
+    }
+
+    public function foreman(): BelongsTo
+    {
+        return $this->belongsTo(Employee::class, 'foreman_id');
     }
 }

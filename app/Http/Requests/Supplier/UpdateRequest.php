@@ -20,8 +20,8 @@ class UpdateRequest extends FormRequest
             'address' => ['nullable', 'string'],
             'phone' => ['nullable', 'string'],
             'email' => ['nullable', 'string'],
-            'tax_no' => ['required', 'string'],
-            'tax_office' => ['required', 'string'],
+            'tax_no' => ['required', 'integer'],
+            'tax_office_id' => ['required', 'integer', 'exists:tax_offices,id'],
             'description' => ['nullable', 'string'],
         ];
     }
@@ -35,7 +35,7 @@ class UpdateRequest extends FormRequest
             'phone' => 'Telefonu',
             'email' => 'E-Posta',
             'tax_no' => 'Vergi Numarası',
-            'tax_office' => 'Vergi Dairesi',
+            'tax_office_id' => 'Vergi Dairesi',
             'description' => 'Açıklama'
         ];
     }

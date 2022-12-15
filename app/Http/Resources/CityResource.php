@@ -6,13 +6,15 @@ use Illuminate\Http\Resources\Json\JsonResource;
 
 class CityResource extends JsonResource
 {
+    /**
+     * @param $request
+     * @return array
+     */
     public function toArray($request): array
     {
         return [
             'id' => $this->id,
-            'country_id' => $this->country->id,
-            'country' => $this->country->name,
-            'name' => $this->name,
+            'name' => $this->name
         ];
     }
 }

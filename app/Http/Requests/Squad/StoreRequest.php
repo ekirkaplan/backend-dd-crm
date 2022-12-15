@@ -20,7 +20,7 @@ class StoreRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => ['required', 'unique:squads.name'],
+            'foreman_id' => ['required', 'exists:employees,id'],
             'employees' => ['nullable', 'array']
         ];
     }
@@ -28,7 +28,7 @@ class StoreRequest extends FormRequest
     public function attributes()
     {
         return [
-            'name' => 'Ekip Adı',
+            'foreman_id' => 'Usta Başı',
             'employees' => 'İşçiler'
         ];
     }

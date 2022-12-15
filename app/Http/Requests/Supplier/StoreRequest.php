@@ -14,14 +14,15 @@ class StoreRequest extends FormRequest
 
     public function rules(): array
     {
+
         return [
             'city_id' => ['required', 'integer', 'exists:cities,id'],
             'title' => ['required', 'string'],
             'address' => ['nullable', 'string'],
             'phone' => ['nullable', 'string'],
             'email' => ['nullable', 'string'],
-            'tax_no' => ['required', 'string'],
-            'tax_office' => ['required', 'string'],
+            'tax_no' => ['required', 'integer'],
+            'tax_office_id' => ['required', 'integer', 'exists:tax_offices,id'],
             'description' => ['nullable', 'string'],
         ];
     }

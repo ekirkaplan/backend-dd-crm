@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\Facades\JsonOutputFaced;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\LoginRequest;
+use App\Models\TaxOffice;
 use App\Services\AuthenticationService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
@@ -22,7 +23,6 @@ class LoginController extends Controller
     )
     {
     }
-
 
     /**
      * @param LoginRequest $request

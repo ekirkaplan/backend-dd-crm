@@ -6,6 +6,7 @@ use App\Interfaces\BaseInterface;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 
+
 class BaseRepository implements BaseInterface
 {
     /**

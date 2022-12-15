@@ -10,12 +10,12 @@ return new class extends Migration {
         Schema::create('suppliers', function (Blueprint $table) {
             $table->id();
             $table->foreignId('city_id')->references('id')->on('cities');
+            $table->foreignId('tax_office_id')->nullable()->references('id')->on('tax_offices');
             $table->string('title');
             $table->text('address')->nullable();
             $table->string('phone')->nullable();
             $table->string('email')->nullable();
             $table->string('tax_no');
-            $table->string('tax_office');
             $table->text('description')->nullable();
             $table->timestamps();
             $table->softDeletes();

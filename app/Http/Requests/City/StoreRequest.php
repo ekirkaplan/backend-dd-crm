@@ -15,7 +15,6 @@ class StoreRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'country_id' => ['required', 'integer'],
             'name' => ['required', 'string']
         ];
     }
@@ -23,8 +22,7 @@ class StoreRequest extends FormRequest
     public function attributes(): array
     {
         return [
-            'country_id' => 'Ülke',
-            'name' => 'Şehir İsmi',
+            'name' => 'Şehir İsmi'
         ];
     }
 }

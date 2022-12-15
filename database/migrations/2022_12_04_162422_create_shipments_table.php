@@ -13,7 +13,7 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('shipments', function (Blueprint $table) {
+        Schema::create('shipments'  , function (Blueprint $table) {
             $table->id();
             $table->foreignId('vehicle_id')->references('id')->on('vehicles');
             $table->foreignId('driver_id')->references('id')->on('drivers');

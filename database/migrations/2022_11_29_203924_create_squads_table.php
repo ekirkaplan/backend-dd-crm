@@ -9,7 +9,7 @@ return new class extends Migration {
     {
         Schema::create('squads', function (Blueprint $table) {
             $table->id();
-            $table->string('name')->unique();
+            $table->foreignId('foreman_id')->references('id')->on('employees');
             $table->timestamps();
             $table->softDeletes();
         });

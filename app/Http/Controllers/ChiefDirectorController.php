@@ -6,6 +6,7 @@ use App\Facades\JsonOutputFaced;
 use App\Http\Requests\ChiefDirector\StoreRequest;
 use App\Http\Requests\ChiefDirector\UpdateRequest;
 use App\Models\ChiefDirector;
+use App\Models\RegionDirector;
 use App\Repositories\BaseRepository;
 use App\Repositories\ChiefDirectorRepository;
 use App\Services\ChiefDirectorService;
@@ -15,16 +16,15 @@ use Illuminate\Http\Request;
 class ChiefDirectorController extends Controller
 {
     /**
-     * @param BaseRepository $baseRepository
-     * @param ChiefDirectorRepository $chiefDirectorRepository
-     * @param ChiefDirectorService $chiefDirectorService
+     * @param  BaseRepository  $baseRepository
+     * @param  ChiefDirectorRepository  $chiefDirectorRepository
+     * @param  ChiefDirectorService  $chiefDirectorService
      */
     public function __construct(
         private BaseRepository $baseRepository,
         private ChiefDirectorRepository $chiefDirectorRepository,
         private ChiefDirectorService $chiefDirectorService
-    )
-    {
+    ) {
         $this->baseRepository->init(new ChiefDirector());
     }
 
@@ -35,6 +35,7 @@ class ChiefDirectorController extends Controller
     {
         $chiefDirectors = $this->baseRepository->getAll();
         $chiefDirectors = $this->chiefDirectorService->setPlural($chiefDirectors);
+
         return JsonOutputFaced::setData($chiefDirectors)->response();
     }
 
@@ -46,6 +47,18 @@ class ChiefDirectorController extends Controller
     {
         $search = $request->get('search');
         $chiefDirectors = $this->chiefDirectorRepository->getFiltered($search);
+
+        return JsonOutputFaced::setData($chiefDirectors)->response();
+    }
+
+    /**
+     * @param  RegionDirector  $regionDirector
+     * @return JsonResponse
+     */
+    public function getRegionOfChiefs(RegionDirector $regionDirector): JsonResponse
+    {
+        $chiefDirectors = $this->chiefDirectorRepository->getRegionOfChiefs($regionDirector);
+
         return JsonOutputFaced::setData($chiefDirectors)->response();
     }
 
@@ -56,6 +69,7 @@ class ChiefDirectorController extends Controller
     public function store(StoreRequest $request): JsonResponse
     {
         $this->baseRepository->store($request->validated());
+
         return JsonOutputFaced::setMessage('İşletme Müdürlüğü Eklendi')->response();
     }
 
@@ -66,6 +80,7 @@ class ChiefDirectorController extends Controller
     public function show(ChiefDirector $chiefDirector): JsonResponse
     {
         $chiefDirector = $this->chiefDirectorService->setSingle($chiefDirector);
+
         return JsonOutputFaced::setData($chiefDirector)->response();
     }
 
@@ -77,6 +92,7 @@ class ChiefDirectorController extends Controller
     public function update(UpdateRequest $request, ChiefDirector $chiefDirector): JsonResponse
     {
         $this->baseRepository->update($chiefDirector, $request->validated());
+
         return JsonOutputFaced::setMessage('İşletme Müdürlüğü Güncellendi')->response();
     }
 
@@ -87,6 +103,7 @@ class ChiefDirectorController extends Controller
     public function destroy(ChiefDirector $chiefDirector): JsonResponse
     {
         $this->baseRepository->destroy($chiefDirector);
+
         return JsonOutputFaced::setMessage('İşletme Müdürlüğü Silidi')->response();
     }
 }

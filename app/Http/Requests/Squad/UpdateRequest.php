@@ -17,7 +17,6 @@ class UpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => ['required', 'unique:squads.name'],
             'employees' => ['nullable', 'array']
         ];
     }
@@ -25,7 +24,6 @@ class UpdateRequest extends FormRequest
     public function attributes()
     {
         return [
-            'name' => 'Ekip Adı',
             'employees' => 'İşçiler'
         ];
     }

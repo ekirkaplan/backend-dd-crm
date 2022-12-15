@@ -27,7 +27,7 @@ class SquadRepository implements SquadInterface
             ->when($search, function ($query, $search) {
                 $query->orWhere('name', 'ilike', "%{$search}%");
             })
-            ->with('employees')
+            ->with(['employees', 'foreman'])
             ->paginate($perPage);
     }
 

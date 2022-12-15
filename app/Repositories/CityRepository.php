@@ -4,12 +4,13 @@ namespace App\Repositories;
 
 use App\Interfaces\CityInterface;
 use App\Models\City;
+use App\Models\Country;
 use Illuminate\Contracts\Pagination\Paginator;
 
 class CityRepository implements CityInterface
 {
     /**
-     * @param City $city
+     * @param  City  $city
      */
     public function __construct(protected City $city)
     {
