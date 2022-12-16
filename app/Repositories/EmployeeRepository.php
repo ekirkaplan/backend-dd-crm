@@ -46,7 +46,7 @@ class EmployeeRepository implements EmployeeInterface
                 $query->orWhere('last_name', 'ilike', "%{$search}%");
                 $query->orWhere('phone', 'ilike', "%{$search}%");
             })
-            ->with('squads', 'companies')
+            ->with(['company'])
             ->paginate($perPage);
     }
 

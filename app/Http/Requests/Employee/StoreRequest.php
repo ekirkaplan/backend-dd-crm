@@ -15,6 +15,7 @@ class StoreRequest extends FormRequest
     public function rules(): array
     {
         return [
+            'company_id' => ['required', 'integer', 'exists:companies,id'],
             'first_name' => ['required', 'string'],
             'last_name' => ['required', 'string'],
             'phone' => ['required', 'string'],
@@ -24,9 +25,10 @@ class StoreRequest extends FormRequest
         ];
     }
 
-    public function attributes()
+    public function attributes(): array
     {
         return [
+            'company_id' => 'Şirket',
             'first_name' => 'Adı',
             'last_name' => 'Soyadı',
             'phone' => 'Telefonu',

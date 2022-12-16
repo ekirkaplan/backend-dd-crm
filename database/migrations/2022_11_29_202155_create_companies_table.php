@@ -9,6 +9,7 @@ return new class extends Migration {
     {
         Schema::create('companies', function (Blueprint $table) {
             $table->id();
+            $table->boolean('default')->nullable()->default(0);
             $table->string('name');
             $table->timestamps();
             $table->softDeletes();

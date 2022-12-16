@@ -32,8 +32,19 @@ class Employee extends Model
         return $this->belongsToMany(Squad::class, 'squad_employees');
     }
 
+    /**
+     * @return HasOne
+     */
     public function squadOfForeman(): HasOne
     {
         return $this->hasOne(Squad::class, 'foreman_id');
+    }
+
+    /**
+     * @return BelongsTo
+     */
+    public function company(): BelongsTo
+    {
+        return $this->belongsTo(Company::class);
     }
 }
