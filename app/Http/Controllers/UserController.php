@@ -74,7 +74,7 @@ class UserController extends Controller
     public function store(StoreRequest $request): JsonResponse
     {
 //        PermissionFaced::permission('user.edit');
-        $data = $request->validated(['email', 'role_id', 'first_name', 'last_name']);
+        $data = $request->only(['email', 'role_id', 'first_name', 'last_name']);
         $data['password'] = Hash::make($request->get('password'));
         $this->baseRepository->store($data);
         return JsonOutputFaced::setMessage('Kullanıcı Eklendi')->response();
@@ -88,7 +88,7 @@ class UserController extends Controller
     public function update(UpdateRequest $request, User $user): JsonResponse
     {
 //        PermissionFaced::permission('user.edit');
-        $data = $request->validated(['email', 'role_id', 'first_name', 'last_name']);
+        $data = $request->only(['email', 'role_id', 'first_name', 'last_name']);
         if ($request->has('password')){
             $data['password'] = Hash::make($request->get('password'));
         }
