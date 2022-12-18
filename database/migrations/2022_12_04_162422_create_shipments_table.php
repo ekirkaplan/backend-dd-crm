@@ -15,10 +15,14 @@ return new class extends Migration
     {
         Schema::create('shipments'  , function (Blueprint $table) {
             $table->id();
-            $table->foreignId('vehicle_id')->references('id')->on('vehicles');
-            $table->foreignId('driver_id')->references('id')->on('drivers');
+            $table->string('driver_name');
+            $table->string('driver_phone');
+            $table->string('vehicle_plate');
+            $table->string('vehicle_brand');
+            $table->unsignedTinyInteger('vehicle_type');
             $table->text('description')->nullable();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

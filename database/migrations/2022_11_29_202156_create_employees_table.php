@@ -13,6 +13,8 @@ return new class extends Migration {
             $table->boolean('type')->default(0)->nullable();
             $table->string('first_name');
             $table->string('last_name');
+            $table->date('start_date')->nullable();
+            $table->date('end_date')->nullable();
             $table->string('phone');
             $table->string('address')->nullable();
             $table->text('description')->nullable();

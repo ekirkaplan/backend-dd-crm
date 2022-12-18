@@ -20,6 +20,7 @@ use App\Http\Controllers\CityController;
 use App\Http\Controllers\VehicleController;
 use App\Http\Controllers\DriverController;
 use App\Http\Controllers\TaxOfficeController;
+use App\Http\Controllers\ShipmentController;
 use App\Http\Controllers\ContractController;
 
 
@@ -135,17 +136,17 @@ Route::middleware(['jwt.verify'])->group(function () {
     });
     Route::apiResource('cities', CityController::class);
 
-    Route::controller(VehicleController::class)->prefix('vehicles')->group(function () {
-        Route::get('get-all', 'getAll');
-        Route::get('get-filtered', 'getFiltered');
-    });
-    Route::apiResource('vehicles', VehicleController::class);
-
-    Route::controller(DriverController::class)->prefix('drivers')->group(function () {
-        Route::get('get-all', 'getAll');
-        Route::get('get-filtered', 'getFiltered');
-    });
-    Route::apiResource('drivers', DriverController::class);
+//    Route::controller(VehicleController::class)->prefix('vehicles')->group(function () {
+//        Route::get('get-all', 'getAll');
+//        Route::get('get-filtered', 'getFiltered');
+//    });
+//    Route::apiResource('vehicles', VehicleController::class);
+//
+//    Route::controller(DriverController::class)->prefix('drivers')->group(function () {
+//        Route::get('get-all', 'getAll');
+//        Route::get('get-filtered', 'getFiltered');
+//    });
+//    Route::apiResource('drivers', DriverController::class);
 
     Route::controller(TaxOfficeController::class)->prefix('tax-offices')->group(function () {
         Route::get('get-all', 'getAll');
@@ -158,4 +159,12 @@ Route::middleware(['jwt.verify'])->group(function () {
         Route::get('get-filtered', 'getFiltered');
     });
     Route::apiResource('contracts', ContractController::class);
+
+    Route::controller(ShipmentController::class)->prefix('shipments')->group(function () {
+        Route::get('get-all', 'getAll');
+        Route::get('get-filtered', 'getFiltered');
+    });
+    Route::apiResource('shipments', ShipmentController::class);
+
+
 });

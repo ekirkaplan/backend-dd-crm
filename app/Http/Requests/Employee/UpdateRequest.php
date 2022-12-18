@@ -18,6 +18,8 @@ class UpdateRequest extends FormRequest
             'company_id' => ['required', 'integer', 'exists:companies,id'],
             'first_name' => ['required', 'string'],
             'last_name' => ['required', 'string'],
+            'start_date' => ['required', 'date'],
+            'end_date' => ['nullable', 'date'],
             'phone' => ['required', 'string'],
             'address' => ['nullable', 'string'],
             'description' => ['nullable', 'string']
@@ -30,6 +32,8 @@ class UpdateRequest extends FormRequest
             'company_id' => 'Şirket',
             'first_name' => 'Adı',
             'last_name' => 'Soyadı',
+            'start_date' => "Başlangıç Tarihi",
+            'end_date' => "Çıkış Tarihi",
             'phone' => 'Telefonu',
             'address' => 'Adres',
             'description' => 'Açıklama'
