@@ -17,11 +17,11 @@ use App\Http\Controllers\ExitWarehouseController;
 use App\Http\Controllers\RegionDirectorController;
 use App\Http\Controllers\ChiefDirectorController;
 use App\Http\Controllers\CityController;
-use App\Http\Controllers\VehicleController;
-use App\Http\Controllers\DriverController;
 use App\Http\Controllers\TaxOfficeController;
 use App\Http\Controllers\ShipmentController;
 use App\Http\Controllers\ContractController;
+use App\Http\Controllers\ChiefdomController;
+use App\Http\Controllers\SquadUnitPriceController;
 
 
 /*
@@ -166,5 +166,17 @@ Route::middleware(['jwt.verify'])->group(function () {
     });
     Route::apiResource('shipments', ShipmentController::class);
 
+    Route::controller(ChiefdomController::class)->prefix('chiefdoms')->group(function () {
+        Route::get('get-all', 'getAll');
+        Route::get('get-filtered', 'getFiltered');
+    });
+    Route::apiResource('chiefdoms', ChiefdomController::class);
+
+
+    Route::controller(SquadUnitPriceController::class)->prefix('squad-unit-prices')->group(function () {
+        Route::get('get-all', 'getAll');
+        Route::get('get-filtered', 'getFiltered');
+    });
+    Route::apiResource('squad-unit-prices', SquadUnitPriceController::class);
 
 });

@@ -1,132 +1,602 @@
-<!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
+<script> Sfdump = window.Sfdump || (function (doc) {
+        var refStyle = doc.createElement('style'), rxEsc = /([.*+?^${}()|\[\]\/\\])/g, idRx = /\bsf-dump-\d+-ref[012]\w+\b/,
+            keyHint = 0 <= navigator.platform.toUpperCase().indexOf('MAC') ? 'Cmd' : 'Ctrl', addEventListener = function (e, n, cb) {
+                e.addEventListener(n, cb, false);
+            };
+        refStyle.innerHTML = 'pre.sf-dump .sf-dump-compact, .sf-dump-str-collapse .sf-dump-str-collapse, .sf-dump-str-expand .sf-dump-str-expand { display: none; }';
+        (doc.documentElement.firstElementChild || doc.documentElement.children[0]).appendChild(refStyle);
+        refStyle = doc.createElement('style');
+        (doc.documentElement.firstElementChild || doc.documentElement.children[0]).appendChild(refStyle);
+        if (!doc.addEventListener) {
+            addEventListener = function (element, eventName, callback) {
+                element.attachEvent('on' + eventName, function (e) {
+                    e.preventDefault = function () {
+                        e.returnValue = false;
+                    };
+                    e.target = e.srcElement;
+                    callback(e);
+                });
+            };
+        }
 
-        <title>Laravel</title>
-
-        <!-- Fonts -->
-        <link href="https://fonts.bunny.net/css2?family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
-
-        <!-- Styles -->
-        <style>
-            /*! normalize.css v8.0.1 | MIT License | github.com/necolas/normalize.css */html{line-height:1.15;-webkit-text-size-adjust:100%}body{margin:0}a{background-color:transparent}[hidden]{display:none}html{font-family:system-ui,-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Helvetica Neue,Arial,Noto Sans,sans-serif,Apple Color Emoji,Segoe UI Emoji,Segoe UI Symbol,Noto Color Emoji;line-height:1.5}*,:after,:before{box-sizing:border-box;border:0 solid #e2e8f0}a{color:inherit;text-decoration:inherit}svg,video{display:block;vertical-align:middle}video{max-width:100%;height:auto}.bg-white{--tw-bg-opacity: 1;background-color:rgb(255 255 255 / var(--tw-bg-opacity))}.bg-gray-100{--tw-bg-opacity: 1;background-color:rgb(243 244 246 / var(--tw-bg-opacity))}.border-gray-200{--tw-border-opacity: 1;border-color:rgb(229 231 235 / var(--tw-border-opacity))}.border-t{border-top-width:1px}.flex{display:flex}.grid{display:grid}.hidden{display:none}.items-center{align-items:center}.justify-center{justify-content:center}.font-semibold{font-weight:600}.h-5{height:1.25rem}.h-8{height:2rem}.h-16{height:4rem}.text-sm{font-size:.875rem}.text-lg{font-size:1.125rem}.leading-7{line-height:1.75rem}.mx-auto{margin-left:auto;margin-right:auto}.ml-1{margin-left:.25rem}.mt-2{margin-top:.5rem}.mr-2{margin-right:.5rem}.ml-2{margin-left:.5rem}.mt-4{margin-top:1rem}.ml-4{margin-left:1rem}.mt-8{margin-top:2rem}.ml-12{margin-left:3rem}.-mt-px{margin-top:-1px}.max-w-6xl{max-width:72rem}.min-h-screen{min-height:100vh}.overflow-hidden{overflow:hidden}.p-6{padding:1.5rem}.py-4{padding-top:1rem;padding-bottom:1rem}.px-6{padding-left:1.5rem;padding-right:1.5rem}.pt-8{padding-top:2rem}.fixed{position:fixed}.relative{position:relative}.top-0{top:0}.right-0{right:0}.shadow{--tw-shadow: 0 1px 3px 0 rgb(0 0 0 / .1), 0 1px 2px -1px rgb(0 0 0 / .1);--tw-shadow-colored: 0 1px 3px 0 var(--tw-shadow-color), 0 1px 2px -1px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000),var(--tw-ring-shadow, 0 0 #0000),var(--tw-shadow)}.text-center{text-align:center}.text-gray-200{--tw-text-opacity: 1;color:rgb(229 231 235 / var(--tw-text-opacity))}.text-gray-300{--tw-text-opacity: 1;color:rgb(209 213 219 / var(--tw-text-opacity))}.text-gray-400{--tw-text-opacity: 1;color:rgb(156 163 175 / var(--tw-text-opacity))}.text-gray-500{--tw-text-opacity: 1;color:rgb(107 114 128 / var(--tw-text-opacity))}.text-gray-600{--tw-text-opacity: 1;color:rgb(75 85 99 / var(--tw-text-opacity))}.text-gray-700{--tw-text-opacity: 1;color:rgb(55 65 81 / var(--tw-text-opacity))}.text-gray-900{--tw-text-opacity: 1;color:rgb(17 24 39 / var(--tw-text-opacity))}.underline{text-decoration:underline}.antialiased{-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}.w-5{width:1.25rem}.w-8{width:2rem}.w-auto{width:auto}.grid-cols-1{grid-template-columns:repeat(1,minmax(0,1fr))}@media (min-width:640px){.sm\:rounded-lg{border-radius:.5rem}.sm\:block{display:block}.sm\:items-center{align-items:center}.sm\:justify-start{justify-content:flex-start}.sm\:justify-between{justify-content:space-between}.sm\:h-20{height:5rem}.sm\:ml-0{margin-left:0}.sm\:px-6{padding-left:1.5rem;padding-right:1.5rem}.sm\:pt-0{padding-top:0}.sm\:text-left{text-align:left}.sm\:text-right{text-align:right}}@media (min-width:768px){.md\:border-t-0{border-top-width:0}.md\:border-l{border-left-width:1px}.md\:grid-cols-2{grid-template-columns:repeat(2,minmax(0,1fr))}}@media (min-width:1024px){.lg\:px-8{padding-left:2rem;padding-right:2rem}}@media (prefers-color-scheme:dark){.dark\:bg-gray-800{--tw-bg-opacity: 1;background-color:rgb(31 41 55 / var(--tw-bg-opacity))}.dark\:bg-gray-900{--tw-bg-opacity: 1;background-color:rgb(17 24 39 / var(--tw-bg-opacity))}.dark\:border-gray-700{--tw-border-opacity: 1;border-color:rgb(55 65 81 / var(--tw-border-opacity))}.dark\:text-white{--tw-text-opacity: 1;color:rgb(255 255 255 / var(--tw-text-opacity))}.dark\:text-gray-400{--tw-text-opacity: 1;color:rgb(156 163 175 / var(--tw-text-opacity))}.dark\:text-gray-500{--tw-text-opacity: 1;color:rgb(107 114 128 / var(--tw-text-opacity))}}
-        </style>
-
-        <style>
-            body {
-                font-family: 'Nunito', sans-serif;
+        function toggle(a, recursive) {
+            var s = a.nextSibling || {}, oldClass = s.className, arrow, newClass;
+            if (/\bsf-dump-compact\b/.test(oldClass)) {
+                arrow = '&#9660;';
+                newClass = 'sf-dump-expanded';
+            } else if (/\bsf-dump-expanded\b/.test(oldClass)) {
+                arrow = '&#9654;';
+                newClass = 'sf-dump-compact';
+            } else {
+                return false;
             }
-        </style>
-    </head>
-    <body class="antialiased">
-        <div class="relative flex items-top justify-center min-h-screen bg-gray-100 dark:bg-gray-900 sm:items-center py-4 sm:pt-0">
-            @if (Route::has('login'))
-                <div class="hidden fixed top-0 right-0 px-6 py-4 sm:block">
-                    @auth
-                        <a href="{{ url('/home') }}" class="text-sm text-gray-700 dark:text-gray-500 underline">Home</a>
-                    @else
-                        <a href="{{ route('login') }}" class="text-sm text-gray-700 dark:text-gray-500 underline">Log in</a>
+            if (doc.createEvent && s.dispatchEvent) {
+                var event = doc.createEvent('Event');
+                event.initEvent('sf-dump-expanded' === newClass ? 'sfbeforedumpexpand' : 'sfbeforedumpcollapse', true, false);
+                s.dispatchEvent(event);
+            }
+            a.lastChild.innerHTML = arrow;
+            s.className = s.className.replace(/\bsf-dump-(compact|expanded)\b/, newClass);
+            if (recursive) {
+                try {
+                    a = s.querySelectorAll('.' + oldClass);
+                    for (s = 0; s < a.length; ++s) {
+                        if (-1 == a[s].className.indexOf(newClass)) {
+                            a[s].className = newClass;
+                            a[s].previousSibling.lastChild.innerHTML = arrow;
+                        }
+                    }
+                } catch (e) {
+                }
+            }
+            return true;
+        };
 
-                        @if (Route::has('register'))
-                            <a href="{{ route('register') }}" class="ml-4 text-sm text-gray-700 dark:text-gray-500 underline">Register</a>
-                        @endif
-                    @endauth
-                </div>
-            @endif
+        function collapse(a, recursive) {
+            var s = a.nextSibling || {}, oldClass = s.className;
+            if (/\bsf-dump-expanded\b/.test(oldClass)) {
+                toggle(a, recursive);
+                return true;
+            }
+            return false;
+        };
 
-            <div class="max-w-6xl mx-auto sm:px-6 lg:px-8">
-                <div class="flex justify-center pt-8 sm:justify-start sm:pt-0">
-                    <svg viewBox="0 0 651 192" fill="none" xmlns="http://www.w3.org/2000/svg" class="h-16 w-auto text-gray-700 sm:h-20">
-                        <g clip-path="url(#clip0)" fill="#EF3B2D">
-                            <path d="M248.032 44.676h-16.466v100.23h47.394v-14.748h-30.928V44.676zM337.091 87.202c-2.101-3.341-5.083-5.965-8.949-7.875-3.865-1.909-7.756-2.864-11.669-2.864-5.062 0-9.69.931-13.89 2.792-4.201 1.861-7.804 4.417-10.811 7.661-3.007 3.246-5.347 6.993-7.016 11.239-1.672 4.249-2.506 8.713-2.506 13.389 0 4.774.834 9.26 2.506 13.459 1.669 4.202 4.009 7.925 7.016 11.169 3.007 3.246 6.609 5.799 10.811 7.66 4.199 1.861 8.828 2.792 13.89 2.792 3.913 0 7.804-.955 11.669-2.863 3.866-1.908 6.849-4.533 8.949-7.875v9.021h15.607V78.182h-15.607v9.02zm-1.431 32.503c-.955 2.578-2.291 4.821-4.009 6.73-1.719 1.91-3.795 3.437-6.229 4.582-2.435 1.146-5.133 1.718-8.091 1.718-2.96 0-5.633-.572-8.019-1.718-2.387-1.146-4.438-2.672-6.156-4.582-1.719-1.909-3.032-4.152-3.938-6.73-.909-2.577-1.36-5.298-1.36-8.161 0-2.864.451-5.585 1.36-8.162.905-2.577 2.219-4.819 3.938-6.729 1.718-1.908 3.77-3.437 6.156-4.582 2.386-1.146 5.059-1.718 8.019-1.718 2.958 0 5.656.572 8.091 1.718 2.434 1.146 4.51 2.674 6.229 4.582 1.718 1.91 3.054 4.152 4.009 6.729.953 2.577 1.432 5.298 1.432 8.162-.001 2.863-.479 5.584-1.432 8.161zM463.954 87.202c-2.101-3.341-5.083-5.965-8.949-7.875-3.865-1.909-7.756-2.864-11.669-2.864-5.062 0-9.69.931-13.89 2.792-4.201 1.861-7.804 4.417-10.811 7.661-3.007 3.246-5.347 6.993-7.016 11.239-1.672 4.249-2.506 8.713-2.506 13.389 0 4.774.834 9.26 2.506 13.459 1.669 4.202 4.009 7.925 7.016 11.169 3.007 3.246 6.609 5.799 10.811 7.66 4.199 1.861 8.828 2.792 13.89 2.792 3.913 0 7.804-.955 11.669-2.863 3.866-1.908 6.849-4.533 8.949-7.875v9.021h15.607V78.182h-15.607v9.02zm-1.432 32.503c-.955 2.578-2.291 4.821-4.009 6.73-1.719 1.91-3.795 3.437-6.229 4.582-2.435 1.146-5.133 1.718-8.091 1.718-2.96 0-5.633-.572-8.019-1.718-2.387-1.146-4.438-2.672-6.156-4.582-1.719-1.909-3.032-4.152-3.938-6.73-.909-2.577-1.36-5.298-1.36-8.161 0-2.864.451-5.585 1.36-8.162.905-2.577 2.219-4.819 3.938-6.729 1.718-1.908 3.77-3.437 6.156-4.582 2.386-1.146 5.059-1.718 8.019-1.718 2.958 0 5.656.572 8.091 1.718 2.434 1.146 4.51 2.674 6.229 4.582 1.718 1.91 3.054 4.152 4.009 6.729.953 2.577 1.432 5.298 1.432 8.162 0 2.863-.479 5.584-1.432 8.161zM650.772 44.676h-15.606v100.23h15.606V44.676zM365.013 144.906h15.607V93.538h26.776V78.182h-42.383v66.724zM542.133 78.182l-19.616 51.096-19.616-51.096h-15.808l25.617 66.724h19.614l25.617-66.724h-15.808zM591.98 76.466c-19.112 0-34.239 15.706-34.239 35.079 0 21.416 14.641 35.079 36.239 35.079 12.088 0 19.806-4.622 29.234-14.688l-10.544-8.158c-.006.008-7.958 10.449-19.832 10.449-13.802 0-19.612-11.127-19.612-16.884h51.777c2.72-22.043-11.772-40.877-33.023-40.877zm-18.713 29.28c.12-1.284 1.917-16.884 18.589-16.884 16.671 0 18.697 15.598 18.813 16.884h-37.402zM184.068 43.892c-.024-.088-.073-.165-.104-.25-.058-.157-.108-.316-.191-.46-.056-.097-.137-.176-.203-.265-.087-.117-.161-.242-.265-.345-.085-.086-.194-.148-.29-.223-.109-.085-.206-.182-.327-.252l-.002-.001-.002-.002-35.648-20.524a2.971 2.971 0 00-2.964 0l-35.647 20.522-.002.002-.002.001c-.121.07-.219.167-.327.252-.096.075-.205.138-.29.223-.103.103-.178.228-.265.345-.066.089-.147.169-.203.265-.083.144-.133.304-.191.46-.031.085-.08.162-.104.25-.067.249-.103.51-.103.776v38.979l-29.706 17.103V24.493a3 3 0 00-.103-.776c-.024-.088-.073-.165-.104-.25-.058-.157-.108-.316-.191-.46-.056-.097-.137-.176-.203-.265-.087-.117-.161-.242-.265-.345-.085-.086-.194-.148-.29-.223-.109-.085-.206-.182-.327-.252l-.002-.001-.002-.002L40.098 1.396a2.971 2.971 0 00-2.964 0L1.487 21.919l-.002.002-.002.001c-.121.07-.219.167-.327.252-.096.075-.205.138-.29.223-.103.103-.178.228-.265.345-.066.089-.147.169-.203.265-.083.144-.133.304-.191.46-.031.085-.08.162-.104.25-.067.249-.103.51-.103.776v122.09c0 1.063.568 2.044 1.489 2.575l71.293 41.045c.156.089.324.143.49.202.078.028.15.074.23.095a2.98 2.98 0 001.524 0c.069-.018.132-.059.2-.083.176-.061.354-.119.519-.214l71.293-41.045a2.971 2.971 0 001.489-2.575v-38.979l34.158-19.666a2.971 2.971 0 001.489-2.575V44.666a3.075 3.075 0 00-.106-.774zM74.255 143.167l-29.648-16.779 31.136-17.926.001-.001 34.164-19.669 29.674 17.084-21.772 12.428-43.555 24.863zm68.329-76.259v33.841l-12.475-7.182-17.231-9.92V49.806l12.475 7.182 17.231 9.92zm2.97-39.335l29.693 17.095-29.693 17.095-29.693-17.095 29.693-17.095zM54.06 114.089l-12.475 7.182V46.733l17.231-9.92 12.475-7.182v74.537l-17.231 9.921zM38.614 7.398l29.693 17.095-29.693 17.095L8.921 24.493 38.614 7.398zM5.938 29.632l12.475 7.182 17.231 9.92v79.676l.001.005-.001.006c0 .114.032.221.045.333.017.146.021.294.059.434l.002.007c.032.117.094.222.14.334.051.124.088.255.156.371a.036.036 0 00.004.009c.061.105.149.191.222.288.081.105.149.22.244.314l.008.01c.084.083.19.142.284.215.106.083.202.178.32.247l.013.005.011.008 34.139 19.321v34.175L5.939 144.867V29.632h-.001zm136.646 115.235l-65.352 37.625V148.31l48.399-27.628 16.953-9.677v33.862zm35.646-61.22l-29.706 17.102V66.908l17.231-9.92 12.475-7.182v33.841z"/>
-                        </g>
-                    </svg>
-                </div>
+        function expand(a, recursive) {
+            var s = a.nextSibling || {}, oldClass = s.className;
+            if (/\bsf-dump-compact\b/.test(oldClass)) {
+                toggle(a, recursive);
+                return true;
+            }
+            return false;
+        };
 
-                <div class="mt-8 bg-white dark:bg-gray-800 overflow-hidden shadow sm:rounded-lg">
-                    <div class="grid grid-cols-1 md:grid-cols-2">
-                        <div class="p-6">
-                            <div class="flex items-center">
-                                <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" class="w-8 h-8 text-gray-500"><path d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path></svg>
-                                <div class="ml-4 text-lg leading-7 font-semibold"><a href="https://laravel.com/docs" class="underline text-gray-900 dark:text-white">Documentation</a></div>
-                            </div>
+        function collapseAll(root) {
+            var a = root.querySelector('a.sf-dump-toggle');
+            if (a) {
+                collapse(a, true);
+                expand(a);
+                return true;
+            }
+            return false;
+        }
 
-                            <div class="ml-12">
-                                <div class="mt-2 text-gray-600 dark:text-gray-400 text-sm">
-                                    Laravel has wonderful, thorough documentation covering every aspect of the framework. Whether you are new to the framework or have previous experience with Laravel, we recommend reading all of the documentation from beginning to end.
-                                </div>
-                            </div>
-                        </div>
+        function reveal(node) {
+            var previous, parents = [];
+            while ((node = node.parentNode || {}) && (previous = node.previousSibling) && 'A' === previous.tagName) {
+                parents.push(previous);
+            }
+            if (0 !== parents.length) {
+                parents.forEach(function (parent) {
+                    expand(parent);
+                });
+                return true;
+            }
+            return false;
+        }
 
-                        <div class="p-6 border-t border-gray-200 dark:border-gray-700 md:border-t-0 md:border-l">
-                            <div class="flex items-center">
-                                <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" class="w-8 h-8 text-gray-500"><path d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"></path><path d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
-                                <div class="ml-4 text-lg leading-7 font-semibold"><a href="https://laracasts.com" class="underline text-gray-900 dark:text-white">Laracasts</a></div>
-                            </div>
+        function highlight(root, activeNode, nodes) {
+            resetHighlightedNodes(root);
+            Array.from(nodes || []).forEach(function (node) {
+                if (!/\bsf-dump-highlight\b/.test(node.className)) {
+                    node.className = node.className + ' sf-dump-highlight';
+                }
+            });
+            if (!/\bsf-dump-highlight-active\b/.test(activeNode.className)) {
+                activeNode.className = activeNode.className + ' sf-dump-highlight-active';
+            }
+        }
 
-                            <div class="ml-12">
-                                <div class="mt-2 text-gray-600 dark:text-gray-400 text-sm">
-                                    Laracasts offers thousands of video tutorials on Laravel, PHP, and JavaScript development. Check them out, see for yourself, and massively level up your development skills in the process.
-                                </div>
-                            </div>
-                        </div>
+        function resetHighlightedNodes(root) {
+            Array.from(root.querySelectorAll('.sf-dump-str, .sf-dump-key, .sf-dump-public, .sf-dump-protected, .sf-dump-private')).forEach(function (strNode) {
+                strNode.className = strNode.className.replace(/\bsf-dump-highlight\b/, '');
+                strNode.className = strNode.className.replace(/\bsf-dump-highlight-active\b/, '');
+            });
+        }
 
-                        <div class="p-6 border-t border-gray-200 dark:border-gray-700">
-                            <div class="flex items-center">
-                                <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" class="w-8 h-8 text-gray-500"><path d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z"></path></svg>
-                                <div class="ml-4 text-lg leading-7 font-semibold"><a href="https://laravel-news.com/" class="underline text-gray-900 dark:text-white">Laravel News</a></div>
-                            </div>
+        return function (root, x) {
+            root = doc.getElementById(root);
+            var indentRx = new RegExp('^(' + (root.getAttribute('data-indent-pad') || ' ').replace(rxEsc, '\\$1') + ')+', 'm'), options = {"maxDepth": 1, "maxStringLength": 160, "fileLinkFormat": false},
+                elt = root.getElementsByTagName('A'), len = elt.length, i = 0, s, h, t = [];
+            while (i < len) t.push(elt[i++]);
+            for (i in x) {
+                options[i] = x[i];
+            }
 
-                            <div class="ml-12">
-                                <div class="mt-2 text-gray-600 dark:text-gray-400 text-sm">
-                                    Laravel News is a community driven portal and newsletter aggregating all of the latest and most important news in the Laravel ecosystem, including new package releases and tutorials.
-                                </div>
-                            </div>
-                        </div>
+            function a(e, f) {
+                addEventListener(root, e, function (e, n) {
+                    if ('A' == e.target.tagName) {
+                        f(e.target, e);
+                    } else if ('A' == e.target.parentNode.tagName) {
+                        f(e.target.parentNode, e);
+                    } else {
+                        n = /\bsf-dump-ellipsis\b/.test(e.target.className) ? e.target.parentNode : e.target;
+                        if ((n = n.nextElementSibling) && 'A' == n.tagName) {
+                            if (!/\bsf-dump-toggle\b/.test(n.className)) {
+                                n = n.nextElementSibling || n;
+                            }
+                            f(n, e, true);
+                        }
+                    }
+                });
+            };
 
-                        <div class="p-6 border-t border-gray-200 dark:border-gray-700 md:border-l">
-                            <div class="flex items-center">
-                                <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" class="w-8 h-8 text-gray-500"><path d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                                <div class="ml-4 text-lg leading-7 font-semibold text-gray-900 dark:text-white">Vibrant Ecosystem</div>
-                            </div>
+            function isCtrlKey(e) {
+                return e.ctrlKey || e.metaKey;
+            }
 
-                            <div class="ml-12">
-                                <div class="mt-2 text-gray-600 dark:text-gray-400 text-sm">
-                                    Laravel's robust library of first-party tools and libraries, such as <a href="https://forge.laravel.com" class="underline">Forge</a>, <a href="https://vapor.laravel.com" class="underline">Vapor</a>, <a href="https://nova.laravel.com" class="underline">Nova</a>, and <a href="https://envoyer.io" class="underline">Envoyer</a> help you take your projects to the next level. Pair them with powerful open source libraries like <a href="https://laravel.com/docs/billing" class="underline">Cashier</a>, <a href="https://laravel.com/docs/dusk" class="underline">Dusk</a>, <a href="https://laravel.com/docs/broadcasting" class="underline">Echo</a>, <a href="https://laravel.com/docs/horizon" class="underline">Horizon</a>, <a href="https://laravel.com/docs/sanctum" class="underline">Sanctum</a>, <a href="https://laravel.com/docs/telescope" class="underline">Telescope</a>, and more.
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+            function xpathString(str) {
+                var parts = str.match(/[^'"]+|['"]/g).map(function (part) {
+                    if ("'" == part) {
+                        return '"\'"';
+                    }
+                    if ('"' == part) {
+                        return "'\"'";
+                    }
+                    return "'" + part + "'";
+                });
+                return "concat(" + parts.join(",") + ", '')";
+            }
 
-                <div class="flex justify-center mt-4 sm:items-center sm:justify-between">
-                    <div class="text-center text-sm text-gray-500 sm:text-left">
-                        <div class="flex items-center">
-                            <svg fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" stroke="currentColor" class="-mt-px w-5 h-5 text-gray-400">
-                                <path d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"></path>
-                            </svg>
+            function xpathHasClass(className) {
+                return "contains(concat(' ', normalize-space(@class), ' '), ' " + className + " ')";
+            }
 
-                            <a href="https://laravel.bigcartel.com" class="ml-1 underline">
-                                Shop
-                            </a>
+            addEventListener(root, 'mouseover', function (e) {
+                if ('' != refStyle.innerHTML) {
+                    refStyle.innerHTML = '';
+                }
+            });
+            a('mouseover', function (a, e, c) {
+                if (c) {
+                    e.target.style.cursor = "pointer";
+                } else if (a = idRx.exec(a.className)) {
+                    try {
+                        refStyle.innerHTML = 'pre.sf-dump .' + a[0] + '{background-color: #B729D9; color: #FFF !important; border-radius: 2px}';
+                    } catch (e) {
+                    }
+                }
+            });
+            a('click', function (a, e, c) {
+                if (/\bsf-dump-toggle\b/.test(a.className)) {
+                    e.preventDefault();
+                    if (!toggle(a, isCtrlKey(e))) {
+                        var r = doc.getElementById(a.getAttribute('href').slice(1)), s = r.previousSibling, f = r.parentNode, t = a.parentNode;
+                        t.replaceChild(r, a);
+                        f.replaceChild(a, s);
+                        t.insertBefore(s, r);
+                        f = f.firstChild.nodeValue.match(indentRx);
+                        t = t.firstChild.nodeValue.match(indentRx);
+                        if (f && t && f[0] !== t[0]) {
+                            r.innerHTML = r.innerHTML.replace(new RegExp('^' + f[0].replace(rxEsc, '\\$1'), 'mg'), t[0]);
+                        }
+                        if (/\bsf-dump-compact\b/.test(r.className)) {
+                            toggle(s, isCtrlKey(e));
+                        }
+                    }
+                    if (c) {
+                    } else if (doc.getSelection) {
+                        try {
+                            doc.getSelection().removeAllRanges();
+                        } catch (e) {
+                            doc.getSelection().empty();
+                        }
+                    } else {
+                        doc.selection.empty();
+                    }
+                } else if (/\bsf-dump-str-toggle\b/.test(a.className)) {
+                    e.preventDefault();
+                    e = a.parentNode.parentNode;
+                    e.className = e.className.replace(/\bsf-dump-str-(expand|collapse)\b/, a.parentNode.className);
+                }
+            });
+            elt = root.getElementsByTagName('SAMP');
+            len = elt.length;
+            i = 0;
+            while (i < len) t.push(elt[i++]);
+            len = t.length;
+            for (i = 0; i < len; ++i) {
+                elt = t[i];
+                if ('SAMP' == elt.tagName) {
+                    a = elt.previousSibling || {};
+                    if ('A' != a.tagName) {
+                        a = doc.createElement('A');
+                        a.className = 'sf-dump-ref';
+                        elt.parentNode.insertBefore(a, elt);
+                    } else {
+                        a.innerHTML += ' ';
+                    }
+                    a.title = (a.title ? a.title + '\n[' : '[') + keyHint + '+click] Expand all children';
+                    a.innerHTML += elt.className == 'sf-dump-compact' ? '<span>&#9654;</span>' : '<span>&#9660;</span>';
+                    a.className += ' sf-dump-toggle';
+                    x = 1;
+                    if ('sf-dump' != elt.parentNode.className) {
+                        x += elt.parentNode.getAttribute('data-depth') / 1;
+                    }
+                } else if (/\bsf-dump-ref\b/.test(elt.className) && (a = elt.getAttribute('href'))) {
+                    a = a.slice(1);
+                    elt.className += ' ' + a;
+                    if (/[\[{]$/.test(elt.previousSibling.nodeValue)) {
+                        a = a != elt.nextSibling.id && doc.getElementById(a);
+                        try {
+                            s = a.nextSibling;
+                            elt.appendChild(a);
+                            s.parentNode.insertBefore(a, s);
+                            if (/^[@#]/.test(elt.innerHTML)) {
+                                elt.innerHTML += ' <span>&#9654;</span>';
+                            } else {
+                                elt.innerHTML = '<span>&#9654;</span>';
+                                elt.className = 'sf-dump-ref';
+                            }
+                            elt.className += ' sf-dump-toggle';
+                        } catch (e) {
+                            if ('&' == elt.innerHTML.charAt(0)) {
+                                elt.innerHTML = '&#8230;';
+                                elt.className = 'sf-dump-ref';
+                            }
+                        }
+                    }
+                }
+            }
+            if (doc.evaluate && Array.from && root.children.length > 1) {
+                root.setAttribute('tabindex', 0);
+                SearchState = function () {
+                    this.nodes = [];
+                    this.idx = 0;
+                };
+                SearchState.prototype = {
+                    next: function () {
+                        if (this.isEmpty()) {
+                            return this.current();
+                        }
+                        this.idx = this.idx < (this.nodes.length - 1) ? this.idx + 1 : 0;
+                        return this.current();
+                    }, previous: function () {
+                        if (this.isEmpty()) {
+                            return this.current();
+                        }
+                        this.idx = this.idx > 0 ? this.idx - 1 : (this.nodes.length - 1);
+                        return this.current();
+                    }, isEmpty: function () {
+                        return 0 === this.count();
+                    }, current: function () {
+                        if (this.isEmpty()) {
+                            return null;
+                        }
+                        return this.nodes[this.idx];
+                    }, reset: function () {
+                        this.nodes = [];
+                        this.idx = 0;
+                    }, count: function () {
+                        return this.nodes.length;
+                    },
+                };
 
-                            <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" class="ml-4 -mt-px w-5 h-5 text-gray-400">
-                                <path d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path>
-                            </svg>
+                function showCurrent(state) {
+                    var currentNode = state.current(), currentRect, searchRect;
+                    if (currentNode) {
+                        reveal(currentNode);
+                        highlight(root, currentNode, state.nodes);
+                        if ('scrollIntoView' in currentNode) {
+                            currentNode.scrollIntoView(true);
+                            currentRect = currentNode.getBoundingClientRect();
+                            searchRect = search.getBoundingClientRect();
+                            if (currentRect.top < (searchRect.top + searchRect.height)) {
+                                window.scrollBy(0, -(searchRect.top + searchRect.height + 5));
+                            }
+                        }
+                    }
+                    counter.textContent = (state.isEmpty() ? 0 : state.idx + 1) + ' of ' + state.count();
+                }
 
-                            <a href="https://github.com/sponsors/taylorotwell" class="ml-1 underline">
-                                Sponsor
-                            </a>
-                        </div>
-                    </div>
+                var search = doc.createElement('div');
+                search.className = 'sf-dump-search-wrapper sf-dump-search-hidden';
+                search.innerHTML = ' <input type="text" class="sf-dump-search-input"> <span class="sf-dump-search-count">0 of 0<\/span> <button type="button" class="sf-dump-search-input-previous" tabindex="-1"> <svg viewBox="0 0 1792 1792" xmlns="http://www.w3.org/2000/svg"><path d="M1683 1331l-166 165q-19 19-45 19t-45-19L896 965l-531 531q-19 19-45 19t-45-19l-166-165q-19-19-19-45.5t19-45.5l742-741q19-19 45-19t45 19l742 741q19 19 19 45.5t-19 45.5z"\/><\/svg> <\/button> <button type="button" class="sf-dump-search-input-next" tabindex="-1"> <svg viewBox="0 0 1792 1792" xmlns="http://www.w3.org/2000/svg"><path d="M1683 808l-742 741q-19 19-45 19t-45-19L109 808q-19-19-19-45.5t19-45.5l166-165q19-19 45-19t45 19l531 531 531-531q19-19 45-19t45 19l166 165q19 19 19 45.5t-19 45.5z"\/><\/svg> <\/button> ';
+                root.insertBefore(search, root.firstChild);
+                var state = new SearchState();
+                var searchInput = search.querySelector('.sf-dump-search-input');
+                var counter = search.querySelector('.sf-dump-search-count');
+                var searchInputTimer = 0;
+                var previousSearchQuery = '';
+                addEventListener(searchInput, 'keyup', function (e) {
+                    var searchQuery = e.target.value; /* Don't perform anything if the pressed key didn't change the query */
+                    if (searchQuery === previousSearchQuery) {
+                        return;
+                    }
+                    previousSearchQuery = searchQuery;
+                    clearTimeout(searchInputTimer);
+                    searchInputTimer = setTimeout(function () {
+                        state.reset();
+                        collapseAll(root);
+                        resetHighlightedNodes(root);
+                        if ('' === searchQuery) {
+                            counter.textContent = '0 of 0';
+                            return;
+                        }
+                        var classMatches = ["sf-dump-str", "sf-dump-key", "sf-dump-public", "sf-dump-protected", "sf-dump-private",].map(xpathHasClass).join(' or ');
+                        var xpathResult = doc.evaluate('.//span[' + classMatches + '][contains(translate(child::text(), ' + xpathString(searchQuery.toUpperCase()) + ', ' + xpathString(searchQuery.toLowerCase()) + '), ' + xpathString(searchQuery.toLowerCase()) + ')]', root, null, XPathResult.ORDERED_NODE_ITERATOR_TYPE, null);
+                        while (node = xpathResult.iterateNext()) state.nodes.push(node);
+                        showCurrent(state);
+                    }, 400);
+                });
+                Array.from(search.querySelectorAll('.sf-dump-search-input-next, .sf-dump-search-input-previous')).forEach(function (btn) {
+                    addEventListener(btn, 'click', function (e) {
+                        e.preventDefault();
+                        -1 !== e.target.className.indexOf('next') ? state.next() : state.previous();
+                        searchInput.focus();
+                        collapseAll(root);
+                        showCurrent(state);
+                    })
+                });
+                addEventListener(root, 'keydown', function (e) {
+                    var isSearchActive = !/\bsf-dump-search-hidden\b/.test(search.className);
+                    if ((114 === e.keyCode && !isSearchActive) || (isCtrlKey(e) && 70 === e.keyCode)) { /* F3 or CMD/CTRL + F */
+                        if (70 === e.keyCode && document.activeElement === searchInput) { /* * If CMD/CTRL + F is hit while having focus on search input, * the user probably meant to trigger browser search instead. * Let the browser execute its behavior: */
+                            return;
+                        }
+                        e.preventDefault();
+                        search.className = search.className.replace(/\bsf-dump-search-hidden\b/, '');
+                        searchInput.focus();
+                    } else if (isSearchActive) {
+                        if (27 === e.keyCode) { /* ESC key */
+                            search.className += ' sf-dump-search-hidden';
+                            e.preventDefault();
+                            resetHighlightedNodes(root);
+                            searchInput.value = '';
+                        } else if ((isCtrlKey(e) && 71 === e.keyCode) /* CMD/CTRL + G */ || 13 === e.keyCode /* Enter */ || 114 === e.keyCode /* F3 */) {
+                            e.preventDefault();
+                            e.shiftKey ? state.previous() : state.next();
+                            collapseAll(root);
+                            showCurrent(state);
+                        }
+                    }
+                });
+            }
+            if (0 >= options.maxStringLength) {
+                return;
+            }
+            try {
+                elt = root.querySelectorAll('.sf-dump-str');
+                len = elt.length;
+                i = 0;
+                t = [];
+                while (i < len) t.push(elt[i++]);
+                len = t.length;
+                for (i = 0; i < len; ++i) {
+                    elt = t[i];
+                    s = elt.innerText || elt.textContent;
+                    x = s.length - options.maxStringLength;
+                    if (0 < x) {
+                        h = elt.innerHTML;
+                        elt[elt.innerText ? 'innerText' : 'textContent'] = s.substring(0, options.maxStringLength);
+                        elt.className += ' sf-dump-str-collapse';
+                        elt.innerHTML = '<span class=sf-dump-str-collapse>' + h + '<a class="sf-dump-ref sf-dump-str-toggle" title="Collapse"> &#9664;</a></span>' + '<span class=sf-dump-str-expand>' + elt.innerHTML + '<a class="sf-dump-ref sf-dump-str-toggle" title="' + x + ' remaining characters"> &#9654;</a></span>';
+                    }
+                }
+            } catch (e) {
+            }
+        };
+    })(document); </script>
+<style> pre.sf-dump {
+        display: block;
+        white-space: pre;
+        padding: 5px;
+        overflow: initial !important;
+    }
 
-                    <div class="ml-4 text-center text-sm text-gray-500 sm:text-right sm:ml-0">
-                        Laravel v{{ Illuminate\Foundation\Application::VERSION }} (PHP v{{ PHP_VERSION }})
-                    </div>
-                </div>
-            </div>
-        </div>
-    </body>
-</html>
+    pre.sf-dump:after {
+        content: "";
+        visibility: hidden;
+        display: block;
+        height: 0;
+        clear: both;
+    }
+
+    pre.sf-dump span {
+        display: inline;
+    }
+
+    pre.sf-dump a {
+        text-decoration: none;
+        cursor: pointer;
+        border: 0;
+        outline: none;
+        color: inherit;
+    }
+
+    pre.sf-dump img {
+        max-width: 50em;
+        max-height: 50em;
+        margin: .5em 0 0 0;
+        padding: 0;
+        background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAAAAAA6mKC9AAAAHUlEQVQY02O8zAABilCaiQEN0EeA8QuUcX9g3QEAAjcC5piyhyEAAAAASUVORK5CYII=) #D3D3D3;
+    }
+
+    pre.sf-dump .sf-dump-ellipsis {
+        display: inline-block;
+        overflow: visible;
+        text-overflow: ellipsis;
+        max-width: 5em;
+        white-space: nowrap;
+        overflow: hidden;
+        vertical-align: top;
+    }
+
+    pre.sf-dump .sf-dump-ellipsis + .sf-dump-ellipsis {
+        max-width: none;
+    }
+
+    pre.sf-dump code {
+        display: inline;
+        padding: 0;
+        background: none;
+    }
+
+    .sf-dump-public.sf-dump-highlight, .sf-dump-protected.sf-dump-highlight, .sf-dump-private.sf-dump-highlight, .sf-dump-str.sf-dump-highlight, .sf-dump-key.sf-dump-highlight {
+        background: rgba(111, 172, 204, 0.3);
+        border: 1px solid #7DA0B1;
+        border-radius: 3px;
+    }
+
+    .sf-dump-public.sf-dump-highlight-active, .sf-dump-protected.sf-dump-highlight-active, .sf-dump-private.sf-dump-highlight-active, .sf-dump-str.sf-dump-highlight-active, .sf-dump-key.sf-dump-highlight-active {
+        background: rgba(253, 175, 0, 0.4);
+        border: 1px solid #ffa500;
+        border-radius: 3px;
+    }
+
+    pre.sf-dump .sf-dump-search-hidden {
+        display: none !important;
+    }
+
+    pre.sf-dump .sf-dump-search-wrapper {
+        font-size: 0;
+        white-space: nowrap;
+        margin-bottom: 5px;
+        display: flex;
+        position: -webkit-sticky;
+        position: sticky;
+        top: 5px;
+    }
+
+    pre.sf-dump .sf-dump-search-wrapper > * {
+        vertical-align: top;
+        box-sizing: border-box;
+        height: 21px;
+        font-weight: normal;
+        border-radius: 0;
+        background: #FFF;
+        color: #757575;
+        border: 1px solid #BBB;
+    }
+
+    pre.sf-dump .sf-dump-search-wrapper > input.sf-dump-search-input {
+        padding: 3px;
+        height: 21px;
+        font-size: 12px;
+        border-right: none;
+        border-top-left-radius: 3px;
+        border-bottom-left-radius: 3px;
+        color: #000;
+        min-width: 15px;
+        width: 100%;
+    }
+
+    pre.sf-dump .sf-dump-search-wrapper > .sf-dump-search-input-next, pre.sf-dump .sf-dump-search-wrapper > .sf-dump-search-input-previous {
+        background: #F2F2F2;
+        outline: none;
+        border-left: none;
+        font-size: 0;
+        line-height: 0;
+    }
+
+    pre.sf-dump .sf-dump-search-wrapper > .sf-dump-search-input-next {
+        border-top-right-radius: 3px;
+        border-bottom-right-radius: 3px;
+    }
+
+    pre.sf-dump .sf-dump-search-wrapper > .sf-dump-search-input-next > svg, pre.sf-dump .sf-dump-search-wrapper > .sf-dump-search-input-previous > svg {
+        pointer-events: none;
+        width: 12px;
+        height: 12px;
+    }
+
+    pre.sf-dump .sf-dump-search-wrapper > .sf-dump-search-count {
+        display: inline-block;
+        padding: 0 5px;
+        margin: 0;
+        border-left: none;
+        line-height: 21px;
+        font-size: 12px;
+    }
+
+    pre.sf-dump, pre.sf-dump .sf-dump-default {
+        background-color: #18171B;
+        color: #FF8400;
+        line-height: 1.2em;
+        font: 12px Menlo, Monaco, Consolas, monospace;
+        word-wrap: break-word;
+        white-space: pre-wrap;
+        position: relative;
+        z-index: 99999;
+        word-break: break-all
+    }
+
+    pre.sf-dump .sf-dump-num {
+        font-weight: bold;
+        color: #1299DA
+    }
+
+    pre.sf-dump .sf-dump-const {
+        font-weight: bold
+    }
+
+    pre.sf-dump .sf-dump-str {
+        font-weight: bold;
+        color: #56DB3A
+    }
+
+    pre.sf-dump .sf-dump-note {
+        color: #1299DA
+    }
+
+    pre.sf-dump .sf-dump-ref {
+        color: #A0A0A0
+    }
+
+    pre.sf-dump .sf-dump-public {
+        color: #FFFFFF
+    }
+
+    pre.sf-dump .sf-dump-protected {
+        color: #FFFFFF
+    }
+
+    pre.sf-dump .sf-dump-private {
+        color: #FFFFFF
+    }
+
+    pre.sf-dump .sf-dump-meta {
+        color: #B729D9
+    }
+
+    pre.sf-dump .sf-dump-key {
+        color: #56DB3A
+    }
+
+    pre.sf-dump .sf-dump-index {
+        color: #1299DA
+    }
+
+    pre.sf-dump .sf-dump-ellipsis {
+        color: #FF8400
+    }
+
+    pre.sf-dump .sf-dump-ns {
+        user-select: none;
+    }
+
+    pre.sf-dump .sf-dump-ellipsis-note {
+        color: #1299DA
+    }</style>
+<pre class=sf-dump id=sf-dump-324839767 data-indent-pad="  ">[]<span style="color: #A0A0A0;"> // app/Http/Controllers/SquadController.php:59</span>
+</pre>
+<script>Sfdump("sf-dump-324839767")</script>

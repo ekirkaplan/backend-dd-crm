@@ -18,10 +18,11 @@ class UpdateRequest extends FormRequest
             'company_id' => ['required', 'integer', 'exists:companies,id'],
             'first_name' => ['required', 'string'],
             'last_name' => ['required', 'string'],
-            'start_date' => ['required', 'date'],
+            'start_date' => ['nullable', 'date'],
             'end_date' => ['nullable', 'date'],
             'phone' => ['required', 'string'],
             'address' => ['nullable', 'string'],
+            'type' => ['required', 'integer'],
             'description' => ['nullable', 'string']
         ];
     }

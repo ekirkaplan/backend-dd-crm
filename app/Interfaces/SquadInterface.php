@@ -12,4 +12,12 @@ interface SquadInterface extends FilteredInterface
      * @return void
      */
     public function sync(Squad $squad, array $data): void;
+
+    /**
+     * @param  Squad  $squad
+     * @param  array  $employees
+     * @param  array  $removedEmployees
+     * @return void
+     */
+    public function syncUpdate(Squad $squad, array $employees, array $removedEmployees): void;
 }

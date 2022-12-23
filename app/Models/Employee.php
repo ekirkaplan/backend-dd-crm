@@ -29,7 +29,7 @@ class Employee extends Model
      */
     public function squads(): BelongsToMany
     {
-        return $this->belongsToMany(Squad::class, 'squad_employees');
+        return $this->belongsToMany(Squad::class, 'squad_employees')->withTimestamps();
     }
 
     /**
@@ -38,6 +38,11 @@ class Employee extends Model
     public function squadOfForeman(): HasOne
     {
         return $this->hasOne(Squad::class, 'foreman_id');
+    }
+
+    public function employeeSquads(): BelongsToMany
+    {
+        return $this->hasMany(SquadEmployee::class, 'employee_id')->withTimestamps();
     }
 
     /**

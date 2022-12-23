@@ -6,6 +6,7 @@ use App\Interfaces\EmployeeInterface;
 use App\Models\Employee;
 use Illuminate\Contracts\Pagination\Paginator;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Query\Builder;
 
 class EmployeeRepository implements EmployeeInterface
 {
@@ -21,7 +22,9 @@ class EmployeeRepository implements EmployeeInterface
      */
     public function outOfSquadEmployee(): Collection
     {
-            return $this->employee->whereDoesntHave('squads')->where('type', 0)->get();
+            return $this->employee->whereDoesntHave('squads', function ($builder) {
+                $builder->whereNull('end_date');
+            })->where('type', 0)->get();
     }
 
     /**
@@ -47,6 +50,7 @@ class EmployeeRepository implements EmployeeInterface
                 $query->orWhere('phone', 'ilike', "%{$search}%");
             })
             ->with(['company'])
+            ->orderBy('id')
             ->paginate($perPage);
     }
 

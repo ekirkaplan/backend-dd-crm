@@ -82,8 +82,8 @@ class SquadController extends Controller
     public function update(UpdateRequest $request, Squad $squad): JsonResponse
     {
         $employees = $request->get('employees');
-        $this->squadRepository->sync($squad, $employees);
-        $this->baseRepository->update($squad, $request->validated());
+        $removedEmployees = $request->get('removedEmployees');
+        $this->squadRepository->syncUpdate($squad, $employees, $removedEmployees);
         return JsonOutputFaced::setMessage('Ekip Güncellendi')->response();
     }
 

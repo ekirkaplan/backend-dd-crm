@@ -12,7 +12,7 @@ class SquadResource extends JsonResource
             'id' => $this->id,
             'foreman' => new EmployeeResource($this->foreman),
             'foreman_id' => $this->foreman_id,
-            'employees' => EmployeeResource::collection($this->employees)
+            'employees' => SquadEmplooyesResource::collection($this->squadEmployees)
         ];
     }
 }

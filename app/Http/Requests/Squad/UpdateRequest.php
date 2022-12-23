@@ -17,7 +17,8 @@ class UpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'employees' => ['nullable', 'array']
+            'employees' => ['nullable', 'array'],
+            'removedEmployees' => ['nullable', 'array']
         ];
     }
 
