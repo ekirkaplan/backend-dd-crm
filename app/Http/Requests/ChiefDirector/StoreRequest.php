@@ -7,11 +7,17 @@ use Illuminate\Validation\Rule;
 
 class StoreRequest extends FormRequest
 {
+    /**
+     * @return bool
+     */
     public function authorize(): bool
     {
         return true;
     }
 
+    /**
+     * @return array[]
+     */
     public function rules(): array
     {
         return [
@@ -21,6 +27,9 @@ class StoreRequest extends FormRequest
         ];
     }
 
+    /**
+     * @return string[]
+     */
     public function attributes(): array
     {
         return [

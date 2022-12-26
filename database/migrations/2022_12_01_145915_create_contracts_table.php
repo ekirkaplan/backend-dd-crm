@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('chief_director_id')->references('id')->on('chief_directors');
             $table->foreignId('region_director_id')->references('id')->on('region_directors');
-            $table->foreignId('exit_warehouse_id')->references('id')->on('exit_warehouses');
+            $table->foreignId('chiefdom_id')->references('id')->on('chiefdoms');
             $table->foreignId('product_type_id')->references('id')->on('product_types');
             $table->string('stack_no');
             $table->string('parcel_no');
@@ -35,7 +35,7 @@ return new class extends Migration
             $table->date('actual_start_date');
             $table->unsignedInteger('number_of_man_day');
             $table->unsignedInteger('extension_time_received');
-            $table->unsignedInteger('yield_percentage');
+            $table->unsignedInteger('yield_percentage')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

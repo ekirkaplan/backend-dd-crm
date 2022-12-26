@@ -12,4 +12,5 @@ interface ChiefdomInterface extends FilteredInterface
      * @return Collection
      */
     public function getByChiefDirector(ChiefDirector $chiefDirector): Collection;
+
 }

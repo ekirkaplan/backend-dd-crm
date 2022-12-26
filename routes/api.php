@@ -22,6 +22,7 @@ use App\Http\Controllers\ShipmentController;
 use App\Http\Controllers\ContractController;
 use App\Http\Controllers\ChiefdomController;
 use App\Http\Controllers\SquadUnitPriceController;
+use App\Http\Controllers\SquadContractController;
 
 
 /*
@@ -169,6 +170,7 @@ Route::middleware(['jwt.verify'])->group(function () {
     Route::controller(ChiefdomController::class)->prefix('chiefdoms')->group(function () {
         Route::get('get-all', 'getAll');
         Route::get('get-filtered', 'getFiltered');
+        Route::get('get-by-chief-director/{chiefDirector}', 'getByChiefDirector');
     });
     Route::apiResource('chiefdoms', ChiefdomController::class);
 
@@ -178,5 +180,11 @@ Route::middleware(['jwt.verify'])->group(function () {
         Route::get('get-filtered', 'getFiltered');
     });
     Route::apiResource('squad-unit-prices', SquadUnitPriceController::class);
+
+    Route::controller(SquadContractController::class)->prefix('squad-contracts')->group(function () {
+        Route::get('get-all', 'getAll');
+        Route::get('get-filtered', 'getFiltered');
+    });
+    Route::apiResource('squad-contracts', SquadContractController::class);
 
 });

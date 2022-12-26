@@ -16,7 +16,7 @@ class StoreRequest extends FormRequest
             'chief_director_id' => ['required', 'integer', 'exists:chief_directors,id'],
             'region_director_id' => ['required', 'integer', 'exists:region_directors,id'],
             'product_type_id' => ['required', 'integer', 'exists:product_types,id'],
-            'exit_warehouse_id' => ['required', 'integer', 'exists:exit_warehouses,id'],
+            'chiefdom_id' => ['required', 'integer', 'exists:chiefdoms,id'],
             'stack_no' => ['required', 'string', 'unique:contracts,stack_no'],
             'parcel_no' => ['required', 'string'],
             'cubic_meter' => ['required'],

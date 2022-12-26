@@ -14,7 +14,7 @@ class ChiefdomResource extends JsonResource
     public function toArray($request)
     {
         return [
-            'id' => $this->name,
+            'id' => $this->id,
             'chief_director_id' => $this->chief_director_id,
             'name' => $this->name,
             'phone' => $this->phone,
