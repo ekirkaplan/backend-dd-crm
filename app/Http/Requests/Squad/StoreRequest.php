@@ -21,15 +21,17 @@ class StoreRequest extends FormRequest
     {
         return [
             'foreman_id' => ['required', 'exists:employees,id'],
-            'employees' => ['nullable', 'array']
+            'employees' => ['array', 'nullable'],
+            'employees.*.squad_start_date' => ['required', 'date'],
         ];
     }
 
-    public function attributes()
+    public function attributes(): array
     {
         return [
             'foreman_id' => 'Usta Başı',
-            'employees' => 'İşçiler'
+            'employees' => 'İşçiler',
+            'employees.*.squad_start_date' => 'İşçi Başlangıç Tarihi Girmediniz!',
         ];
     }
 }

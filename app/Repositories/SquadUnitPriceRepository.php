@@ -21,7 +21,7 @@ class SquadUnitPriceRepository implements SquadUnitPriceInterface
             ->query()
             ->when($search, function ($query, $search) {
                 $query->orWhere('start_date', 'ilike', "%{$search}%");
-            })
+            })->with('squad')
             ->paginate($perPage);
     }
 }

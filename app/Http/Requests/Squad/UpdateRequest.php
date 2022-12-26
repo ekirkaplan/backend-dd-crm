@@ -17,15 +17,17 @@ class UpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'employees' => ['nullable', 'array'],
-            'removedEmployees' => ['nullable', 'array']
+            'employees' => ['array', 'nullable'],
+            'employees.*.squad_start_date' => ['required', 'date'],
         ];
     }
 
     public function attributes()
     {
         return [
-            'employees' => 'İşçiler'
+            'foreman_id' => 'Usta Başı',
+            'employees' => 'İşçiler',
+            'employees.*.squad_start_date' => 'İşçi Başlangıç Tarihi Girmediniz!',
         ];
     }
 }

@@ -15,6 +15,6 @@ class SquadUnitPrice extends Model
 
     public function squad(): BelongsTo
     {
-        return $this->belongsTo(Squad::class);
+        return $this->belongsTo(Squad::class)->with('foreman');
     }
 }
