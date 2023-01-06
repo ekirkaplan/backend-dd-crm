@@ -14,6 +14,7 @@ class ContractCost extends Model
      * @var string
      */
     protected $table = 'contract_costs';
+
     /**
      * @var string[]
      */

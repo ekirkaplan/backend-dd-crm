@@ -28,5 +28,4 @@ class CustomerRepository implements CustomerInterface
             ->with('city')
             ->paginate($perPage);
     }
-
 }
