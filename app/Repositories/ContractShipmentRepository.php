@@ -3,8 +3,10 @@
 namespace App\Repositories;
 
 use App\Interfaces\ContractShipmentInterface;
+use App\Models\Contract;
 use App\Models\ContractShipment;
 use Illuminate\Contracts\Pagination\Paginator;
+use Illuminate\Database\Eloquent\Collection;
 
 class ContractShipmentRepository implements ContractShipmentInterface
 {
@@ -26,5 +28,19 @@ class ContractShipmentRepository implements ContractShipmentInterface
             ->with(['company'])
             ->orderBy('id')
             ->paginate($perPage);
+    }
+
+    /**
+     * @param Contract $contract
+     * @return Collection
+     */
+    public function getGroupByContractId(Contract $contract): Collection
+    {
+        return $this->contractShipment
+            ->query()
+            ->where('contract_id', $contract->id)
+            ->orderBy('id')
+            ->get()
+            ->groupBy('contract_id');
     }
 }

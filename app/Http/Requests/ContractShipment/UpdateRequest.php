@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\ContractShipments;
+namespace App\Http\Requests\ContractShipment;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreRequest extends FormRequest
+class UpdateRequest extends FormRequest
 {
     public function authorize(): bool
     {

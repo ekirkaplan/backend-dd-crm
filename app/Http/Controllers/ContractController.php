@@ -6,7 +6,6 @@ use App\Facades\JsonOutputFaced;
 use App\Http\Requests\Contracts\StoreRequest;
 use App\Http\Requests\Contracts\UpdateRequest;
 use App\Models\Contract;
-use App\Repositories\BaseRepository;
 use App\Repositories\ContractRepository;
 use App\Services\ContractService;
 use Illuminate\Http\JsonResponse;
@@ -14,9 +13,12 @@ use Illuminate\Http\Request;
 
 class ContractController extends Controller
 {
-    public function __construct(private BaseRepository $baseRepository, private ContractRepository $contractRepository, private ContractService $contractService)
+    /**
+     * @param ContractRepository $contractRepository
+     * @param ContractService $contractService
+     */
+    public function __construct(private ContractRepository $contractRepository, private ContractService $contractService)
     {
-        $this->baseRepository->init(new Contract());
     }
 
     /**
@@ -24,13 +26,12 @@ class ContractController extends Controller
      */
     public function getAll(): JsonResponse
     {
-        $contracts = $this->contractService->setPlural($this->baseRepository->getAll());
-
+        $contracts = $this->contractService->setPlural($this->contractRepository->getAll());
         return JsonOutputFaced::setData($contracts)->response();
     }
 
     /**
-     * @param  Request  $request
+     * @param Request $request
      * @return JsonResponse
      */
     public function getFiltered(Request $request): JsonResponse
@@ -41,18 +42,27 @@ class ContractController extends Controller
     }
 
     /**
-     * @param  StoreRequest  $request
+     * @return JsonResponse
+     */
+    public function getArchived(): JsonResponse
+    {
+        $contracts = $this->contractRepository->getArchived();
+        return JsonOutputFaced::setData($contracts)->response();
+    }
+
+    /**
+     * @param StoreRequest $request
      * @return JsonResponse
      */
     public function store(StoreRequest $request): JsonResponse
     {
-        $this->baseRepository->store($request->validated());
+        $this->contractRepository->store($request->validated());
 
         return JsonOutputFaced::setMessage('Kesim Sözleşmesi Oluşturuldu')->response();
     }
 
     /**
-     * @param  Contract  $contract
+     * @param Contract $contract
      * @return JsonResponse
      */
     public function show(Contract $contract): JsonResponse
@@ -63,24 +73,24 @@ class ContractController extends Controller
     }
 
     /**
-     * @param  UpdateRequest  $request
-     * @param  Contract  $contract
+     * @param UpdateRequest $request
+     * @param Contract $contract
      * @return JsonResponse
      */
     public function update(UpdateRequest $request, Contract $contract): JsonResponse
     {
-        $this->baseRepository->update($contract, $request->validated());
+        $this->contractRepository->update($contract, $request->validated());
 
         return JsonOutputFaced::setMessage('Kesim Sözleşmesi Güncellendi')->response();
     }
 
     /**
-     * @param  Contract  $contract
+     * @param Contract $contract
      * @return JsonResponse
      */
     public function destroy(Contract $contract): JsonResponse
     {
-        $this->baseRepository->destroy($contract);
+        $this->contractRepository->destroy($contract);
 
         return JsonOutputFaced::setMessage('Kesim Sözleşmesi Silindi')->response();
     }

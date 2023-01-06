@@ -28,6 +28,7 @@ use App\Http\Controllers\CostTypeController;
 use App\Http\Controllers\ContractCostController;
 use App\Http\Controllers\PaymentTransactionTypeController;
 use App\Http\Controllers\SquadPaymentTransactionController;
+use App\Http\Controllers\ContractShipmentController;
 
 
 /*
@@ -163,6 +164,7 @@ Route::middleware(['jwt.verify'])->group(function () {
     Route::controller(ContractController::class)->prefix('contracts')->group(function () {
         Route::get('get-all', 'getAll');
         Route::get('get-filtered', 'getFiltered');
+        Route::get('get-archived', 'getArchived');
     });
     Route::apiResource('contracts', ContractController::class);
 
@@ -171,6 +173,13 @@ Route::middleware(['jwt.verify'])->group(function () {
         Route::get('get-filtered', 'getFiltered');
     });
     Route::apiResource('shipments', ShipmentController::class);
+
+    Route::controller(ContractShipmentController::class)->prefix('contract-shipments')->group(function () {
+        Route::get('get-all', 'getAll');
+        Route::get('get-filtered', 'getFiltered');
+        Route::get('get-group-by-contract-id/{contract}', 'getGroupByContractId');
+    });
+    Route::apiResource('contract-shipments', ContractShipmentController::class);
 
     Route::controller(ChiefdomController::class)->prefix('chiefdoms')->group(function () {
         Route::get('get-all', 'getAll');

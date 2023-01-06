@@ -19,6 +19,7 @@ return new class extends Migration
             $table->foreignId('region_director_id')->references('id')->on('region_directors');
             $table->foreignId('chiefdom_id')->references('id')->on('chiefdoms');
             $table->foreignId('product_type_id')->references('id')->on('product_types');
+            $table->unsignedTinyInteger('archived')->default(0);
             $table->string('stack_no');
             $table->string('parcel_no');
             $table->double('cubic_meter');
