@@ -23,6 +23,11 @@ use App\Http\Controllers\ContractController;
 use App\Http\Controllers\ChiefdomController;
 use App\Http\Controllers\SquadUnitPriceController;
 use App\Http\Controllers\SquadContractController;
+use App\Http\Controllers\SquadPaymentRequestController;
+use App\Http\Controllers\CostTypeController;
+use App\Http\Controllers\ContractCostController;
+use App\Http\Controllers\PaymentTransactionTypeController;
+use App\Http\Controllers\SquadPaymentTransactionController;
 
 
 /*
@@ -186,5 +191,30 @@ Route::middleware(['jwt.verify'])->group(function () {
         Route::get('get-filtered', 'getFiltered');
     });
     Route::apiResource('squad-contracts', SquadContractController::class);
+
+    Route::controller(SquadPaymentRequestController::class)->prefix('squad-payment-request')->group(function () {
+        Route::get('get-all', 'getAll');
+        Route::get('get-filtered', 'getFiltered');
+    });
+    Route::apiResource('squad-payment-request', SquadPaymentRequestController::class);
+
+
+    Route::apiResource('cost-types', CostTypeController::class);
+
+    Route::controller(ContractCostController::class)->prefix('contract-costs')->group(function () {
+        Route::get('get-all', 'getAll');
+        Route::get('get-filtered', 'getFiltered');
+    });
+    Route::apiResource('contract-costs', ContractCostController::class);
+
+
+    Route::apiResource('payment-transaction-types', PaymentTransactionTypeController::class);
+
+
+    Route::controller(SquadPaymentTransactionController::class)->prefix('squad-payment-transactions')->group(function () {
+        Route::get('get-all', 'getAll');
+        Route::get('get-filtered', 'getFiltered');
+    });
+    Route::apiResource('squad-payment-transactions', SquadPaymentTransactionController::class);
 
 });

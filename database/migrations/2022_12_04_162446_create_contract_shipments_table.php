@@ -26,6 +26,7 @@ return new class extends Migration
             $table->string('exit_cubic_meter');
             $table->date('exit_date');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
