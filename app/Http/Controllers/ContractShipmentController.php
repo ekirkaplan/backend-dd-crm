@@ -125,7 +125,10 @@ class ContractShipmentController extends Controller
 
     private function squadCalc(Squad $squad, string $date, $arrivalTonnage)
     {
-        $unitPrice = $squad->unitPrices()->where('start_date', '>=', $date)->where('end_date', '<=', $date)->first();
+        $unitPrice = $squad->unitPrices()->get()
+            ->where('start_date', '>=', $date)
+            ->where('end_date', '<=', $date)
+            ->first();
         dd($unitPrice);
         if (is_null($unitPrice)) {
             return 0;
