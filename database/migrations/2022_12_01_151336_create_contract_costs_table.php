@@ -19,6 +19,7 @@ return new class extends Migration
             $table->foreignId('cost_type_id')->references('id')->on('cost_types');
             $table->foreignId('squad_id')->references('id')->on('squads');
             $table->double('cost_amount');
+            $table->date('cost_date');
             $table->text('description')->nullable();
             $table->timestamps();
             $table->softDeletes();

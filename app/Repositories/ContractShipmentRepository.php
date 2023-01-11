@@ -25,7 +25,7 @@ class ContractShipmentRepository implements ContractShipmentInterface
                 $query->orWhere('exit_licence_no', 'ilike', "%{$search}%");
                 $query->orWhere('exit_date', 'ilike', "%{$search}%");
             })
-            ->with(['company'])
+            ->with(['city', 'shipment', 'arrivalLocation', 'user', 'contract', 'productType'])
             ->orderBy('id')
             ->paginate($perPage);
     }

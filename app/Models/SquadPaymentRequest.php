@@ -13,7 +13,7 @@ class SquadPaymentRequest extends Model
 
     public function squad(): BelongsTo
     {
-        return $this->belongsTo(Squad::class);
+        return $this->belongsTo(Squad::class)->with('foreman');
     }
 
     public function contract(): BelongsTo

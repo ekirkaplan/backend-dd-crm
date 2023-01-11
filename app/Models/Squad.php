@@ -46,4 +46,12 @@ class Squad extends Model
     {
         return $this->belongsTo(Employee::class, 'foreman_id');
     }
+
+    /**
+     * @return HasMany
+     */
+    public function unitPrices(): HasMany
+    {
+        return $this->hasMany(SquadUnitPrice::class);
+    }
 }

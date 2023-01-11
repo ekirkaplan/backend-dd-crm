@@ -15,14 +15,16 @@ class StoreRequest extends FormRequest
         return [
             'contract_id' => ['required', 'int', 'exists:contracts,id'],
             'squad_id' => ['required', 'int', 'exists:squads,id'],
-            'exit_product_type_id' => ['required', 'int', 'product_types,id'],
+            'exit_product_type_id' => ['required', 'int', 'exists:product_types,id'],
             'shipment_id' => ['required', 'int', 'exists:shipments,id'],
             'exit_city_id' => ['required', 'int', 'exists:cities,id'],
             'arrival_location_id' => ['required', 'int', 'exists:arrival_locations,id'],
             'exit_user_id' => ['required', 'int', 'exists:users,id'],
             'exit_licence_no' => ['required', 'string'],
             'exit_cubic_meter' => ['required'],
-            'exit_date' => ['date', 'required']
+            'exit_date' => ['date', 'required'],
+            'arrival_date' => ['date', 'required'],
+            'arrival_tonnage' => ['required']
         ];
     }
 

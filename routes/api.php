@@ -207,7 +207,9 @@ Route::middleware(['jwt.verify'])->group(function () {
     });
     Route::apiResource('squad-payment-request', SquadPaymentRequestController::class);
 
-
+    Route::controller(CostTypeController::class)->prefix('cost-types')->group(function () {
+        Route::get('get-all', 'getAll');
+    });
     Route::apiResource('cost-types', CostTypeController::class);
 
     Route::controller(ContractCostController::class)->prefix('contract-costs')->group(function () {

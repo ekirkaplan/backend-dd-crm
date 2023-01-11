@@ -20,6 +20,7 @@ class ContractCostResource extends JsonResource
             'cost_type_id' => $this->cost_type_id,
             'squad_id' => $this->squad_id,
             'cost_amount' => $this->cost_amount,
+            'cost_date' => $this->cost_date,
             'description' => $this->description,
             'contract' => new ContractResource($this->contract),
             'cost_type' => new CostTypeResource($this->costType),

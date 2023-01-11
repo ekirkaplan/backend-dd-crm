@@ -24,7 +24,7 @@ class ContractShipment extends Model
      */
     public function contract(): BelongsTo
     {
-        return $this->belongsTo(Contract::class);
+        return $this->belongsTo(Contract::class)->with('chiefdom');
     }
 
     /**
@@ -40,7 +40,7 @@ class ContractShipment extends Model
      */
     public function productType(): BelongsTo
     {
-        return $this->belongsTo(ProductType::class);
+        return $this->belongsTo(ProductType::class, 'exit_product_type_id');
     }
 
     /**
@@ -56,15 +56,15 @@ class ContractShipment extends Model
      */
     public function city(): BelongsTo
     {
-        return $this->belongsTo(City::class);
+        return $this->belongsTo(City::class, 'exit_city_id');
     }
 
     /**
      * @return BelongsTo
      */
-    public function arrivalLocations(): BelongsTo
+    public function arrivalLocation(): BelongsTo
     {
-        return $this->belongsTo(ArrivalLocation::class);
+        return $this->belongsTo(ArrivalLocation::class, 'arrival_location_id');
     }
 
     /**

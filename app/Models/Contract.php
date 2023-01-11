@@ -24,7 +24,15 @@ class Contract extends Model
      */
     public function chiefDirector(): BelongsTo
     {
-        return $this->belongsTo(ChiefDirector::class);
+        return $this->belongsTo(ChiefDirector::class, 'chief_director_id');
+    }
+
+    /**
+     * @return BelongsTo
+     */
+    public function chiefdom(): BelongsTo
+    {
+        return $this->belongsTo(Chiefdom::class);
     }
 
     /**
