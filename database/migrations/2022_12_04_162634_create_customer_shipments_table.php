@@ -20,10 +20,11 @@ return new class extends Migration
             $table->foreignId('customer_id')->references('id')->on('customers');
             $table->foreignId('shipment_id')->references('id')->on('shipments');
             $table->foreignId('exit_company_id')->references('id')->on('companies');
+            $table->foreignId('arrival_location_id')->references('id')->on('arrival_locations');
             $table->morphs('exit_model');
-            $table->string('supplier_purchase_invoice_no');
-            $table->date('supplier_purchase_invoice_date');
-            $table->double('supplier_purchase_invoice_amount');
+            $table->string('supplier_purchase_invoice_no')->nullable();
+            $table->date('supplier_purchase_invoice_date')->nullable();
+            $table->double('supplier_purchase_invoice_amount')->nullable();
             $table->date('shipment_date');
             $table->double('shipment_invoice_amount');
             $table->double('exit_tonnage');
@@ -38,6 +39,7 @@ return new class extends Migration
             $table->double('product_invoice_total_amount');
             $table->text('withholding');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

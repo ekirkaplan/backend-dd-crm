@@ -54,4 +54,12 @@ class Squad extends Model
     {
         return $this->hasMany(SquadUnitPrice::class);
     }
+
+    /**
+     * @return HasMany
+     */
+    public function contracts(): HasMany
+    {
+        return $this->hasMany(SquadContract::class);
+    }
 }

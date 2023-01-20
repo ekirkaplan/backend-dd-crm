@@ -29,6 +29,7 @@ use App\Http\Controllers\ContractCostController;
 use App\Http\Controllers\PaymentTransactionTypeController;
 use App\Http\Controllers\SquadPaymentTransactionController;
 use App\Http\Controllers\ContractShipmentController;
+use App\Http\Controllers\CustomerShipmentController;
 
 
 /*
@@ -115,6 +116,7 @@ Route::middleware(['jwt.verify'])->group(function () {
     Route::controller(CustomerUnitPriceController::class)->prefix('customer-unit-prices')->group(function () {
         Route::get('get-all', 'getAll');
         Route::get('get-filtered', 'getFiltered');
+        Route::get('get-for-product-type/{customer}/{productType}', 'getForProductType');
     });
     Route::apiResource('customer-unit-prices', CustomerUnitPriceController::class);
 
@@ -218,14 +220,25 @@ Route::middleware(['jwt.verify'])->group(function () {
     });
     Route::apiResource('contract-costs', ContractCostController::class);
 
-
+    Route::controller(PaymentTransactionTypeController::class)->prefix('payment-transaction-types')->group(function () {
+        Route::get('get-all', 'getAll');
+        Route::get('get-filtered', 'getFiltered');
+    });
     Route::apiResource('payment-transaction-types', PaymentTransactionTypeController::class);
 
 
     Route::controller(SquadPaymentTransactionController::class)->prefix('squad-payment-transactions')->group(function () {
         Route::get('get-all', 'getAll');
         Route::get('get-filtered', 'getFiltered');
+        Route::get('get-total-transaction-amount/{squad}/{contract}', 'getTotalTransactionAmount');
     });
     Route::apiResource('squad-payment-transactions', SquadPaymentTransactionController::class);
+
+    Route::controller(CustomerShipmentController::class)->prefix('customer-shipments')->group(function () {
+        Route::get('get-all', 'getAll');
+        Route::get('get-filtered', 'getFiltered');
+        Route::get('get-total-transaction-amount/{squad}/{contract}', 'getTotalTransactionAmount');
+    });
+    Route::apiResource('customer-shipments', CustomerShipmentController::class);
 
 });

@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Facades\JsonOutputFaced;
 use App\Http\Requests\SquadPaymentTransactions\StoreRequest;
 use App\Http\Requests\SquadPaymentTransactions\UpdateRequest;
+use App\Models\Contract;
+use App\Models\Squad;
 use App\Models\SquadPaymentTransaction;
 use App\Repositories\BaseRepository;
 use App\Repositories\SquadPaymentTransactionRepository;
@@ -61,8 +63,15 @@ class SquadPaymentTransactionController extends Controller
 
     public function destroy(SquadPaymentTransaction $squadPaymentTransaction): JsonResponse
     {
-        $this->destroy($squadPaymentTransaction);
+        $this->baseRepository->destroy($squadPaymentTransaction);
 
         return JsonOutputFaced::setMessage('Kesim Ekibi Cari İşlemi Silindi')->response();
+    }
+
+    public function getTotalTransactionAmount(Squad $squad, Contract $contract): JsonResponse
+    {
+        $data = $this->squadPaymentTransactionRepository->getTotalTransactionAmount($squad, $contract);
+
+        return JsonOutputFaced::setData($data)->response();
     }
 }

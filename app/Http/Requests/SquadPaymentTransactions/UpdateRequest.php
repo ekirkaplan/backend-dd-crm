@@ -15,10 +15,8 @@ class UpdateRequest extends FormRequest
     {
         return [
             'payment_transaction_type_id' => ['required', 'int', 'exists:payment_transaction_types,id'],
-            'contact_id' => ['required', 'int', 'exists:contracts,id'],
+            'contract_id' => ['required', 'int', 'exists:contracts,id'],
             'squad_id' => ['required', 'int', 'exists:squads,id'],
-            'total_transaction_amount' => ['required'],
-            'total_payment_amount' => ['required'],
             'payment_date' => ['required'],
             'payment_amount' => ['required'],
             'description' => ['nullable'],

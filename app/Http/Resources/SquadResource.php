@@ -2,6 +2,8 @@
 
 namespace App\Http\Resources;
 
+use App\Models\Contract;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class SquadResource extends JsonResource
@@ -12,7 +14,16 @@ class SquadResource extends JsonResource
             'id' => $this->id,
             'foreman' => new EmployeeResource($this->foreman),
             'foreman_id' => $this->foreman_id,
-            'employees' => SquadEmplooyesResource::collection($this->squadEmployees)
+            'name' => $this->foreman->first_name . ' ' . $this->foreman->last_name,
+            'employees' => SquadEmplooyesResource::collection($this->squadEmployees),
+            'contracts' => ContractResource::collection($this->getContracts())
         ];
+    }
+
+    private function getContracts(): Collection
+    {
+        $contractIds = $this->contracts()->pluck('contract_id');
+
+        return Contract::whereIn('id', $contractIds)->get();
     }
 }

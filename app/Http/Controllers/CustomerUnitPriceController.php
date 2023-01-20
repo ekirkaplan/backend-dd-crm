@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use App\Facades\JsonOutputFaced;
 use App\Http\Requests\CustomerUnitPrice\StoreRequest;
 use App\Http\Requests\CustomerUnitPrice\UpdateRequest;
+use App\Models\Customer;
 use App\Models\CustomerUnitPrice;
+use App\Models\ProductType;
 use App\Repositories\BaseRepository;
 use App\Repositories\CustomerUnitPriceRepository;
 use App\Services\CustomerUnitPriceService;
@@ -88,5 +90,12 @@ class CustomerUnitPriceController extends Controller
     {
         $this->baseRepository->destroy($customerUnitPrice);
         return JsonOutputFaced::setMessage('Müşteri Birim Fiyat Silindi')->response();
+    }
+
+    public function getForProductType(Customer $customer, ProductType $productType): JsonResponse
+    {
+        $data = $this->customerUnitPriceService->setSingle($this->customerUnitPriceRepository->getForProductType($customer, $productType));
+
+        return JsonOutputFaced::setData($data)->response();
     }
 }
