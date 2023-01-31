@@ -35,7 +35,6 @@ return new class extends Migration
             $table->date('product_invoice_date');
             $table->string('product_invoice_amount_without_tax');
             $table->string('product_tax_percentage');
-            $table->string('product_total_tax');
             $table->double('product_invoice_total_amount');
             $table->text('withholding');
             $table->timestamps();

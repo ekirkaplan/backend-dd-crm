@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Facades\JsonOutputFaced;
+use App\Models\ExitWarehouse;
+use App\Models\Squad;
+use App\Models\Supplier;
 use App\Services\CustomerShipmentService;
 use App\Http\Requests\CustomerShipment\StoreRequest;
 use App\Http\Requests\CustomerShipment\UpdateRequest;
@@ -15,16 +18,15 @@ use Illuminate\Http\Request;
 class CustomerShipmentController extends Controller
 {
     /**
-     * @param BaseRepository $baseRepository
-     * @param CustomerShipmentRepository $customerShipmentRepository
-     * @param CustomerShipmentService $customerShipmentService
+     * @param  BaseRepository  $baseRepository
+     * @param  CustomerShipmentRepository  $customerShipmentRepository
+     * @param  CustomerShipmentService  $customerShipmentService
      */
     public function __construct(
         private BaseRepository $baseRepository,
         private CustomerShipmentRepository $customerShipmentRepository,
         private CustomerShipmentService $customerShipmentService
-    )
-    {
+    ) {
         $this->baseRepository->init(new CustomerShipment());
     }
 
@@ -35,6 +37,7 @@ class CustomerShipmentController extends Controller
     {
         $customerShipments = $this->baseRepository->getAll();
         $customerShipments = $this->customerShipmentService->setPlural($customerShipments);
+
         return JsonOutputFaced::setData($customerShipments)->response();
     }
 
@@ -46,6 +49,7 @@ class CustomerShipmentController extends Controller
     {
         $search = $request->get('search');
         $customerShipments = $this->customerShipmentRepository->getFiltered($search);
+
         return JsonOutputFaced::setData($customerShipments)->response();
     }
 
@@ -55,7 +59,10 @@ class CustomerShipmentController extends Controller
      */
     public function store(StoreRequest $request): JsonResponse
     {
-        $this->baseRepository->store($request->validated());
+        $data = $request->except('exit_type');
+        $data['exit_model_type'] = $this->exitTypeConverter($request->get('exit_type'));
+        $this->baseRepository->store($data);
+
         return JsonOutputFaced::setMessage('Müşteri Sevkiyat Ekledi')->response();
     }
 
@@ -66,6 +73,7 @@ class CustomerShipmentController extends Controller
     public function show(CustomerShipment $customerShipment): JsonResponse
     {
         $customerShipment = $this->customerShipmentService->setSingle($customerShipment);
+
         return JsonOutputFaced::setData($customerShipment)->response();
     }
 
@@ -76,7 +84,10 @@ class CustomerShipmentController extends Controller
      */
     public function update(UpdateRequest $request, CustomerShipment $customerShipment): JsonResponse
     {
-        $this->baseRepository->update($customerShipment, $request->validated());
+        $data = $request->except('exit_type');
+        $data['exit_model_type'] = $this->exitTypeConverter($request->get('exit_type'));
+        $this->baseRepository->update($customerShipment, $data);
+
         return JsonOutputFaced::setMessage('Müşteri Sevkiyat Güncellendi')->response();
     }
 
@@ -87,6 +98,18 @@ class CustomerShipmentController extends Controller
     public function destroy(CustomerShipment $customerShipment): JsonResponse
     {
         $this->baseRepository->destroy($customerShipment);
+
         return JsonOutputFaced::setMessage('Müşteri Sevkiyat Silindi')->response();
+    }
+
+    private function exitTypeConverter(int $type): string
+    {
+        if ($type === 0) {
+            return ExitWarehouse::class;
+        } elseif ($type === 1) {
+            return Squad::class;
+        } elseif ($type === 2) {
+            return Supplier::class;
+        }
     }
 }

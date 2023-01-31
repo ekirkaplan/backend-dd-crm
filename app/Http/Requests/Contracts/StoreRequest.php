@@ -33,7 +33,7 @@ class StoreRequest extends FormRequest
             'actual_start_date' => ['required', 'date'],
             'number_of_man_day' => ['required', 'integer'],
             'extension_time_received' => ['required', 'integer'],
-            'yield_percentage' => ['nullable', 'integer'],
+            'yield_percentage' => ['required', 'integer'],
         ];
     }
 

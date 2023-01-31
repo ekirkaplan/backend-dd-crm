@@ -25,7 +25,7 @@ class CustomerShipment extends Model
      */
     public function company(): BelongsTo
     {
-        return $this->belongsTo(Company::class);
+        return $this->belongsTo(Company::class, 'exit_company_id');
     }
 
     /**
@@ -33,7 +33,7 @@ class CustomerShipment extends Model
      */
     public function shipment(): BelongsTo
     {
-        return $this->belongsTo(Shipment::class);
+        return $this->belongsTo(Shipment::class,'shipment_id');
     }
 
     /**
@@ -49,7 +49,7 @@ class CustomerShipment extends Model
      */
     public function city(): BelongsTo
     {
-        return $this->belongsTo(City::class);
+        return $this->belongsTo(City::class, 'exit_city_id');
     }
 
     /**

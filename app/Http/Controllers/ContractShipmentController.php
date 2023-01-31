@@ -118,6 +118,7 @@ class ContractShipmentController extends Controller
         return JsonOutputFaced::setMessage('Kontrat Sevkiyat Silindi')->response();
     }
 
+    #Private Function Area
     private function shipmentsCalc(ArrivalLocation $arrivalLocation, $arrivalTonnage)
     {
         return $arrivalLocation->transport_unit_price * (int)$arrivalTonnage;

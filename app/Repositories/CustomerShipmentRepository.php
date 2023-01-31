@@ -42,7 +42,7 @@ class CustomerShipmentRepository implements CustomerShipmentInterface
                 $query->orWhere('product_invoice_total_amount', 'ilike', "%{$search}%");
                 $query->orWhere('withholding', 'ilike', "%{$search}%");
             })
-            ->with('productType', 'city', 'customer', 'company')
+            ->with('productType', 'city', 'customer', 'company', 'shipment')
             ->paginate($perPage);
     }
 }

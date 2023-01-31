@@ -30,6 +30,7 @@ use App\Http\Controllers\PaymentTransactionTypeController;
 use App\Http\Controllers\SquadPaymentTransactionController;
 use App\Http\Controllers\ContractShipmentController;
 use App\Http\Controllers\CustomerShipmentController;
+use App\Http\Controllers\ContractReportController;
 
 
 /*
@@ -240,5 +241,10 @@ Route::middleware(['jwt.verify'])->group(function () {
         Route::get('get-total-transaction-amount/{squad}/{contract}', 'getTotalTransactionAmount');
     });
     Route::apiResource('customer-shipments', CustomerShipmentController::class);
+
+    Route::controller(ContractReportController::class)->prefix('contract-reports')->group(function (){
+        Route::get('/get-report', 'index');
+    });
+
 
 });

@@ -19,14 +19,17 @@ class StoreRequest extends FormRequest
     public function rules(): array
     {
         return [
+            'exit_type' => ['required', 'int'],
+            'exit_model_id' => ['required', 'int'],
             'product_type_id' => ['required', 'int', 'exists:product_types,id'],
             'exit_city_id' => ['required', 'int', 'exists:cities,id'],
             'customer_id' => ['required', 'int', 'exists:customers,id'],
             'shipment_id' => ['required', 'int', 'exists:shipments,id'],
             'exit_company_id' => ['required', 'int', 'exists:companies,id'],
-            'supplier_purchase_invoice_no' => ['required'],
-            'supplier_purchase_invoice_date' => ['required'],
-            'supplier_purchase_invoice_amount' => ['required'],
+            'arrival_location_id' => ['required', 'int', 'exists:arrival_locations,id'],
+            'supplier_purchase_invoice_no' => ['nullable'],
+            'supplier_purchase_invoice_date' => ['nullable'],
+            'supplier_purchase_invoice_amount' => ['nullable'],
             'shipment_date' => ['required'],
             'shipment_invoice_amount' => ['required'],
             'exit_tonnage' => ['required'],
@@ -37,7 +40,6 @@ class StoreRequest extends FormRequest
             'product_invoice_date' => ['required'],
             'product_invoice_amount_without_tax' => ['required'],
             'product_tax_percentage' => ['required'],
-            'product_total_tax' => ['required'],
             'product_invoice_total_amount' => ['required'],
             'withholding' => ['required'],
         ];
