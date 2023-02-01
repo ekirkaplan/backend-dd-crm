@@ -31,6 +31,7 @@ use App\Http\Controllers\SquadPaymentTransactionController;
 use App\Http\Controllers\ContractShipmentController;
 use App\Http\Controllers\CustomerShipmentController;
 use App\Http\Controllers\ContractReportController;
+use App\Http\Controllers\SquadShipmentReportController;
 
 
 /*
@@ -246,5 +247,10 @@ Route::middleware(['jwt.verify'])->group(function () {
         Route::get('/get-report', 'index');
     });
 
+    Route::controller(SquadShipmentReportController::class)->prefix('squad-shipment-reports')->group(function (){
+        Route::get('/get-report', 'index');
+    });
 
 });
+
+
