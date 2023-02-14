@@ -23,6 +23,7 @@ class StoreRequest extends FormRequest
             'tax_no' => ['required', 'integer'],
             'tax_office_id' => ['required', 'integer', 'exists:tax_offices,id'],
             'description' => ['nullable', 'string'],
+            'files' => ['array', 'nullable'],
         ];
     }
 

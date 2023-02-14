@@ -8,6 +8,7 @@ use App\Http\Requests\Customer\UpdateRequest;
 use App\Models\Customer;
 use App\Repositories\BaseRepository;
 use App\Repositories\CustomerRepository;
+use App\Repositories\MediaRepository;
 use App\Services\CustomerService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -22,7 +23,8 @@ class CustomerController extends Controller
     public function __construct(
         private BaseRepository $baseRepository,
         private CustomerRepository $customerRepository,
-        private CustomerService $customerService
+        private CustomerService $customerService,
+        private MediaRepository $mediaRepository
     )
     {
         $this->baseRepository->init(new Customer());
@@ -55,7 +57,13 @@ class CustomerController extends Controller
      */
     public function store(StoreRequest $request): JsonResponse
     {
-        $this->baseRepository->store($request->validated());
+        $customer = $this->baseRepository->store($request->validated());
+        $mediasData = [
+            'model_type' => Customer::class,
+            'model_id' => $customer->id,
+            'files' => $request->get('files'),
+        ];
+        $this->mediaRepository->sync($mediasData);
         return JsonOutputFaced::setMessage('Müşteri Ekledi')->response();
     }
 
@@ -65,7 +73,7 @@ class CustomerController extends Controller
      */
     public function show(Customer $customer): JsonResponse
     {
-        $cutsomer = $this->customerService->setSingle($customer);
+        $customer = $this->customerService->setSingle($customer);
         return JsonOutputFaced::setData($customer)->response();
     }
 
@@ -77,6 +85,12 @@ class CustomerController extends Controller
     public function update(UpdateRequest $request, Customer $customer): JsonResponse
     {
         $this->baseRepository->update($customer, $request->validated());
+        $mediasData = [
+            'model_type' => Customer::class,
+            'model_id' => $customer->id,
+            'files' => $request->get('files'),
+        ];
+        $this->mediaRepository->sync($mediasData);
         return JsonOutputFaced::setMessage('Müşteri Güncellendi')->response();
     }
 

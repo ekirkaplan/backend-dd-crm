@@ -10,7 +10,9 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Media extends Model
 {
-    use SoftDeletes, HasActivity;
+    use HasActivity;
+
+    protected $appends = ['url'];
 
     /**
      * @var string[]
@@ -27,47 +29,9 @@ class Media extends Model
      */
     protected $cast = ['path'];
 
-    /**
-     * @var string[]
-     */
-    protected $fillable = [
-        'name',
-        'extension',
-        'full_name',
-        'mime_class',
-        'mime_type',
-        'size',
-    ];
 
-    /**
-     * @return Model|MorphTo
-     */
-    public function model(): Model|MorphTo
+    public function getUrlAttribute()
     {
-        return $this->morphTo();
-    }
-
-    /**
-     * @return string
-     */
-    public function url(): string
-    {
-        return url('api/media', $this->id);
-    }
-
-    /**
-     * @return string
-     */
-    public function __toString(): string
-    {
-        return $this->url();
-    }
-
-    /**
-     * @return Attribute|string
-     */
-    public function path(): Attribute|string
-    {
-        return 'medias/' . $this->full_name;
+        return url("/uploads/".$this->created_at->format('d_m_Y')."/".$this->full_name);
     }
 }

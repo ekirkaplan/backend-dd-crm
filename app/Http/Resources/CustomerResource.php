@@ -18,7 +18,8 @@ class CustomerResource extends JsonResource
             'tax_no' => $this->tax_no,
             'tax_office' => $this->tax_office,
             'description' => $this->description,
-            'city' => new CityResource($this->city)
+            'city' => new CityResource($this->city),
+            'files' => $this->medias
         ];
     }
 }

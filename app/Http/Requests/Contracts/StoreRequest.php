@@ -34,6 +34,7 @@ class StoreRequest extends FormRequest
             'number_of_man_day' => ['required', 'integer'],
             'extension_time_received' => ['required', 'integer'],
             'yield_percentage' => ['required', 'integer'],
+            'files' => ['nullable', 'array'],
         ];
     }
 

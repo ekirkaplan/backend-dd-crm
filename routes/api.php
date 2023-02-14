@@ -32,6 +32,7 @@ use App\Http\Controllers\ContractShipmentController;
 use App\Http\Controllers\CustomerShipmentController;
 use App\Http\Controllers\ContractReportController;
 use App\Http\Controllers\SquadShipmentReportController;
+use App\Http\Controllers\MediasController;
 
 
 /*
@@ -147,18 +148,6 @@ Route::middleware(['jwt.verify'])->group(function () {
     });
     Route::apiResource('cities', CityController::class);
 
-//    Route::controller(VehicleController::class)->prefix('vehicles')->group(function () {
-//        Route::get('get-all', 'getAll');
-//        Route::get('get-filtered', 'getFiltered');
-//    });
-//    Route::apiResource('vehicles', VehicleController::class);
-//
-//    Route::controller(DriverController::class)->prefix('drivers')->group(function () {
-//        Route::get('get-all', 'getAll');
-//        Route::get('get-filtered', 'getFiltered');
-//    });
-//    Route::apiResource('drivers', DriverController::class);
-
     Route::controller(TaxOfficeController::class)->prefix('tax-offices')->group(function () {
         Route::get('get-all', 'getAll');
         Route::get('get-filtered', 'getFiltered');
@@ -249,6 +238,10 @@ Route::middleware(['jwt.verify'])->group(function () {
 
     Route::controller(SquadShipmentReportController::class)->prefix('squad-shipment-reports')->group(function (){
         Route::get('/get-report', 'index');
+    });
+
+    Route::controller(MediasController::class)->prefix('medias')->group(function (){
+        Route::post('/upload', 'upload');
     });
 
 });

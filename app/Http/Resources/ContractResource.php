@@ -44,6 +44,7 @@ class ContractResource extends JsonResource
             'region_director' => new RegionDirectorResource($this->regionDirector),
             'product_type' => new ProductTypeResource($this->productType),
             'exit_warehouse' => new ExitWareHouseResource($this->exitWarehouse),
+            'files' => $this->medias
         ];
     }
 }

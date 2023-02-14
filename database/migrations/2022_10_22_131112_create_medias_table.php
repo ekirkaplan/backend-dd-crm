@@ -17,12 +17,10 @@ return new class extends Migration
             $table->id();
             $table->string('name')->nullable();
             $table->string('extension')->nullable();
-            $table->string('full_name')->unique();
-            $table->string('mime_class')->nullable();
-            $table->string('mime_type')->nullable();
+            $table->string('full_name')->nullable();
+            $table->string('path')->nullable();
             $table->unsignedBigInteger('size')->nullable();
             $table->timestamps();
-            $table->softDeletes();
         });
     }
 

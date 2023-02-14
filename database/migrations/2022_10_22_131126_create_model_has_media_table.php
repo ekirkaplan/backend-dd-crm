@@ -14,6 +14,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('model_has_media', function (Blueprint $table) {
+            $table->id();
             $table->morphs('model');
             $table->foreignId('media_id')->references('id')->on('medias');
         });

@@ -7,6 +7,7 @@ use App\Http\Requests\Contracts\StoreRequest;
 use App\Http\Requests\Contracts\UpdateRequest;
 use App\Models\Contract;
 use App\Repositories\ContractRepository;
+use App\Repositories\MediaRepository;
 use App\Services\ContractService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -17,7 +18,7 @@ class ContractController extends Controller
      * @param ContractRepository $contractRepository
      * @param ContractService $contractService
      */
-    public function __construct(private ContractRepository $contractRepository, private ContractService $contractService)
+    public function __construct(private ContractRepository $contractRepository, private ContractService $contractService, private MediaRepository $mediaRepository)
     {
     }
 
@@ -56,7 +57,13 @@ class ContractController extends Controller
      */
     public function store(StoreRequest $request): JsonResponse
     {
-        $this->contractRepository->store($request->validated());
+        $contract = $this->contractRepository->store($request->validated());
+        $mediasData = [
+            'model_type' => Contract::class,
+            'model_id' => $contract->id,
+            'files' => $request->get('files'),
+        ];
+        $this->mediaRepository->sync($mediasData);
 
         return JsonOutputFaced::setMessage('Kesim Sözleşmesi Oluşturuldu')->response();
     }
@@ -81,6 +88,12 @@ class ContractController extends Controller
     {
         $this->contractRepository->update($contract, $request->validated());
 
+        $mediasData = [
+            'model_type' => Contract::class,
+            'model_id' => $contract->id,
+            'files' => $request->get('files'),
+        ];
+        $this->mediaRepository->sync($mediasData);
         return JsonOutputFaced::setMessage('Kesim Sözleşmesi Güncellendi')->response();
     }
 
