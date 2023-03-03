@@ -5,19 +5,20 @@ namespace App\Repositories;
 use App\Interfaces\CustomerShipmentInterface;
 use App\Models\CustomerShipment;
 use Illuminate\Contracts\Pagination\Paginator;
+use Illuminate\Database\Eloquent\Collection;
 
 class CustomerShipmentRepository implements CustomerShipmentInterface
 {
     /**
-     * @param CustomerShipment $customerShipment
+     * @param  CustomerShipment  $customerShipment
      */
     public function __construct(protected CustomerShipment $customerShipment)
     {
     }
 
     /**
-     * @param string|null $search
-     * @param int $perPage
+     * @param  string|null  $search
+     * @param  int  $perPage
      * @return Paginator
      */
     public function getFiltered(?string $search = null, int $perPage = 10): Paginator
@@ -44,5 +45,12 @@ class CustomerShipmentRepository implements CustomerShipmentInterface
             })
             ->with('productType', 'city', 'customer', 'company', 'shipment')
             ->paginate($perPage);
+    }
+
+    public function bulkInvoiceUpdate(Collection $customerShipments, array $data): void
+    {
+        foreach ($customerShipments as $customerShipment) {
+            $customerShipment->update($data);
+        }
     }
 }

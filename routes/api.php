@@ -33,6 +33,7 @@ use App\Http\Controllers\CustomerShipmentController;
 use App\Http\Controllers\ContractReportController;
 use App\Http\Controllers\SquadShipmentReportController;
 use App\Http\Controllers\MediasController;
+use App\Http\Controllers\CustomerShipmentReportController;
 
 
 /*
@@ -228,6 +229,7 @@ Route::middleware(['jwt.verify'])->group(function () {
     Route::controller(CustomerShipmentController::class)->prefix('customer-shipments')->group(function () {
         Route::get('get-all', 'getAll');
         Route::get('get-filtered', 'getFiltered');
+        Route::post('bulk-invoice-update', 'bulkInvoiceUpdate');
         Route::get('get-total-transaction-amount/{squad}/{contract}', 'getTotalTransactionAmount');
     });
     Route::apiResource('customer-shipments', CustomerShipmentController::class);
@@ -246,4 +248,7 @@ Route::middleware(['jwt.verify'])->group(function () {
 
 });
 
+Route::controller(CustomerShipmentReportController::class)->prefix('customer-shipment-report')->group(function (){
+    Route::get('/get-report', 'getReport');
+});
 

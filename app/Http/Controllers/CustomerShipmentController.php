@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Facades\JsonOutputFaced;
+use App\Http\Requests\CustomerShipment\BulkInvoiceUpdateRequest;
 use App\Models\ExitWarehouse;
 use App\Models\Squad;
 use App\Models\Supplier;
@@ -100,6 +101,25 @@ class CustomerShipmentController extends Controller
         $this->baseRepository->destroy($customerShipment);
 
         return JsonOutputFaced::setMessage('Müşteri Sevkiyat Silindi')->response();
+    }
+
+    public function bulkInvoiceUpdate(BulkInvoiceUpdateRequest $request): JsonResponse
+    {
+        $data = $request->only([
+            'product_invoice_no',
+            'product_invoice_date',
+            'product_invoice_amount_without_tax',
+            'product_tax_percentage',
+            'product_invoice_total_amount',
+            'withholding',
+        ]);
+
+        $customerShipments = CustomerShipment::whereIn('id', $request->get('shipments'))->get();
+
+        $this->customerShipmentRepository->bulkInvoiceUpdate($customerShipments, $data);
+
+        return JsonOutputFaced::setMessage('Fatura Bilgileri GÜncellendi')->response();
+
     }
 
     private function exitTypeConverter(int $type): string

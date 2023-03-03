@@ -2,13 +2,9 @@
 
 namespace App\Http\Resources;
 
-use App\Models\ExitWarehouse;
-use App\Models\Squad;
-use App\Models\Supplier;
 use Illuminate\Http\Resources\Json\JsonResource;
-use function PHPUnit\Framework\isNull;
 
-class CustomerShipmentResource extends JsonResource
+class CustomerShipmentReportResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -24,10 +20,8 @@ class CustomerShipmentResource extends JsonResource
             'exit_city' => new CityResource($this->city),
             'customer' => new CustomerResource($this->customer),
             'shipment' => new ShipmentResource($this->shipment),
-            'arrival_location' => new ArrivalLocationResource($this->arrivalLocation),
             'exit_company' => new CompanyResource($this->company),
             'exit_type' => $this->exitTypeConverter($this->exit_model_type),
-            'exit_name' => isNull($this->exitType->name) ? $this->exitType->title : $this->exitType->name,
             'exit_model_id' => $this->exit_model_id,
             'product_type_id' => $this->product_type_id,
             'exit_city_id' => $this->exit_city_id,
@@ -50,18 +44,18 @@ class CustomerShipmentResource extends JsonResource
             'product_tax_percentage' => $this->product_tax_percentage,
             'product_total_tax' => $this->product_total_tax,
             'product_invoice_total_amount' => $this->product_invoice_total_amount,
-            'withholding' => $this->withholding,
+            'withholding' => $this->withholding
         ];
     }
 
-    private function exitTypeConverter(string $type): int
+    private function exitTypeConverter(string $type): string
     {
         if ($type === "App\Models\ExitWarehouse") {
-            return 0;
+            return "Depo";
         } elseif ($type === "App\Models\Squad") {
-            return 1;
+            return "Kesim Ekibi";
         } elseif ($type === "App\Models\Supplier") {
-            return 2;
+            return "Tedarikçi";
         }
     }
 }

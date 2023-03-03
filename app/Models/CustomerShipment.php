@@ -4,6 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\MorphOne;
+use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class CustomerShipment extends Model
@@ -33,7 +35,7 @@ class CustomerShipment extends Model
      */
     public function shipment(): BelongsTo
     {
-        return $this->belongsTo(Shipment::class,'shipment_id');
+        return $this->belongsTo(Shipment::class, 'shipment_id');
     }
 
     /**
@@ -58,5 +60,15 @@ class CustomerShipment extends Model
     public function productType(): BelongsTo
     {
         return $this->belongsTo(ProductType::class, 'product_type_id');
+    }
+
+    public function exitType(): MorphTo
+    {
+        return $this->morphTo('exit_model');
+    }
+
+    public function arrivalLocation(): BelongsTo
+    {
+        return $this->belongsTo(ArrivalLocation::class, 'arrival_location_id');
     }
 }
