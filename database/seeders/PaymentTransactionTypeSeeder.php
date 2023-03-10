@@ -20,7 +20,7 @@ class PaymentTransactionTypeSeeder extends Seeder
                 'name' => 'Sözleşme Hakedişine Mahsuben'
             ],
             [
-                'name' => 'Avams Ödeme'
+                'name' => 'Avans Ödeme'
             ],
             [
                 'name' => 'Diğer Ödemeler'

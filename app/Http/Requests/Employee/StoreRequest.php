@@ -20,7 +20,7 @@ class StoreRequest extends FormRequest
             'last_name' => ['required', 'string'],
             'start_date' => ['nullable', 'date'],
             'end_date' => ['nullable', 'date'],
-            'phone' => ['required', 'string'],
+            'phone' => ['nullable', 'string'],
             'address' => ['nullable', 'string'],
             'type' => ['required', 'integer'],
             'description' => ['nullable', 'string']

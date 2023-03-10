@@ -11,8 +11,8 @@ return new class extends Migration {
             $table->id();
             $table->foreignId('city_id')->references('id')->on('cities');
             $table->string('name');
-            $table->text('address');
-            $table->string('phone');
+            $table->text('address')->nullable();
+            $table->string('phone')->nullable();
             $table->text('description')->nullable();
             $table->timestamps();
             $table->softDeletes();

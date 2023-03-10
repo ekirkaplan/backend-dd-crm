@@ -16,8 +16,8 @@ class UpdateRequest extends FormRequest
             'driver_name' => ['required', 'string'],
             'driver_phone' => ['required', 'string'],
             'vehicle_plate' => ['required', 'string'],
-            'vehicle_brand' => ['required', 'string'],
-            'vehicle_type' => ['required', 'integer'],
+            'vehicle_brand' => ['nullable', 'string'],
+            'vehicle_type' => ['nullable', 'integer'],
             'description' => ['nullable', 'string'],
         ];
     }

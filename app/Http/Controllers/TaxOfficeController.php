@@ -21,7 +21,7 @@ class TaxOfficeController extends Controller
 
     public function getAll(): JsonResponse
     {
-        $taxOffices = $this->taxOfficeService->setPlural($this->baseRepository->getAll());
+        $taxOffices = $this->taxOfficeService->setPlural($this->baseRepository->getAll()->sortBy('name'));
 
         return JsonOutputFaced::setData($taxOffices)->response();
     }

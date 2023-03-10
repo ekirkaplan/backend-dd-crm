@@ -18,8 +18,8 @@ return new class extends Migration
             $table->string('driver_name');
             $table->string('driver_phone');
             $table->string('vehicle_plate');
-            $table->string('vehicle_brand');
-            $table->unsignedTinyInteger('vehicle_type');
+            $table->string('vehicle_brand')->nullable();
+            $table->unsignedTinyInteger('vehicle_type')->nullable();
             $table->text('description')->nullable();
             $table->timestamps();
             $table->softDeletes();

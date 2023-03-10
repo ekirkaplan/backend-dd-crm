@@ -58,12 +58,12 @@ class ContractController extends Controller
     public function store(StoreRequest $request): JsonResponse
     {
         $contract = $this->contractRepository->store($request->validated());
-        $mediasData = [
+   /*     $mediasData = [
             'model_type' => Contract::class,
             'model_id' => $contract->id,
             'files' => $request->get('files'),
         ];
-        $this->mediaRepository->sync($mediasData);
+        $this->mediaRepository->sync($mediasData);*/
 
         return JsonOutputFaced::setMessage('Kesim Sözleşmesi Oluşturuldu')->response();
     }
@@ -88,12 +88,12 @@ class ContractController extends Controller
     {
         $this->contractRepository->update($contract, $request->validated());
 
-        $mediasData = [
+/*        $mediasData = [
             'model_type' => Contract::class,
             'model_id' => $contract->id,
             'files' => $request->get('files'),
         ];
-        $this->mediaRepository->sync($mediasData);
+        $this->mediaRepository->sync($mediasData);*/
         return JsonOutputFaced::setMessage('Kesim Sözleşmesi Güncellendi')->response();
     }
 

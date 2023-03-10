@@ -17,8 +17,8 @@ class StoreRequest extends FormRequest
         return [
             'city_id' => ['required', 'integer', 'exists:cities,id'],
             'name' => ['required', 'string'],
-            'address' => ['required', 'string'],
-            'phone' => ['required', 'string'],
+            'address' => ['nullable', 'string'],
+            'phone' => ['nullable', 'string'],
             'description' => ['nullable', 'string'],
         ];
     }

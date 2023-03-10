@@ -19,7 +19,7 @@ class StoreRequest extends FormRequest
             'product_type_id' => ['required', 'integer', 'exists:product_types,id'],
             'start_date' => ['required', 'date'],
             'end_date' => ['required', 'date'],
-            'purchase_unit_price' => ['required', 'integer'],
+            'purchase_unit_price' => ['required', 'integer']
         ];
     }
 

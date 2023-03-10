@@ -15,7 +15,7 @@ return new class extends Migration {
             $table->string('last_name');
             $table->date('start_date')->nullable();
             $table->date('end_date')->nullable();
-            $table->string('phone');
+            $table->string('phone')->nullable();
             $table->string('address')->nullable();
             $table->text('description')->nullable();
             $table->timestamps();

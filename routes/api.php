@@ -246,9 +246,11 @@ Route::middleware(['jwt.verify'])->group(function () {
         Route::post('/upload', 'upload');
     });
 
+    Route::controller(CustomerShipmentReportController::class)->prefix('customer-shipment-report')->group(function (){
+        Route::get('/get-report', 'getReport');
+    });
+
 });
 
-Route::controller(CustomerShipmentReportController::class)->prefix('customer-shipment-report')->group(function (){
-    Route::get('/get-report', 'getReport');
-});
+
 

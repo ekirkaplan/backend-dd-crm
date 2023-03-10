@@ -58,12 +58,12 @@ class CustomerController extends Controller
     public function store(StoreRequest $request): JsonResponse
     {
         $customer = $this->baseRepository->store($request->validated());
-        $mediasData = [
+/*        $mediasData = [
             'model_type' => Customer::class,
             'model_id' => $customer->id,
             'files' => $request->get('files'),
         ];
-        $this->mediaRepository->sync($mediasData);
+        $this->mediaRepository->sync($mediasData);*/
         return JsonOutputFaced::setMessage('Müşteri Ekledi')->response();
     }
 
@@ -85,12 +85,12 @@ class CustomerController extends Controller
     public function update(UpdateRequest $request, Customer $customer): JsonResponse
     {
         $this->baseRepository->update($customer, $request->validated());
-        $mediasData = [
+/*        $mediasData = [
             'model_type' => Customer::class,
             'model_id' => $customer->id,
             'files' => $request->get('files'),
         ];
-        $this->mediaRepository->sync($mediasData);
+        $this->mediaRepository->sync($mediasData);*/
         return JsonOutputFaced::setMessage('Müşteri Güncellendi')->response();
     }
 
