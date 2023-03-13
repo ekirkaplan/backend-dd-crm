@@ -214,7 +214,7 @@ Route::middleware(['jwt.verify'])->group(function () {
 
     Route::controller(PaymentTransactionTypeController::class)->prefix('payment-transaction-types')->group(function () {
         Route::get('get-all', 'getAll');
-        Route::get('get-filtered', 'getFiltered');
+
     });
     Route::apiResource('payment-transaction-types', PaymentTransactionTypeController::class);
 
@@ -230,7 +230,7 @@ Route::middleware(['jwt.verify'])->group(function () {
         Route::get('get-all', 'getAll');
         Route::get('get-filtered', 'getFiltered');
         Route::post('bulk-invoice-update', 'bulkInvoiceUpdate');
-        Route::get('get-total-transaction-amount/{squad}/{contract}', 'getTotalTransactionAmount');
+
     });
     Route::apiResource('customer-shipments', CustomerShipmentController::class);
 

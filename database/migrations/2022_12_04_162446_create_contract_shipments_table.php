@@ -27,8 +27,8 @@ return new class extends Migration
             $table->date('exit_date');
             $table->date('arrival_date');
             $table->unsignedBigInteger('arrival_tonnage');
-            $table->string('arrival_calc_amount');
-            $table->string('squad_calc_amount');
+            $table->double('arrival_calc_amount');
+            $table->double('squad_calc_amount');
             $table->timestamps();
             $table->softDeletes();
         });
