@@ -18,10 +18,18 @@ class CustomerShipmentReportRepository implements CustomerShipmentReportInterfac
 
     public function getReport(array $filter): Collection
     {
-        return $this->customerShipment ->whereHas('shipment', function ($query) use ($filter) {
-            $query->where('vehicle_plate', 'ilike',"%{$filter['plate']}%");
-        })->whereBetween('shipment_date', [$filter['start_date'], $filter['end_date']])
-            ->orWhere('customer_id', $filter['customer_id'])
-            ->get();
+        $query = $this->customerShipment;
+
+        if ($filter['plate']) {
+            $query->whereHas('shipment', function ($query) use ($filter) {
+                $query->where('vehicle_plate', 'ilike', "%{$filter['plate']}%");
+            });
+        }
+
+        if ($filter['customer_id'] > 0) {
+            $query->where('customer_id', $filter['customer_id']);
+        }
+
+        return $query->whereBetween('shipment_date', [$filter['start_date'], $filter['end_date']])->get();
     }
 }

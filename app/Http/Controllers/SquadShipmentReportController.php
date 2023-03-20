@@ -10,7 +10,7 @@ use Illuminate\Http\Request;
 
 class SquadShipmentReportController extends Controller
 {
-    public function index(Request $request): JsonResponse
+    public function getReport(Request $request): JsonResponse
     {
         $startDate = $request->get('start_date');
         $endDate = $request->get('end_date');

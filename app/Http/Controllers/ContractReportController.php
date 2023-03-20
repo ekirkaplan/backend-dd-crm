@@ -8,7 +8,7 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 class ContractReportController extends Controller
 {
-    public function index(Request $request): JsonResponse
+    public function getReport(Request $request): JsonResponse
     {
         if ($request->get('contract_id') > 0){
             $contracts = Contract::find($request->get('contract_id'));

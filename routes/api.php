@@ -235,11 +235,11 @@ Route::middleware(['jwt.verify'])->group(function () {
     Route::apiResource('customer-shipments', CustomerShipmentController::class);
 
     Route::controller(ContractReportController::class)->prefix('contract-reports')->group(function (){
-        Route::get('/get-report', 'index');
+        Route::get('/get-report', 'getReport');
     });
 
     Route::controller(SquadShipmentReportController::class)->prefix('squad-shipment-reports')->group(function (){
-        Route::get('/get-report', 'index');
+        Route::get('/get-report', 'getReport');
     });
 
     Route::controller(MediasController::class)->prefix('medias')->group(function (){
