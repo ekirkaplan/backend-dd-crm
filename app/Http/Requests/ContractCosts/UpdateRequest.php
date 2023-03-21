@@ -22,7 +22,7 @@ class UpdateRequest extends FormRequest
         return [
             'contract_id' => ['required', 'int', 'exists:contracts,id'],
             'cost_type_id' => ['required', 'int', 'exists:cost_types,id'],
-            'squad_id' => ['required', 'int', 'exists:squads,id'],
+            'squad_id' => ['nullable', 'int', 'exists:squads,id'],
             'cost_amount' => ['required'],
             'cost_date' => ['required', 'date'],
             'description' => ['nullable', 'string']
