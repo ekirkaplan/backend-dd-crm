@@ -19,7 +19,7 @@ return new class extends Migration {
             $table->foreignId('squad_id')->references('id')->on('squads');
             $table->date('payment_date');
             $table->double('payment_amount');
-            $table->text('description');
+            $table->text('description')->nullable();
             $table->timestamps();
         });
     }
