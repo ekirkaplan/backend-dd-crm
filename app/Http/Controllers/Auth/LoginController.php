@@ -32,7 +32,7 @@ class LoginController extends Controller
     {
         if (!$token = JWTAuth::attempt($request->validated())) {
             return JsonOutputFaced::setStatusCode(400)
-                ->setMessage(__('auth.errors.failed'))
+                ->setMessage("E-Posta Veya Şifre Hatalı")
                 ->response();
         }
 
