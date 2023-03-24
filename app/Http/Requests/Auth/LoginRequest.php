@@ -24,8 +24,8 @@ class LoginRequest extends FormRequest
     public function rules()
     {
         return [
-            'email' => 'required',
-            'password' => 'required',
+            'email' => ['required', 'email', 'exists:users,email'],
+            'password' => ['required', 'min:8'],
         ];
     }
 
@@ -33,7 +33,7 @@ class LoginRequest extends FormRequest
     {
         return [
             'email' => 'E-Posta',
-            'Şifre' => 'E-Posta'
+            'Şifre' => 'Şifre'
         ];
     }
 }
