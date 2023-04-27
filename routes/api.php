@@ -34,6 +34,7 @@ use App\Http\Controllers\ContractReportController;
 use App\Http\Controllers\SquadShipmentReportController;
 use App\Http\Controllers\MediasController;
 use App\Http\Controllers\CustomerShipmentReportController;
+use App\Http\Controllers\InvoiceController;
 
 
 /*
@@ -234,20 +235,24 @@ Route::middleware(['jwt.verify'])->group(function () {
     });
     Route::apiResource('customer-shipments', CustomerShipmentController::class);
 
-    Route::controller(ContractReportController::class)->prefix('contract-reports')->group(function (){
+    Route::controller(ContractReportController::class)->prefix('contract-reports')->group(function () {
         Route::get('/get-report', 'getReport');
     });
 
-    Route::controller(SquadShipmentReportController::class)->prefix('squad-shipment-reports')->group(function (){
+    Route::controller(SquadShipmentReportController::class)->prefix('squad-shipment-reports')->group(function () {
         Route::get('/get-report', 'getReport');
     });
 
-    Route::controller(MediasController::class)->prefix('medias')->group(function (){
+    Route::controller(MediasController::class)->prefix('medias')->group(function () {
         Route::post('/upload', 'upload');
     });
 
-    Route::controller(CustomerShipmentReportController::class)->prefix('customer-shipment-report')->group(function (){
+    Route::controller(CustomerShipmentReportController::class)->prefix('customer-shipment-report')->group(function () {
         Route::get('/get-report', 'getReport');
+    });
+
+    Route::controller(InvoiceController::class)->prefix('invoice-manage')->group(function () {
+        Route::get('/get-list', 'getFiltered');
     });
 
 });

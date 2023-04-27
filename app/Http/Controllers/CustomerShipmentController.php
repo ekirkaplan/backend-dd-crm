@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Facades\JsonOutputFaced;
 use App\Http\Requests\CustomerShipment\BulkInvoiceUpdateRequest;
+use App\Models\ContractShipment;
 use App\Models\ExitWarehouse;
 use App\Models\Squad;
 use App\Models\Supplier;
@@ -19,15 +20,16 @@ use Illuminate\Http\Request;
 class CustomerShipmentController extends Controller
 {
     /**
-     * @param  BaseRepository  $baseRepository
-     * @param  CustomerShipmentRepository  $customerShipmentRepository
-     * @param  CustomerShipmentService  $customerShipmentService
+     * @param BaseRepository $baseRepository
+     * @param CustomerShipmentRepository $customerShipmentRepository
+     * @param CustomerShipmentService $customerShipmentService
      */
     public function __construct(
-        private BaseRepository $baseRepository,
+        private BaseRepository             $baseRepository,
         private CustomerShipmentRepository $customerShipmentRepository,
-        private CustomerShipmentService $customerShipmentService
-    ) {
+        private CustomerShipmentService    $customerShipmentService
+    )
+    {
         $this->baseRepository->init(new CustomerShipment());
     }
 
@@ -43,7 +45,7 @@ class CustomerShipmentController extends Controller
     }
 
     /**
-     * @param  Request  $request
+     * @param Request $request
      * @return JsonResponse
      */
     public function getFiltered(Request $request): JsonResponse
@@ -55,7 +57,7 @@ class CustomerShipmentController extends Controller
     }
 
     /**
-     * @param  StoreRequest  $request
+     * @param StoreRequest $request
      * @return JsonResponse
      */
     public function store(StoreRequest $request): JsonResponse
@@ -68,7 +70,7 @@ class CustomerShipmentController extends Controller
     }
 
     /**
-     * @param  CustomerShipment  $customerShipment
+     * @param CustomerShipment $customerShipment
      * @return JsonResponse
      */
     public function show(CustomerShipment $customerShipment): JsonResponse
@@ -79,8 +81,8 @@ class CustomerShipmentController extends Controller
     }
 
     /**
-     * @param  UpdateRequest  $request
-     * @param  CustomerShipment  $customerShipment
+     * @param UpdateRequest $request
+     * @param CustomerShipment $customerShipment
      * @return JsonResponse
      */
     public function update(UpdateRequest $request, CustomerShipment $customerShipment): JsonResponse
@@ -93,7 +95,7 @@ class CustomerShipmentController extends Controller
     }
 
     /**
-     * @param  CustomerShipment  $customerShipment
+     * @param CustomerShipment $customerShipment
      * @return JsonResponse
      */
     public function destroy(CustomerShipment $customerShipment): JsonResponse
@@ -114,9 +116,23 @@ class CustomerShipmentController extends Controller
             'withholding',
         ]);
 
-        $customerShipments = CustomerShipment::whereIn('id', $request->get('shipments'))->get();
+        $contractData = [
+            'invoice_no' => $request->get('product_invoice_no'),
+            'tax_rate' => $request->get('product_tax_percentage'),
+            'invoice_date' => $request->get('product_invoice_date'),
+            'invoice_without_amount' => $request->get('product_invoice_amount_without_tax'),
+            'invoice_total_amount' => $request->get('product_invoice_total_amount'),
+            'invoice_withholding' => $request->get('withholding')
+        ];
+
+        $customerShipments = CustomerShipment::whereIn('id', $request->get('selectedCustomer'))->get();
+        $contractShipments = ContractShipment::whereIn('id', $request->get('selectedContract'))->get();
 
         $this->customerShipmentRepository->bulkInvoiceUpdate($customerShipments, $data);
+
+        foreach ($contractShipments as $contractShipment) {
+            $contractShipment->update($contractData);
+        }
 
         return JsonOutputFaced::setMessage('Fatura Bilgileri GÜncellendi')->response();
 

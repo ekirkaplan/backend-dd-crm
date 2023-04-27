@@ -21,7 +21,7 @@ class UpdateRequest extends FormRequest
             'arrival_location_id' => ['required', 'int', 'exists:arrival_locations,id'],
             'exit_user_id' => ['required', 'int', 'exists:users,id'],
             'customer_id' => ['required', 'int', 'exists:customers,id'],
-            'exit_licence_no' => ['nullable', 'string'],
+            'exit_licence_no' => ['nullable'],
             'exit_cubic_meter' => ['required'],
             'exit_date' => ['date', 'required'],
             'arrival_date' => ['date', 'required'],
