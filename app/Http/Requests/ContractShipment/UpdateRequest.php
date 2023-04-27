@@ -20,11 +20,24 @@ class UpdateRequest extends FormRequest
             'exit_city_id' => ['required', 'int', 'exists:cities,id'],
             'arrival_location_id' => ['required', 'int', 'exists:arrival_locations,id'],
             'exit_user_id' => ['required', 'int', 'exists:users,id'],
-            'exit_licence_no' => ['required', 'string'],
+            'customer_id' => ['required', 'int', 'exists:customers,id'],
+            'exit_licence_no' => ['nullable', 'string'],
             'exit_cubic_meter' => ['required'],
             'exit_date' => ['date', 'required'],
             'arrival_date' => ['date', 'required'],
-            'arrival_tonnage' => ['required']
+            'arrival_tonnage' => ['required'],
+            'shipment_invoice_no' => ['string', 'nullable'],
+            'shipment_tax_rate' => ['integer', 'nullable'],
+            'shipment_invoice_without_amount' => ['nullable'],
+            'shipment_invoice_date' => ['date', 'nullable'],
+            'shipment_invoice_total_amount' => ['nullable'],
+            'shipment_invoice_withholding' => ['int', 'nullable'],
+            'invoice_no' => ['string', 'nullable'],
+            'tax_rate' => ['int', 'nullable'],
+            'invoice_date' => ['date', 'nullable'],
+            'invoice_without_amount' => ['nullable'],
+            'invoice_total_amount' => ['nullable'],
+            'invoice_withholding' => ['nullable'],
         ];
     }
 
@@ -40,7 +53,19 @@ class UpdateRequest extends FormRequest
             'exit_user_id' => "Çıkış Onaylayan",
             'exit_licence_no' => "Çıkış Lisans No",
             'exit_cubic_meter' => "Çıkış M3",
-            'exit_date' => "Çıkış Tarihi"
+            'exit_date' => "Çıkış Tarihi",
+            'shipment_invoice_no' => "Nakliye Fatura No",
+            'shipment_tax_rate' => "Nakliye Fatura Vergi Oranı",
+            'shipment_invoice_date' => "Nakliye Fatura Tarihi",
+            'shipment_invoice_total_amount' => "Nakliye Fatura Genel Toplam",
+            'shipment_invoice_withholding' => "Nakliye Fatura Tefkifat",
+            'invoice_no' => "Fatura NO",
+            'tax_rate' => "Fatura Vergi Oranı",
+            'invoice_date' => "Fatura Tarihi",
+            'invoice_without_amount' => "Fatura Vergi Hariç Fiyatı",
+            'invoice_total_amount' => "Fatura Genel Toplam",
+            'invoice_withholding' => "Fatura Tefkifat",
+            'customer_id' => "Müşteri",
         ];
     }
 }

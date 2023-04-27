@@ -74,4 +74,12 @@ class ContractShipment extends Model
     {
         return $this->belongsTo(User::class, 'exit_user_id');
     }
+
+    /**
+     * @return BelongsTo
+     */
+    public function customer()
+    {
+        return $this->belongsTo(Customer::class, 'customer_id');
+    }
 }

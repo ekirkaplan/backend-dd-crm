@@ -28,11 +28,11 @@ class UpdateRequest extends FormRequest
             'contract_stamp_duty' => ['required'],
             'forward_invoice_fee' => ['required'],
             'contract_invoice_date' => ['required', 'date'],
-            'contract_receipt_no' => ['required', 'string'],
+            'contract_receipt_no' => ['nullable', 'string'],
             'field_pickup_date' => ['required', 'date'],
             'actual_start_date' => ['required', 'date'],
             'number_of_man_day' => ['required', 'integer'],
-            'extension_time_received' => ['required', 'integer'],
+            'extension_time_received' => ['nullable', 'integer'],
             'yield_percentage' => ['required', 'integer'],
             'files' => ['nullable', 'array'],
         ];

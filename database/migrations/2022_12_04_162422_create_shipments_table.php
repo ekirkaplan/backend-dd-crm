@@ -15,8 +15,8 @@ return new class extends Migration
     {
         Schema::create('shipments'  , function (Blueprint $table) {
             $table->id();
-            $table->string('driver_name');
-            $table->string('driver_phone');
+            $table->string('driver_name')->nullable();
+            $table->string('driver_phone')->nullable();
             $table->string('vehicle_plate');
             $table->string('vehicle_brand')->nullable();
             $table->unsignedTinyInteger('vehicle_type')->nullable();

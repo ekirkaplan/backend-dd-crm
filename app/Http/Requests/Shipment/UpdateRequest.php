@@ -13,8 +13,8 @@ class UpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'driver_name' => ['required', 'string'],
-            'driver_phone' => ['required', 'string'],
+            'driver_name' => ['nullable', 'string'],
+            'driver_phone' => ['nullable', 'string'],
             'vehicle_plate' => ['required', 'string'],
             'vehicle_brand' => ['nullable', 'string'],
             'vehicle_type' => ['nullable', 'integer'],

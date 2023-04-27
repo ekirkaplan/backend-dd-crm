@@ -31,11 +31,11 @@ return new class extends Migration
             $table->double('forward_invoice_fee');
             $table->date('contract_invoice_date');
             $table->double('contract_invoice_price');
-            $table->string('contract_receipt_no');
+            $table->string('contract_receipt_no')->nullable();
             $table->date('field_pickup_date');
             $table->date('actual_start_date');
             $table->unsignedInteger('number_of_man_day');
-            $table->unsignedInteger('extension_time_received');
+            $table->unsignedInteger('extension_time_received')->nullable();
             $table->unsignedInteger('yield_percentage')->nullable();
             $table->timestamps();
             $table->softDeletes();

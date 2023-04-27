@@ -31,17 +31,22 @@ class StoreRequest extends FormRequest
             'supplier_purchase_invoice_date' => ['nullable'],
             'supplier_purchase_invoice_amount' => ['nullable'],
             'shipment_date' => ['required'],
-            'shipment_invoice_amount' => ['required'],
+            'shipment_invoice_no' => ['nullable'],
+            'shipment_invoice_date' => ['nullable'],
+            'shipment_invoice_amount_without_tax' => ['nullable'],
+            'shipment_invoice_total_amount' => ['nullable'],
+            'shipment_tax_percentage' => ['nullable'],
+            'shipment_invoice_withholding' => ['nullable'],
             'exit_tonnage' => ['required'],
             'different_shipping_amount_status' => ['required'],
             'arrival_tonnage' => ['required'],
             'different_tonnage_status' => ['required'],
-            'product_invoice_no' => ['required'],
-            'product_invoice_date' => ['required'],
-            'product_invoice_amount_without_tax' => ['required'],
-            'product_tax_percentage' => ['required'],
-            'product_invoice_total_amount' => ['required'],
-            'withholding' => ['required'],
+            'product_invoice_no' => ['nullable'],
+            'product_invoice_date' => ['nullable'],
+            'product_invoice_amount_without_tax' => ['nullable'],
+            'product_tax_percentage' => ['nullable'],
+            'product_invoice_total_amount' => ['nullable'],
+            'withholding' => ['nullable'],
         ];
     }
 
@@ -68,7 +73,7 @@ class StoreRequest extends FormRequest
             'product_tax_percentage' => 'Ürün Vergi Oranı',
             'product_total_tax' => 'Ürün Toplam Vergi',
             'product_invoice_total_amount' => 'Ürün Toplam Vergi Tutarı',
-            'withholding' => 'Stopaj',
+            'withholding' => 'Tevkifat',
         ];
     }
 }

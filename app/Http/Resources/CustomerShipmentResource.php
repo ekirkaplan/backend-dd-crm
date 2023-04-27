@@ -51,6 +51,12 @@ class CustomerShipmentResource extends JsonResource
             'product_total_tax' => $this->product_total_tax,
             'product_invoice_total_amount' => $this->product_invoice_total_amount,
             'withholding' => $this->withholding,
+            'shipment_invoice_no' => $this->shipment_invoice_no,
+            'shipment_invoice_date' => $this->shipment_invoice_date,
+            'shipment_invoice_amount_without_tax' => $this->shipment_invoice_amount_without_tax,
+            'shipment_tax_percentage' => $this->shipment_tax_percentage,
+            'shipment_invoice_total_amount' => $this->shipment_invoice_total_amount,
+            'shipment_invoice_withholding' => $this->shipment_invoice_withholding,
         ];
     }
 
