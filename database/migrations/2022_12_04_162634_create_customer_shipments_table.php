@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('product_type_id')->references('id')->on('product_types');
             $table->foreignId('exit_city_id')->references('id')->on('cities');
-            $table->foreignId('customer_id')->references('id')->on('customers');
+            $table->foreignId('customer_id')->nullable()->references('id')->on('customers');
             $table->foreignId('shipment_id')->references('id')->on('shipments');
             $table->foreignId('exit_company_id')->references('id')->on('companies');
             $table->foreignId('arrival_location_id')->references('id')->on('arrival_locations');

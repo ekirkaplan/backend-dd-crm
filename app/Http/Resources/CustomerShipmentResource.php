@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources;
 
+use App\Models\Customer;
 use App\Models\ExitWarehouse;
 use App\Models\Squad;
 use App\Models\Supplier;
@@ -22,7 +23,7 @@ class CustomerShipmentResource extends JsonResource
             'id' => $this->id,
             'product_type' => new ProductTypeResource($this->productType),
             'exit_city' => new CityResource($this->city),
-            'customer' => new CustomerResource($this->customer),
+            'customer' => $this->customerResource($this->customer_id),
             'shipment' => new ShipmentResource($this->shipment),
             'arrival_location' => new ArrivalLocationResource($this->arrivalLocation),
             'exit_company' => new CompanyResource($this->company),
@@ -68,6 +69,15 @@ class CustomerShipmentResource extends JsonResource
             return 1;
         } elseif ($type === "App\Models\Supplier") {
             return 2;
+        }
+    }
+
+    private function customerResource(int|null $customerId)
+    {
+        if ($customerId){
+            return new CustomerResource(Customer::find($customerId));
+        }else {
+            return ['title' => "Tanımsız"];
         }
     }
 }

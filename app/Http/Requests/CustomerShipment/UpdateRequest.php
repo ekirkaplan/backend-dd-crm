@@ -23,7 +23,7 @@ class UpdateRequest extends FormRequest
             'exit_model_id' => ['required', 'int'],
             'product_type_id' => ['required', 'int', 'exists:product_types,id'],
             'exit_city_id' => ['required', 'int', 'exists:cities,id'],
-            'customer_id' => ['required', 'int', 'exists:customers,id'],
+            'customer_id' => ['required_if:exit_type,0'],
             'shipment_id' => ['required', 'int', 'exists:shipments,id'],
             'arrival_location_id' => ['required', 'int', 'exists:arrival_locations,id'],
             'exit_company_id' => ['required', 'int', 'exists:companies,id'],

@@ -128,7 +128,7 @@ class ContractShipmentController extends Controller
     {
         $unitPrice = $squad->unitPrices()
             ->where('start_date', '<=', $date)
-            ->where('end_date', '>=', $date)
+            ->orWhere('end_date', '>=', $date)
             ->first();
         if (is_null($unitPrice)) {
             return 0;

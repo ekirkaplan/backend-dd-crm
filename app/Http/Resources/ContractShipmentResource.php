@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources;
 
+use App\Models\Customer;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class ContractShipmentResource extends JsonResource
@@ -47,7 +48,16 @@ class ContractShipmentResource extends JsonResource
             'exit_city' => new CityResource($this->city),
             'arrival_location' => new ArrivalLocationResource($this->arrivalLocation),
             'exit_user' => new UserResource($this->user),
-            'customer' => new CustomerResource($this->customer),
+            'customer' =>  $this->customerResource($this->customer_id),
         ];
+    }
+
+    private function customerResource(int|null $customerId)
+    {
+        if ($customerId){
+            return new CustomerResource(Customer::find($customerId));
+        }else {
+            return ['title' => "Tanımsız"];
+        }
     }
 }
