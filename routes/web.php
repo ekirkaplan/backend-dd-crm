@@ -14,5 +14,16 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return \Illuminate\Support\Facades\Hash::make("tonguc2023*dd*");
+    $arrivalTonnage = 220;
+    $date = now();
+    $squad = \App\Models\Squad::find(1);
+    $unitPrice = $squad->unitPrices()
+        ->where('start_date', '<=', $date)
+        ->orWhere('end_date', '>=', $date)
+        ->first();
+    if (is_null($unitPrice)) {
+        return 0;
+    } else {
+        return $unitPrice->price * (int)$arrivalTonnage;
+    }
 });

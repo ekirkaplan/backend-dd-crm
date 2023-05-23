@@ -231,6 +231,8 @@ Route::middleware(['jwt.verify'])->group(function () {
         Route::get('get-all', 'getAll');
         Route::get('get-filtered', 'getFiltered');
         Route::post('bulk-invoice-update', 'bulkInvoiceUpdate');
+        Route::post('bulk-invoice-supplier-update', 'bulkSupplierInvoiceUpdate');
+        Route::post('bulk-invoice-shipment-update', 'bulkShipmentInvoiceUpdate');
 
     });
     Route::apiResource('customer-shipments', CustomerShipmentController::class);
