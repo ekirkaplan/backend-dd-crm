@@ -56,7 +56,7 @@ Route::prefix('auth')->group(function () {
     });
 });
 
-Route::middleware(['jwt.verify'])->group(function () {
+Route::middleware([])->group(function () {
     Route::post('logout', [LoginController::class, 'logout']);
     Route::get('/auth/me', [LoginController::class, 'me']);
     Route::get('medias/get-media-by-id/{id}', [MediaController::class, 'getMediaById']);
@@ -255,6 +255,8 @@ Route::middleware(['jwt.verify'])->group(function () {
 
     Route::controller(InvoiceController::class)->prefix('invoice-manage')->group(function () {
         Route::get('/get-list', 'getFiltered');
+        Route::get('/get-supplier', 'getSupplier');
+        Route::get('/get-shipment', 'getShipment');
     });
 
 });
